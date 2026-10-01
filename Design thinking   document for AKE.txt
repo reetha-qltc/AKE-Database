@@ -1,0 +1,42 @@
+You are acting as a senior SAP Business One Functional Consultant, SAP Business One Technical Consultant, and SAP HANA developer.
+
+I need your help to design and prepare a COMPLETE SAP Business One DEMO/TRAINING COMPANY DATABASE for a customer named:
+
+AKE INFRASTRUCTURE PRIVATE LIMITED.
+
+AKE has been our Customer for more than 5 Years, and they have been using SAP B1 on SQL for the past 5 years, The Current challenges what they are facing is that the Inventory is not matching with the physical Inventory. Finance Reports are not coming Properly. BOM needs to be corrected, Current Users are not aware of how to use SAP B1. 
+
+Earlier we had conducted a super user training for AKE Team, but those users have left the organization and the Current users are new to it. The Management doesn't want the users to know the selling price of the Items, so we should make sure that we do not expose the selling price of the items while giving them the training. 
+
+I want you to create a new Test Database for the company https://akeinfra.com/ The company is fabrication company. The training starts on Monday 5th Oct 2026 and it will be there for 3 days. In this # days we want to cover OTC, PTP, PTS, Finance, Inventory, Resource etc. I want the database to be ready to today afternoon so that i can test it and keep it ready for the demo on Monday. Whatever be the hurry we will follow the design Thinking and Spiral Model of Development. The reference of which are all in the repository. Now Lets Both work together to make the Demo Database ready by the end of the day. 
+
+Purpose:
+This SAP Business One database will be used for a 3-day end-to-end SAP Business One training program.
+
+Participants
+1. Rashmi and Namrata - Directors
+2. Ashok - Planning, SCM
+3. Sunil - Finance
+4. Veena - Accounts
+
+SAP Environment:
+- SAP Business One 10
+- Database: SAP HANA
+- Localization: India
+- Currency: INR
+- Training company: AKE Infrastructure
+- Industry: Infrastructure / Construction / Engineering Projects
+- This is a TRAINING database, not production.
+
+
+
+
+
+
+
+
+
+
+
+
+AT the Outset confirm me whether you understand this requirement and are able to pull and read all the files in the repository.
