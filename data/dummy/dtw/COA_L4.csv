@@ -1,0 +1,43 @@
+RecordKey,Code,Name,FatherAccountKey,ActiveAccount,AccountType,AcctCurrency,LockManualTransaction
+RecordKey,AcctCode,AcctName,FatherNum,Postable,ActType,ActCurr,LocManTran
+1,110101,Raw Material Stock,110100,tYES,at_Other,INR,tNO
+2,110102,Work in Progress,110100,tYES,at_Other,INR,tNO
+3,110103,Finished Goods Stock,110100,tYES,at_Other,INR,tNO
+4,110104,Stores and Spares,110100,tYES,at_Other,INR,tNO
+5,110201,Domestic Debtors,110200,tYES,at_Other,INR,tYES
+6,110202,Export Debtors,110200,tYES,at_Other,INR,tYES
+7,110301,Cash in Hand,110300,tYES,at_Other,INR,tNO
+8,110302,Petty Cash,110300,tYES,at_Other,INR,tNO
+9,110303,HDFC Bank Current Account,110300,tYES,at_Other,INR,tNO
+10,110304,ICICI Bank Current Account,110300,tYES,at_Other,INR,tNO
+11,110401,Input CGST,110400,tYES,at_Other,INR,tNO
+12,110402,Input SGST,110400,tYES,at_Other,INR,tNO
+13,110403,Input IGST,110400,tYES,at_Other,INR,tNO
+14,110501,TDS Receivable (deducted by customers),110500,tYES,at_Other,INR,tNO
+15,110502,TCS Receivable,110500,tYES,at_Other,INR,tNO
+16,110503,Advance Income Tax,110500,tYES,at_Other,INR,tNO
+17,110601,Advance to Suppliers,110600,tYES,at_Other,INR,tNO
+18,110602,Staff Advances,110600,tYES,at_Other,INR,tNO
+19,110603,Security Deposits,110600,tYES,at_Other,INR,tNO
+20,110604,Prepaid Expenses,110600,tYES,at_Other,INR,tNO
+21,210101,Domestic Creditors,210100,tYES,at_Other,INR,tYES
+22,210102,Import Creditors,210100,tYES,at_Other,INR,tYES
+23,210201,Output CGST,210200,tYES,at_Other,INR,tNO
+24,210202,Output SGST,210200,tYES,at_Other,INR,tNO
+25,210203,Output IGST,210200,tYES,at_Other,INR,tNO
+26,210301,TDS Payable - 194C Contractors,210300,tYES,at_Other,INR,tNO
+27,210302,TDS Payable - 194J Professional and Technical,210300,tYES,at_Other,INR,tNO
+28,210303,TDS Payable - 194I Rent,210300,tYES,at_Other,INR,tNO
+29,210304,TDS Payable - 194H Commission,210300,tYES,at_Other,INR,tNO
+30,210305,TDS Payable - 194Q Purchase of Goods,210300,tYES,at_Other,INR,tNO
+31,210306,TDS Payable - 194A Interest,210300,tYES,at_Other,INR,tNO
+32,210307,TDS Payable - 192 Salary,210300,tYES,at_Other,INR,tNO
+33,210401,PF Payable,210400,tYES,at_Other,INR,tNO
+34,210402,ESI Payable,210400,tYES,at_Other,INR,tNO
+35,210403,Professional Tax Payable,210400,tYES,at_Other,INR,tNO
+36,210501,Salary Payable,210500,tYES,at_Other,INR,tNO
+37,210502,Provision for Expenses,210500,tYES,at_Other,INR,tNO
+38,210503,Audit Fees Payable,210500,tYES,at_Other,INR,tNO
+39,210504,Provision for Income Tax,210500,tYES,at_Other,INR,tNO
+40,210601,Advance from Customers,210600,tYES,at_Other,INR,tNO
+41,210602,Goods Received Not Invoiced (Allocation),210600,tYES,at_Other,INR,tNO

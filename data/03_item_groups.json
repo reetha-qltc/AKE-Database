@@ -1,0 +1,164 @@
+[
+  {
+    "GroupName": "RM Plates",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_RawMaterial",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-06",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-06",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  },
+  {
+    "GroupName": "RM Structurals",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_RawMaterial",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-08",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-08",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  },
+  {
+    "GroupName": "RM Special Grades",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_RawMaterial",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-07",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-07",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  },
+  {
+    "GroupName": "TMT Rod",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_RawMaterial",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-18",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-08",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  },
+  {
+    "GroupName": "Consumables",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_RawMaterial",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-09",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-09",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  },
+  {
+    "GroupName": "PPE",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_RawMaterial",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-04",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-04",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  },
+  {
+    "GroupName": "Tools",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_RawMaterial",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-05",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-05",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  },
+  {
+    "GroupName": "Sub Assembly",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_GoodsInProcess",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-01",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-01",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  },
+  {
+    "GroupName": "FG",
+    "InventorySystem": "bis_MovingAverage",
+    "MaterialType": "mt_FinishedGoods",
+    "Accounts": {
+      "InventoryAccount": "5002-01-01-03",
+      "CostAccount": "4001-16",
+      "ExpensesAccount": "4001-16",
+      "PurchaseAccount": "4008-01",
+      "RevenuesAccount": "2001-01-01-01",
+      "PriceDifferencesAccount": "4001-17",
+      "GoodsClearingAccount": "3002-02-05",
+      "IncreasingAccount": "4001-20",
+      "DecreasingAccount": "4001-21",
+      "WipAccount": "5002-01-02",
+      "WipVarianceAccount": "4001-23"
+    }
+  }
+]

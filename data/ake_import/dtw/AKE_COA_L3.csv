@@ -1,0 +1,131 @@
+RecordKey,Code,Name,FatherAccountKey,ActiveAccount,AccountType,AcctCurrency,LockManualTransaction
+RecordKey,AcctCode,AcctName,FatherNum,Postable,ActType,ActCurr,LocManTran
+1,5001-01,Tangible Asset,5001,tNO,at_Other,,tNO
+2,5001-02,Intangible Assets,5001,tNO,at_Other,,tNO
+3,5001-99,Asset Acquisition Clearing Account,5001,tNO,at_Other,,tNO
+4,5002-01,Inventories,5002,tNO,at_Other,,tNO
+5,5002-02,Cash and Bank Balances,5002,tNO,at_Other,,tNO
+6,5002-03,Balances with Tax Departments,5002,tNO,at_Other,,tNO
+7,5002-04,Loan and Advances,5002,tNO,at_Other,,tNO
+8,5002-05,Other Current Asset,5002,tNO,at_Other,,tNO
+9,3001-01,Unsecured Loans,3001,tNO,at_Other,,tNO
+10,3002-01,Secured Loans,3002,tNO,at_Other,,tNO
+11,3002-02,Trade Creditors,3002,tNO,at_Other,,tNO
+12,3002-03,Other Creditors (Statutory Payables),3002,tNO,at_Other,,tNO
+13,3002-04,Employee Benefits Payables,3002,tNO,at_Other,,tNO
+14,3002-05,Expenses Payable,3002,tNO,at_Other,,tNO
+15,3002-06,Interest Payable,3002,tNO,at_Other,,tNO
+16,3002-07,Other Finances,3002,tNO,at_Other,,tNO
+17,3002-09,GST Payable,3002,tNO,at_Other,,tNO
+18,3003-01,Provision For Income Tax,3003,tYES,at_Other,INR,tNO
+19,3003-02,Conversion Expenses,3003,tNO,at_Other,,tNO
+20,1001-01,Paid Up Share Capital,1001,tNO,at_Other,,tNO
+21,1002-01,General Reserves,1002,tYES,at_Other,INR,tNO
+22,1002-02,Subsidy From State Government,1002,tYES,at_Other,INR,tNO
+23,1002-03,Deferred Tax,1002,tYES,at_Other,INR,tNO
+24,1002-04,Retained earning account,1002,tYES,at_Other,INR,tNO
+25,1002-05,Profit and Loss Account,1002,tYES,at_Other,INR,tNO
+26,2001-01,Sales,2001,tNO,at_Revenues,,tNO
+27,2001-02,Sales - Out of State,2001,tNO,at_Revenues,,tNO
+28,2001-03,Sales Returns,2001,tNO,at_Revenues,,tNO
+29,2002-01,Export Sales,2002,tYES,at_Revenues,INR,tNO
+30,2003-01,Sales of Service,2003,tYES,at_Revenues,INR,tNO
+31,2003-02,Foreign Exchange Gains,2003,tYES,at_Revenues,INR,tNO
+32,2003-03,Profit on Sales of Assets,2003,tYES,at_Revenues,INR,tNO
+33,2003-04,Export Incentive from State Government,2003,tYES,at_Revenues,INR,tNO
+34,2003-05,Sale of DEBP Licence,2003,tYES,at_Revenues,INR,tNO
+35,2003-06,Miscellaneous revenue(salary deducct),2003,tYES,at_Revenues,INR,tNO
+36,2003-07,(No name in AKE COA) 2003-07,2003,tYES,at_Revenues,INR,tNO
+37,2003-08,FA Sales Revenue Clearing,2003,tYES,at_Revenues,INR,tNO
+38,2003-09,Revenue Account for Retirement,2003,tYES,at_Revenues,INR,tNO
+39,2004-01,Interest on  IT refund,2004,tYES,at_Revenues,INR,tNO
+40,2004-02,Interest on Bescom Deposit,2004,tYES,at_Revenues,INR,tNO
+41,2004-03,Fixed Deposit interest,2004,tYES,at_Revenues,INR,tNO
+42,2004-04,Capital Subsidy Received,2004,tYES,at_Revenues,INR,tNO
+43,2004-05,Duty Drawback Received,2004,tYES,at_Revenues,INR,tNO
+44,2005-01,Duty Drawback received,2005,tYES,at_Revenues,INR,tNO
+45,4001-01,Sub Assembly -Consumed,4001,tYES,at_Expenses,INR,tNO
+46,4001-02,Fixtures - Consumed,4001,tYES,at_Expenses,INR,tNO
+47,4001-03,FG - Consumed,4001,tYES,at_Expenses,INR,tNO
+48,4001-04,PPE - Consumed,4001,tYES,at_Expenses,INR,tNO
+49,4001-05,Tools - Consumed,4001,tYES,at_Expenses,INR,tNO
+50,4001-06,RM plates - Consumed,4001,tYES,at_Expenses,INR,tNO
+51,4001-07,RM Special Grade - Consumed,4001,tYES,at_Expenses,INR,tNO
+52,4001-08,RM Structurals - Consumed,4001,tYES,at_Expenses,INR,tNO
+53,4001-09,Consumables - consumed,4001,tYES,at_Expenses,INR,tNO
+54,4001-10,Fuels and Oils - Consumed,4001,tYES,at_Expenses,INR,tNO
+55,4001-11,Spare Parts and Others - Consumed,4001,tYES,at_Expenses,INR,tNO
+56,4001-12,Office Stationery - Consumed,4001,tYES,at_Expenses,INR,tNO
+57,4001-13,Fixed Assets - Consumed,4001,tYES,at_Expenses,INR,tNO
+58,4001-14,Mfg. Services - Consumed,4001,tYES,at_Expenses,INR,tNO
+59,4001-15,Employee Welfare - Consumed,4001,tYES,at_Expenses,INR,tNO
+60,4001-16,Finished Goods - Cost of Goods Sold,4001,tYES,at_Expenses,INR,tNO
+61,4001-17,Materials - Purchase Price Variance,4001,tYES,at_Expenses,INR,tNO
+62,4001-18,Stock Revaluation Gain,4001,tYES,at_Expenses,INR,tNO
+63,4001-19,Stock Revaluation Losses,4001,tYES,at_Expenses,INR,tNO
+64,4001-20,Stock Difference Gains,4001,tYES,at_Expenses,INR,tNO
+65,4001-21,Stock Difference Losses,4001,tYES,at_Expenses,INR,tNO
+66,4001-22,Material Variance,4001,tYES,at_Expenses,INR,tNO
+67,4001-23,Material - Production cost Variance,4001,tYES,at_Expenses,INR,tNO
+68,4001-25,Instruments - Consumed,4001,tYES,at_Expenses,INR,tNO
+69,4001-26,Packaging Materials Consumed,4001,tYES,at_Expenses,INR,tNO
+70,4001-27,Cost of Goods Sold Transfers,4001,tYES,at_Expenses,INR,tNO
+71,4002-01,Power and Fuels,4002,tNO,at_Expenses,,tNO
+72,4002-02,Rates and Taxes,4002,tNO,at_Expenses,,tNO
+73,4002-03,Building Maintanence,4002,tNO,at_Expenses,,tNO
+74,4002-04,Machinery Repairs and Maintenance,4002,tNO,at_Expenses,,tNO
+75,4002-05,Other Repairs and Maintenance,4002,tNO,at_Expenses,,tNO
+76,4002-06,Freight Charges Inward,4002,tNO,at_Expenses,,tNO
+77,4002-07,Jobwork and Testing Charges,4002,tNO,at_Expenses,,tNO
+78,4002-10,Miscellaneous Mfg Expenses,4002,tNO,at_Expenses,,tNO
+79,4003-01,Salaries & Wages - Direct,4003,tNO,at_Expenses,,tNO
+80,4004-01,Rates and Taxes,4004,tNO,at_Expenses,,tNO
+81,4004-02,Vehicle Maintenance,4004,tNO,at_Expenses,,tNO
+82,4004-03,Travelling Expenses,4004,tNO,at_Expenses,,tNO
+83,4004-04,Insurance,4004,tNO,at_Expenses,,tNO
+84,4004-4-08,MEDICAL IN SURANCE-GMC/ARC,4004,tYES,at_Expenses,INR,tNO
+85,4004-05,Telephone and Mobile Expenses,4004,tNO,at_Expenses,,tNO
+86,4004-06,Audit Fees,4004,tNO,at_Expenses,,tNO
+87,4004-07,Other Adminstrative Expenses,4004,tNO,at_Expenses,,tNO
+88,4005-01,Advertising Expenses,4005,tYES,at_Expenses,INR,tNO
+89,4005-02,CSR Expenses,4005,tYES,at_Expenses,INR,tNO
+90,4005-03,Sales Promotion Expenses,4005,tYES,at_Expenses,INR,tNO
+91,4005-04,Clearing Agent Charges,4005,tYES,at_Expenses,INR,tNO
+92,4005-05,Late Delivery Charges,4005,tYES,at_Expenses,INR,tNO
+93,4006-01,Interest on SBI CC A/c - 36725910067,4006,tYES,at_Expenses,INR,tNO
+94,4006-02,Interest on SBI Term Loan A/c - 36726589244,4006,tYES,at_Expenses,INR,tNO
+95,4006-03,Interest on SBI EB-GECL A/c - 39378306677,4006,tYES,at_Expenses,INR,tNO
+96,4006-04,Interest on Bajaj finance Loan A/c - H404HLP0189639,4006,tYES,at_Expenses,INR,tNO
+97,4006-06,Bank Charges,4006,tYES,at_Expenses,INR,tNO
+98,4006-07,Foreign Currency Exchange Rate  (Loss /Gain),4006,tYES,at_Expenses,INR,tNO
+99,4006-08,Interest on Discounted Bills(EVFS),4006,tYES,at_Expenses,INR,tNO
+100,4006-09,Processing fee for Working capial/loan a/c,4006,tYES,at_Expenses,INR,tNO
+101,4006-10,AMC on  Bajaj Finance Loan,4006,tYES,at_Expenses,INR,tNO
+102,4006-11,Renewal Charges SBI Loans,4006,tYES,at_Expenses,INR,tNO
+103,4006-12,Bills Discounting Charges,4006,tYES,at_Expenses,INR,tNO
+104,4006-13,Interest on SBI WCTL A/c - 40107920101,4006,tYES,at_Expenses,INR,tNO
+105,4006-14,Interest on SBI Guar Emrg Cr (GECL) A/c - 40599111959,4006,tYES,at_Expenses,INR,tNO
+106,4006-15,Interest on TDS/TCS  Late Filling,4006,tYES,at_Expenses,INR,tNO
+107,4006-16,Interest on GST,4006,tYES,at_Expenses,INR,tNO
+108,4006-17,Interest on other Finances,4006,tYES,at_Expenses,INR,tNO
+109,4006-26,Interest on JSW one Finance,4006,tYES,at_Expenses,INR,tNO
+110,4006-18,Interest on SBI SLC A/c,4006,tYES,at_Expenses,INR,tNO
+111,4006-19,Interest on Deutsche Bank Loan-a/c no. 0028,4006,tYES,at_Expenses,INR,tNO
+112,4006-23,Interest on Deutsche Bank Loan a/c no. 0037,4006,tYES,at_Expenses,INR,tNO
+113,4006-24,Interest on Duetsche Bank Loan A/c No. 0019,4006,tYES,at_Expenses,INR,tNO
+114,4006-25,Interest on IDFC Loan Ac no. 126976419,4006,tYES,at_Expenses,INR,tNO
+115,4006-20,Interest -Kotak Loan -19404642,4006,tYES,at_Expenses,INR,tNO
+116,4006-21,Interest -Kotak Loan -19510148,4006,tYES,at_Expenses,INR,tNO
+117,4006-22,Interest -Kotak Loan -19402864,4006,tYES,at_Expenses,INR,tNO
+118,4007-02,Building Depreciation Expense,4007,tYES,at_Expenses,INR,tNO
+119,4007-03,Plant and Machinery Depreciation Expense,4007,tYES,at_Expenses,INR,tNO
+120,4007-04,Furniture and Fixtures Depreciation Expense,4007,tYES,at_Expenses,INR,tNO
+121,4007-05,Computer and Software Depreciation Expense,4007,tYES,at_Expenses,INR,tNO
+122,4007-06,Motor Vechicles -Depreciation,4007,tYES,at_Expenses,INR,tNO
+123,4008-01,Purchasing Account,4008,tYES,at_Expenses,INR,tNO
+124,4008-02,Purchase Return,4008,tYES,at_Expenses,INR,tNO
+125,4008-03,Purchase Offset,4008,tYES,at_Expenses,INR,tNO
+126,4008-04,Cost of goods Purchased,4008,tYES,at_Expenses,INR,tNO
+127,4008-05,Purchase Credit Account,4008,tYES,at_Expenses,INR,tNO
+128,4008-06,Purchase Balanace Account,4008,tYES,at_Expenses,INR,tNO
+129,4008-07,Expense Clearning Account,4008,tYES,at_Expenses,INR,tNO

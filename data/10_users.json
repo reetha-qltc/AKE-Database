@@ -1,0 +1,32 @@
+[
+  {
+    "UserCode": "RASHMI",
+    "UserName": "Rashmi - Director",
+    "Role": "Director"
+  },
+  {
+    "UserCode": "NAMRATA",
+    "UserName": "Namrata - Director",
+    "Role": "Director"
+  },
+  {
+    "UserCode": "ASHOK",
+    "UserName": "Ashok - Planning & SCM",
+    "Role": "Planning"
+  },
+  {
+    "UserCode": "SUNIL",
+    "UserName": "Sunil - Finance",
+    "Role": "Finance"
+  },
+  {
+    "UserCode": "VEENA",
+    "UserName": "Veena - Accounts",
+    "Role": "Accounts"
+  },
+  {
+    "UserCode": "TRAINER",
+    "UserName": "Qltc Trainer",
+    "Role": "Trainer"
+  }
+]

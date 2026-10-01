@@ -1,0 +1,79 @@
+[
+  {
+    "Code": "R-CUT-PLASMA",
+    "Name": "CNC Plasma Cutting Machine",
+    "Type": "rt_Machine",
+    "CostPerHour": 1200,
+    "Warehouse": "SHOP",
+    "Accounts": {
+      "ResourceCostAccount": "3003-02-03",
+      "OverheadAccount": "3003-02-04"
+    }
+  },
+  {
+    "Code": "R-SAW",
+    "Name": "Band Saw Machine",
+    "Type": "rt_Machine",
+    "CostPerHour": 450,
+    "Warehouse": "SHOP",
+    "Accounts": {
+      "ResourceCostAccount": "3003-02-03",
+      "OverheadAccount": "3003-02-04"
+    }
+  },
+  {
+    "Code": "R-DRILL",
+    "Name": "Radial Drilling Machine",
+    "Type": "rt_Machine",
+    "CostPerHour": 500,
+    "Warehouse": "SHOP",
+    "Accounts": {
+      "ResourceCostAccount": "3003-02-03",
+      "OverheadAccount": "3003-02-04"
+    }
+  },
+  {
+    "Code": "R-WELD-MIG",
+    "Name": "MIG Welding Station",
+    "Type": "rt_Machine",
+    "CostPerHour": 600,
+    "Warehouse": "SHOP",
+    "Accounts": {
+      "ResourceCostAccount": "3003-02-03",
+      "OverheadAccount": "3003-02-04"
+    }
+  },
+  {
+    "Code": "R-BLAST",
+    "Name": "Shot Blasting & Painting Booth",
+    "Type": "rt_Machine",
+    "CostPerHour": 900,
+    "Warehouse": "SHOP",
+    "Accounts": {
+      "ResourceCostAccount": "3003-02-03",
+      "OverheadAccount": "3003-02-04"
+    }
+  },
+  {
+    "Code": "R-FITTER",
+    "Name": "Fitter (Labour)",
+    "Type": "rt_Labor",
+    "CostPerHour": 350,
+    "Warehouse": "SHOP",
+    "Accounts": {
+      "ResourceCostAccount": "3003-02-02",
+      "OverheadAccount": "3003-02-04"
+    }
+  },
+  {
+    "Code": "R-WELDER",
+    "Name": "Welder (Labour)",
+    "Type": "rt_Labor",
+    "CostPerHour": 400,
+    "Warehouse": "SHOP",
+    "Accounts": {
+      "ResourceCostAccount": "3003-02-02",
+      "OverheadAccount": "3003-02-04"
+    }
+  }
+]

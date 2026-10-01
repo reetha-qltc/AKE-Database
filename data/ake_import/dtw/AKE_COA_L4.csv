@@ -1,0 +1,261 @@
+RecordKey,Code,Name,FatherAccountKey,ActiveAccount,AccountType,AcctCurrency,LockManualTransaction
+RecordKey,AcctCode,AcctName,FatherNum,Postable,ActType,ActCurr,LocManTran
+1,5001-01-01,Land at D'pet-Unit-2,5001-01,tNO,at_Other,,tNO
+2,5001-01-02,Buildings,5001-01,tNO,at_Other,,tNO
+3,5001-01-03,Plant and Machinery,5001-01,tNO,at_Other,,tNO
+4,5001-01-04,Furniture and Fittings,5001-01,tNO,at_Other,,tNO
+5,5001-01-05,Computers and Software,5001-01,tNO,at_Other,,tNO
+6,5001-01-06,Motor Vehicles,5001-01,tNO,at_Other,,tNO
+7,5001-01-08,Capital Work in Progress,5001-01,tNO,at_Other,,tNO
+8,5001-02-01,Engineering Development,5001-02,tNO,at_Other,,tNO
+9,5001-99-01,Acquistion Cost Clearing Account,5001-99,tYES,at_Other,INR,tNO
+10,5001-99-02,NON Costed Inventory Account for Tracking,5001-99,tYES,at_Other,INR,tNO
+11,5002-01-01,Item Groups,5002-01,tNO,at_Other,,tNO
+12,5002-01-02,Work in Progress,5002-01,tYES,at_Other,INR,tNO
+13,5002-02-02,SBI Current Accounts,5002-02,tNO,at_Other,,tNO
+14,5002-02-03,Cash in Hand,5002-02,tNO,at_Other,,tNO
+15,5002-02-04,Trade Debtors,5002-02,tNO,at_Other,,tNO
+16,5002-03-01,Balance with Central Excise,5002-03,tNO,at_Other,,tNO
+17,5002-03-02,Commercial Tax Department,5002-03,tNO,at_Other,,tNO
+18,5002-03-03,Advance with Other Departments,5002-03,tNO,at_Other,,tNO
+19,5002-03-04,Advance with Income Tax Department,5002-03,tNO,at_Other,,tNO
+20,5002-04-01,Advance to Suppliers,5002-04,tNO,at_Other,,tNO
+21,5002-04-02,Advance to Employees,5002-04,tNO,at_Other,,tNO
+22,5002-04-03,Advance to Contractors,5002-04,tNO,at_Other,,tNO
+23,5002-04-04,Advance Clearning Account,5002-04,tNO,at_Other,,tNO
+24,5002-04-07-01,Advance Clearing Account,5002-04,tYES,at_Other,INR,tNO
+25,5002-04-05,Advances to Branches,5002-04,tNO,at_Other,,tNO
+26,5002-05-01,Deposits,5002-05,tNO,at_Other,,tNO
+27,5002-05-02,Duties and Taxes Receivable,5002-05,tNO,at_Other,,tNO
+28,5002-05-03,GST Receivable(Reverse Charges),5002-05,tNO,at_Other,,tNO
+29,5002-05-04,Investments,5002-05,tNO,at_Other,,tNO
+30,5002-05-05,Balances With Govt Dept,5002-05,tNO,at_Other,,tNO
+31,5002-05-06,Others,5002-05,tNO,at_Other,,tNO
+32,3001-01-01,Unsecured Loans - Directors,3001-01,tNO,at_Other,,tNO
+33,3002-01-01,SBI C/A- 0067,3002-01,tYES,at_Other,INR,tNO
+34,3002-01-02,SBI Term Loan - 36726589244,3002-01,tYES,at_Other,INR,tNO
+35,3002-01-03,SBI EB-GECL A/c - 39378306677,3002-01,tYES,at_Other,INR,tNO
+36,3002-01-04,SBI EB-MSME-WCTL Loan A/c-40107920101,3002-01,tYES,at_Other,INR,tNO
+37,3002-01-05,Bajaj Housing Finance Ltd A/c - H404HLP0189639,3002-01,tYES,at_Other,INR,tNO
+38,3002-01-06,SBI Guar Emrg Cr (GECL) A/c - 40599111959,3002-01,tYES,at_Other,INR,tNO
+39,3002-01-07,Deutsche BankLoan  A/c No - 300041248540019,3002-01,tYES,at_Other,INR,tNO
+40,3002-01-08,SBI--INTEREST ON SLC A/c,3002-01,tYES,at_Other,INR,tNO
+41,3002-01-13-01,JSW ONE FINANCE LTD,3002-01,tYES,at_Other,INR,tNO
+42,3002-01-09,Kotak Loan A/c No. LAP19402864,3002-01,tYES,at_Other,INR,tNO
+43,3002-01-16,Kotak Bank Loan-19404642,3002-01,tYES,at_Other,INR,tNO
+44,3002-01-15,Kotak Bank Loan - 19510148,3002-01,tYES,at_Other,INR,tNO
+45,3002-01-17,Duetsch Bank Loan 300041248540028,3002-01,tYES,at_Other,INR,tNO
+46,3002-01-18,Duetsch Bank loan 300041248540037,3002-01,tYES,at_Other,INR,tNO
+47,3002-02-01,Trade Creditors - Domestic,3002-02,tYES,at_Other,INR,tYES
+48,3002-02-02,Trade Creditors - Foreign,3002-02,tYES,at_Other,INR,tNO
+49,3002-02-03,Trade Creditors - Job Work,3002-02,tYES,at_Other,INR,tNO
+50,3002-02-04,Trade Debitors - Advance Received,3002-02,tYES,at_Other,INR,tNO
+51,3002-02-05,Goods Received Not Invoiced (GRNI) Clearing,3002-02,tYES,at_Other,INR,tNO
+52,3002-02-06,Trade Creditors - Others,3002-02,tNO,at_Other,,tNO
+53,3002-02-07,Downpayment Clearning Account,3002-02,tNO,at_Other,,tNO
+54,3002-02-08,Down Payment from Branches,3002-02,tNO,at_Other,,tNO
+55,3002-03-01,Audit Fees Payable,3002-03,tYES,at_Other,INR,tNO
+56,3002-03-02,(No name in AKE COA) 3002-03-02,3002-03,tYES,at_Other,INR,tNO
+57,3002-03-03,TDS Payable,3002-03,tYES,at_Other,INR,tNO
+58,3002-03-04,TDS on Salaries,3002-03,tYES,at_Other,INR,tNO
+59,3002-03-05,(No name in AKE COA) 3002-03-05,3002-03,tYES,at_Other,INR,tNO
+60,3002-03-06,TCS Payable on Sales,3002-03,tYES,at_Other,INR,tNO
+61,3002-03-07,(No name in AKE COA) 3002-03-07,3002-03,tYES,at_Other,INR,tNO
+62,3002-03-08,(No name in AKE COA) 3002-03-08,3002-03,tYES,at_Other,INR,tNO
+63,3002-03-09,TCS Payable,3002-03,tYES,at_Other,INR,tNO
+64,3002-03-10,TDS Payable @ 0.75,3002-03,tYES,at_Other,INR,tNO
+65,3002-03-11,TDS Payable @1.5%,3002-03,tYES,at_Other,INR,tNO
+66,3002-03-12,TDS Payable on Bajaj Finance Loan Interest,3002-03,tYES,at_Other,INR,tNO
+67,3002-03-13,TDS on Rent,3002-03,tYES,at_Other,INR,tNO
+68,3002-03-14,TDS Payable @ 2%,3002-03,tYES,at_Other,INR,tNO
+69,3002-03-15,TDS Payable on Rent,3002-03,tYES,at_Other,INR,tNO
+70,3002-03-16,TDS on Professional Charges @ 10%,3002-03,tYES,at_Other,INR,tNO
+71,3002-03-17,Zero Tax,3002-03,tYES,at_Other,INR,tNO
+72,3002-03-18,TDS Payable @ 1%,3002-03,tYES,at_Other,INR,tNO
+73,3002-03-19,Worker Loan receipts advances,3002-03,tYES,at_Other,INR,tNO
+74,3002-03-20,TDS Payable Professional Fee @7.5%,3002-03,tYES,at_Other,INR,tNO
+75,3002-03-23,TDS Payable on Purchases,3002-03,tYES,at_Other,INR,tNO
+76,3002-03-21,TDS payable Interest @7.5%,3002-03,tYES,at_Other,INR,tNO
+77,3002-03-22,IGST Payable,3002-03,tYES,at_Other,INR,tNO
+78,3002-03-24,CGST Payable,3002-03,tYES,at_Other,INR,tNO
+79,3002-03-25,SGST Payable,3002-03,tYES,at_Other,INR,tNO
+80,3002-03-26,TDS Payable on Pvt Finances,3002-03,tYES,at_Other,INR,tNO
+81,3002-03-27,GST PAYABLE,3002-03,tYES,at_Other,INR,tNO
+82,3002-04-01,Bonus Payable,3002-04,tYES,at_Other,INR,tNO
+83,3002-04-02,Gratuity Payable,3002-04,tYES,at_Other,INR,tNO
+84,3002-04-03,Professional Tax Payable,3002-04,tYES,at_Other,INR,tNO
+85,3002-04-04,Labour Welfare Fund Payable,3002-04,tYES,at_Other,INR,tNO
+86,3002-04-05,Mediclaim Refundable,3002-04,tYES,at_Other,INR,tNO
+87,3002-04-06,Salaries & Wages Payables,3002-04,tYES,at_Other,INR,tNO
+88,3002-04-07,Directors Remuneration Payable,3002-04,tYES,at_Other,INR,tNO
+89,3002-04-08,Workers welfare Expenses Payable,3002-04,tYES,at_Other,INR,tNO
+90,3002-04-09,ESIC Payable account,3002-04,tYES,at_Other,INR,tNO
+91,3002-04-10,EPF Payable account,3002-04,tYES,at_Other,INR,tNO
+92,3002-04-11,Conveyance expenses payable,3002-04,tYES,at_Other,INR,tNO
+93,3002-04-15,LWF Payable Account,3002-04,tYES,at_Other,INR,tNO
+94,3002-04-12,(No name in AKE COA) 3002-04-12,3002-04,tYES,at_Other,INR,tNO
+95,3002-04-13,Salaries Payable - Director & MD,3002-04,tYES,at_Other,INR,tNO
+96,3002-04-14,Incentives Payable,3002-04,tYES,at_Other,INR,tNO
+97,3002-05-01,Power Charges Payable,3002-05,tYES,at_Other,INR,tNO
+98,3002-05-02,Factory Rent Payable,3002-05,tYES,at_Other,INR,tNO
+99,3002-05-03,Water Charges Payable,3002-05,tYES,at_Other,INR,tNO
+100,3002-06-01,Term Loan Interest Payable,3002-06,tYES,at_Other,INR,tNO
+101,3002-06-02,Interest On CC Payable,3002-06,tYES,at_Other,INR,tNO
+102,3002-06-04,Interest Payable on Bajaj finance payables,3002-06,tYES,at_Other,INR,tNO
+103,3002-07-01,Ugro Capital Limited,3002-07,tYES,at_Other,INR,tNO
+104,3002-07-02,IDFC First Bank Ltd,3002-07,tYES,at_Other,INR,tNO
+105,3002-07-03,Bajaj Finance Ltd,3002-07,tYES,at_Other,INR,tNO
+106,3002-07-04,Clix Capital,3002-07,tYES,at_Other,INR,tNO
+107,3002-07-05,Sharada Enterprises,3002-07,tYES,at_Other,INR,tNO
+108,3002-07-06,Jyothi Axia,3002-07,tYES,at_Other,INR,tNO
+109,3002-07-07,E.M. Enterprises,3002-07,tYES,at_Other,INR,tNO
+110,3002-07-08,Sri Shiv Shakti,3002-07,tYES,at_Other,INR,tNO
+111,3002-07-09,Vinod Utmani HUF,3002-07,tYES,at_Other,INR,tNO
+112,3002-07-11,Mahindra Car Loan,3002-07,tYES,at_Other,INR,tNO
+113,3002-09-01,SGST Output Payable,3002-09,tYES,at_Other,INR,tNO
+114,3002-09-02,CGST Output Payable,3002-09,tYES,at_Other,INR,tNO
+115,3003-09-03,IGST Output Payable,3002-09,tYES,at_Other,INR,tNO
+116,3003-09-04,RCM Payable,3002-09,tYES,at_Other,INR,tNO
+117,3003-09-05,TCS on Scrap,3002-09,tYES,at_Other,INR,tNO
+118,3003-09-06,IGST RCM Payable,3002-09,tYES,at_Other,INR,tNO
+119,3003-09-07,SGST RCM Payable,3002-09,tYES,at_Other,INR,tNO
+120,3003-09-08,CGST RCM Payable,3002-09,tYES,at_Other,INR,tNO
+121,3003-02-01,Cost of Capital,3003-02,tYES,at_Other,INR,tNO
+122,3003-02-02,Labour Cost,3003-02,tYES,at_Other,INR,tNO
+123,3003-02-03,Manufacturing Conversion Cost,3003-02,tYES,at_Other,INR,tNO
+124,3003-02-04,Overheads,3003-02,tYES,at_Other,INR,tNO
+125,3003-02-05,Machining Cost - Outside Processing,3003-02,tYES,at_Other,INR,tNO
+126,1001-01-01-01,Arun Kumar T S,1001-01,tYES,at_Other,INR,tNO
+127,1001-01-01-02,Rashmi Arun,1001-01,tYES,at_Other,INR,tNO
+128,1001-01-01-03,Namrata A,1001-01,tYES,at_Other,INR,tNO
+129,2001-01-01,SALES-PRODUCT SALES,2001-01,tNO,at_Revenues,,tNO
+130,2001-01-02,Sales - Miscellaneous,2001-01,tYES,at_Revenues,INR,tNO
+131,2001-01-03,Sales - Raw Materials,2001-01,tYES,at_Revenues,INR,tNO
+132,2001-01-04,Invoice Paise Round off Account,2001-01,tYES,at_Revenues,INR,tNO
+133,2001-01-05,Packing Charges Collected,2001-01,tYES,at_Revenues,INR,tNO
+134,2001-01-06,Freight Revenue,2001-01,tYES,at_Revenues,INR,tNO
+135,2001-02-01,Sales Out of State,2001-02,tYES,at_Revenues,INR,tNO
+136,2001-02-02,Inter-state -  Sales,2001-02,tYES,at_Revenues,INR,tNO
+137,2001-03-01,Sales Returns - Product Sales,2001-03,tYES,at_Revenues,INR,tNO
+138,2001-03-02,Sales Returns - Export,2001-03,tYES,at_Revenues,INR,tNO
+139,2001-03-03,Sales Returns - Others,2001-03,tYES,at_Revenues,INR,tNO
+140,2001-03-04,Sales return - out of state,2001-03,tYES,at_Revenues,INR,tNO
+141,4002-01-01,Power,4002-01,tYES,at_Expenses,INR,tNO
+142,4002-01-02,Diesel & Petrol Expenses,4002-01,tYES,at_Expenses,INR,tNO
+143,4002-01-03,Water Supply Charges,4002-01,tYES,at_Expenses,INR,tNO
+144,4002-01-04,Factory Rent,4002-01,tYES,at_Expenses,INR,tNO
+145,4002-02-01,Rates and Taxes,4002-02,tYES,at_Expenses,INR,tNO
+146,4002-02-02,Professional Tax (Company),4002-02,tYES,at_Expenses,INR,tNO
+147,4002-02-03,Electrical Inspection Licence Fees,4002-02,tYES,at_Expenses,INR,tNO
+148,4002-02-04,Property Tax,4002-02,tYES,at_Expenses,INR,tNO
+149,4002-02-05,(No name in AKE COA) 4002-02-05,4002-02,tYES,at_Expenses,INR,tNO
+150,4002-02-06,Factory Licence Renewal Fees Paid,4002-02,tYES,at_Expenses,INR,tNO
+151,4002-02-07,KIADB Maintanence Charges,4002-02,tNO,at_Expenses,,tNO
+152,4002-02-08,(No name in AKE COA) 4002-02-08,4002-02,tYES,at_Expenses,INR,tNO
+153,4002-02-09,(No name in AKE COA) 4002-02-09,4002-02,tYES,at_Expenses,INR,tNO
+154,4002-03-01,Repair and Maintenance - Building,4002-03,tYES,at_Expenses,INR,tNO
+155,4002-04-01,Repairs and Maintenance - Machinery,4002-04,tYES,at_Expenses,INR,tNO
+156,4002-05-01,Repirs and Maintenance - Office Equipment,4002-05,tYES,at_Expenses,INR,tNO
+157,4002-05-02,Repairs and Maintenance - Furniture & Fittings,4002-05,tYES,at_Expenses,INR,tNO
+158,4002-05-03,Garden Maintenance,4002-05,tYES,at_Expenses,INR,tNO
+159,4002-05-04,Repair & maintence - Electrical Fittings,4002-05,tYES,at_Expenses,INR,tNO
+160,4002-05-05,Repairs and Maintenance- Computers & Accessories,4002-05,tYES,at_Expenses,INR,tNO
+161,4002-05-06,Repairs and Maintenance - Others,4002-05,tYES,at_Expenses,INR,tNO
+162,4002-06-01,TRANSPORTATION & FREIGHT,4002-06,tYES,at_Expenses,INR,tNO
+163,4002-06-02,Freight on Consumables and Raw materials,4002-06,tYES,at_Expenses,INR,tNO
+164,4002-06-03,Weighment Charges,4002-06,tYES,at_Expenses,INR,tNO
+165,4002-06-04,Crane Handling Charges,4002-06,tYES,at_Expenses,INR,tNO
+166,4002-06-05,Warehouse charges,4002-06,tYES,at_Expenses,INR,tNO
+167,4002-06-06,Packing and Forwarding charges,4002-06,tYES,at_Expenses,INR,tNO
+168,4002-06-07,(No name in AKE COA) 4002-06-07,4002-06,tYES,at_Expenses,INR,tNO
+169,4002-06-08,(No name in AKE COA) 4002-06-08,4002-06,tYES,at_Expenses,INR,tNO
+170,4002-06-09,(No name in AKE COA) 4002-06-09,4002-06,tYES,at_Expenses,INR,tNO
+171,4002-07-01,Jobwork Charges,4002-07,tYES,at_Expenses,INR,tNO
+172,4002-07-02,"Lab Testing, Inspection and Analysis Charges",4002-07,tYES,at_Expenses,INR,tNO
+173,4002-07-03,Calibration Charges,4002-07,tYES,at_Expenses,INR,tNO
+174,4002-07-04,Other Jobwork Charges,4002-07,tNO,at_Expenses,,tNO
+175,4002-10-01,Debit Credit Written Off,4002-10,tYES,at_Expenses,INR,tNO
+176,4002-10-02,Customer Penalties,4002-10,tYES,at_Expenses,INR,tNO
+177,4002-10-03,INTEREST PAID  ON DELAYED PAYMENTS,4002-10,tYES,at_Expenses,INR,tNO
+178,4002-10-04,"Custom Duty, Handling Charges - Import",4002-10,tYES,at_Expenses,INR,tNO
+179,4003-01-01,Salaries-SGA Staff,4003-01,tYES,at_Expenses,INR,tNO
+180,4003-01-02,Salaries Direct- Production Staff,4003-01,tYES,at_Expenses,INR,tNO
+181,4003-01-03,Wages Direct - workers,4003-01,tYES,at_Expenses,INR,tNO
+182,4003-01-04,Manpower Charges,4003-01,tYES,at_Expenses,INR,tNO
+183,4003-01-05,Security Service Charges,4003-01,tYES,at_Expenses,INR,tNO
+184,4003-01-06,Mediclaim For Employees,4003-01,tYES,at_Expenses,INR,tNO
+185,4003-01-07,Medical Expenses,4003-01,tYES,at_Expenses,INR,tNO
+186,4003-01-08,Adhoc / Incentives to Employees,4003-01,tYES,at_Expenses,INR,tNO
+187,4003-01-09,Workers' Welfare Expenses,4003-01,tYES,at_Expenses,INR,tNO
+188,4003-01-10,Conveyance Expenses,4003-01,tYES,at_Expenses,INR,tNO
+189,4003-01-11,Staff training expenses,4003-01,tYES,at_Expenses,INR,tNO
+190,4003-01-12,Room Rent- K R YADHU KUMAR,4003-01,tYES,at_Expenses,INR,tNO
+191,4003-01-13,Gratuity,4003-01,tYES,at_Expenses,INR,tNO
+192,4003-01-14,Leave Encashment,4003-01,tYES,at_Expenses,INR,tNO
+193,4003-01-15,EPF-Employee Contribution,4003-01,tYES,at_Expenses,INR,tNO
+194,4003-01-16,ESIC-Employee Contribution,4003-01,tYES,at_Expenses,INR,tNO
+195,4003-01-17,EPF-MGT Contribution,4003-01,tYES,at_Expenses,INR,tNO
+196,4003-01-18,ESIC-MGT Contribution,4003-01,tYES,at_Expenses,INR,tNO
+197,4003-01-19,LWF-MGT Contribution,4003-01,tYES,at_Expenses,INR,tNO
+198,4003-01-23,LWF-Employee Contribution,4003-01,tYES,at_Expenses,INR,tNO
+199,4003-01-20,Bonus to Sub Contractors,4003-01,tYES,at_Expenses,INR,tNO
+200,4003-01-21,Salaries - Director & MD,4003-01,tYES,at_Expenses,INR,tNO
+201,4003-01-22,LWF- MGT CONTRIBUTION,4003-01,tYES,at_Expenses,INR,tNO
+202,4003-01-24,Bonus to Staff & Workers,4003-01,tYES,at_Expenses,INR,tNO
+203,4003-01-25,Salary & Wage Deductions,4003-01,tYES,at_Expenses,INR,tNO
+204,4003-01-26,Bonus to Staff & Workers 23-24,4003-01,tYES,at_Expenses,INR,tNO
+205,4004-01-01,Rates and Taxes,4004-01,tYES,at_Expenses,INR,tNO
+206,4004-01-02,Professional Tax (Company),4004-01,tYES,at_Expenses,INR,tNO
+207,4004-01-03,Electrical Inspection Licence Fees,4004-01,tYES,at_Expenses,INR,tNO
+208,4004-01-04,Factory Licence Renewal Fees,4004-01,tYES,at_Expenses,INR,tNO
+209,4004-01-05,KIADB Maintanence Charges,4004-01,tYES,at_Expenses,INR,tNO
+210,4004-01-06,L.C. Charges,4004-01,tYES,at_Expenses,INR,tNO
+211,4004-02-01,Fuel for Vehicles,4004-02,tYES,at_Expenses,INR,tNO
+212,4004-02-02,Repairs and Maintenance for Vehicles,4004-02,tYES,at_Expenses,INR,tNO
+213,4004-03-01,Travelling Expenses - Domestic,4004-03,tYES,at_Expenses,INR,tNO
+214,4004-03-02,Travelling Expenses - Abroad,4004-03,tYES,at_Expenses,INR,tNO
+215,4004-04-01,Insurance Stocks and Contants,4004-04,tYES,at_Expenses,INR,tNO
+216,4004-04-02,Insurance Machineries and Buildings,4004-04,tYES,at_Expenses,INR,tNO
+217,4004-04-03,Insurance Vehicles,4004-04,tYES,at_Expenses,INR,tNO
+218,4004-04-04,Insurance Transit,4004-04,tYES,at_Expenses,INR,tNO
+219,4004-04-05,Insurance Others,4004-04,tYES,at_Expenses,INR,tNO
+220,4004-04-06,Key Man Insurance,4004-04,tYES,at_Expenses,INR,tNO
+221,4004-04-07,EXPORT INSURANCE-EEPC/ECGC,4004-04,tYES,at_Expenses,INR,tNO
+222,4004-05-01,Telephone & Mobile Expenses,4004-05,tYES,at_Expenses,INR,tNO
+223,4004-06-01,Audit fees,4004-06,tYES,at_Expenses,INR,tNO
+224,4004-06-02,ROC Charges,4004-06,tYES,at_Expenses,INR,tNO
+225,4004-07-01,Printing and Stationery,4004-07,tYES,at_Expenses,INR,tNO
+226,4004-07-02,Postage and Courier Charges,4004-07,tYES,at_Expenses,INR,tNO
+227,4004-07-03,Professional & Consultancy Charges,4004-07,tYES,at_Expenses,INR,tNO
+228,4004-07-04,Registrational & renewals,4004-07,tYES,at_Expenses,INR,tNO
+229,4004-07-05,Business Promotional expenses,4004-07,tYES,at_Expenses,INR,tNO
+230,4004-07-06,Charity and Donations,4004-07,tYES,at_Expenses,INR,tNO
+231,4004-06-07,EXPORT-DOCUMENTATION CHARGES,4004-06,tYES,at_Expenses,INR,tNO
+232,4004-07-07,Legal / Court Expenses,4004-07,tYES,at_Expenses,INR,tNO
+233,4004-07-08,CLOUD STORAGE EXPENSES,4004-07,tYES,at_Expenses,INR,tNO
+234,4004-07-09,Sales Tax Paid for Earlier Years During Assessment,4004-07,tYES,at_Expenses,INR,tNO
+235,4004-07-10,Income Tax  Paid,4004-07,tYES,at_Expenses,INR,tNO
+236,4004-07-11,News Paper and Periodicals,4004-07,tYES,at_Expenses,INR,tNO
+237,4004-07-12,HOUSE KEEPING EXPENSES,4004-07,tYES,at_Expenses,INR,tNO
+238,4004-07-13,Recruitment Expenses,4004-07,tYES,at_Expenses,INR,tNO
+239,4004-07-14,(No name in AKE COA) 4004-07-14,4004-07,tYES,at_Expenses,INR,tNO
+240,4004-07-24,Cash Discount Account,4004-07,tYES,at_Expenses,INR,tNO
+241,4004-06-25,Labour welfare fund-employees' contribution,4004-06,tYES,at_Expenses,INR,tNO
+242,4004-07-17,Misc Admin Expenses,4004-07,tYES,at_Expenses,INR,tNO
+243,4004-07-15,TDS & TCS Late Fee Charges,4004-07,tYES,at_Expenses,INR,tNO
+244,4004-07-16,GST on Reverse Charge(Exp),4004-07,tYES,at_Expenses,INR,tNO
+245,4004-07-18,Monthly Rental Charges,4004-07,tYES,at_Expenses,INR,tNO
+246,4004-07-19,Training & ISO Auditing Charges,4004-07,tYES,at_Expenses,INR,tNO
+247,4004-07-20,Invoice Paise Round off Account,4004-07,tYES,at_Expenses,INR,tNO
+248,4004-07-21,Audit Fees,4004-07,tYES,at_Expenses,INR,tNO
+249,4004-07-22,Sale of FA Asset,4004-07,tYES,at_Expenses,INR,tNO
+250,4004-07-23,Office Expenses,4004-07,tYES,at_Expenses,INR,tNO
+251,4004-07-25,Ineligible ITC,4004-07,tYES,at_Expenses,INR,tNO
+252,4004-07-26,GST Annual Returns Late Fee Charges,4004-07,tYES,at_Expenses,INR,tNO
+253,4004-07-27,FA Removal Cost,4004-07,tYES,at_Expenses,INR,tNO
+254,4004-07-28,Bad Debts W/Off,4004-07,tYES,at_Expenses,INR,tNO
+255,4004-07-29,Regularisation of Lab Testing charges,4004-07,tYES,at_Expenses,INR,tNO
+256,4004-07-30,Incidental expenses,4004-07,tYES,at_Expenses,INR,tNO
+257,4004-07-31,(No name in AKE COA) 4004-07-31,4004-07,tYES,at_Expenses,INR,tNO
+258,4004-07-32,Accomodation,4004-07,tYES,at_Expenses,INR,tNO
+259,4004-04-09,Insurance on Loan,4004-04,tYES,at_Expenses,INR,tNO

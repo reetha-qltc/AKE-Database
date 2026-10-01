@@ -1,0 +1,65 @@
+RecordKey,Code,Name,FatherAccountKey,ActiveAccount,AccountType,AcctCurrency,LockManualTransaction
+RecordKey,AcctCode,AcctName,FatherNum,Postable,ActType,ActCurr,LocManTran
+1,100100,Land and Building,100000,tYES,at_Other,INR,tNO
+2,100200,Plant and Machinery,100000,tYES,at_Other,INR,tNO
+3,100300,Furniture and Fixtures,100000,tYES,at_Other,INR,tNO
+4,100400,Computers and Peripherals,100000,tYES,at_Other,INR,tNO
+5,100500,Vehicles,100000,tYES,at_Other,INR,tNO
+6,100900,Accumulated Depreciation,100000,tYES,at_Other,INR,tNO
+7,110100,Inventory,110000,tNO,at_Other,,tNO
+8,110200,Trade Receivables,110000,tNO,at_Other,,tNO
+9,110300,Cash and Bank,110000,tNO,at_Other,,tNO
+10,110400,GST Input Credit,110000,tNO,at_Other,,tNO
+11,110500,TDS and Advance Tax,110000,tNO,at_Other,,tNO
+12,110600,Loans and Advances,110000,tNO,at_Other,,tNO
+13,200100,Term Loan - HDFC Bank,200000,tYES,at_Other,INR,tNO
+14,200200,Unsecured Loans from Directors,200000,tYES,at_Other,INR,tNO
+15,210100,Trade Payables,210000,tNO,at_Other,,tNO
+16,210200,GST Output Liability,210000,tNO,at_Other,,tNO
+17,210300,TDS Payable,210000,tNO,at_Other,,tNO
+18,210400,Statutory Dues,210000,tNO,at_Other,,tNO
+19,210500,Provisions,210000,tNO,at_Other,,tNO
+20,210600,Other Current Liabilities,210000,tNO,at_Other,,tNO
+21,300100,Equity Share Capital,300000,tYES,at_Other,INR,tNO
+22,310100,General Reserve,310000,tYES,at_Other,INR,tNO
+23,310200,Retained Earnings,310000,tYES,at_Other,INR,tNO
+24,310300,Opening Balance Difference,310000,tYES,at_Other,INR,tNO
+25,400100,Domestic Sales - Intra State,400000,tYES,at_Revenues,INR,tNO
+26,400200,Domestic Sales - Inter State,400000,tYES,at_Revenues,INR,tNO
+27,400300,Export Sales,400000,tYES,at_Revenues,INR,tNO
+28,400400,Sales Returns,400000,tYES,at_Revenues,INR,tNO
+29,400500,Scrap Sales,400000,tYES,at_Revenues,INR,tNO
+30,410100,Interest Income,410000,tYES,at_Revenues,INR,tNO
+31,410200,Discount Received,410000,tYES,at_Revenues,INR,tNO
+32,410300,Foreign Exchange Gain,410000,tYES,at_Revenues,INR,tNO
+33,500100,Purchase - Raw Material,500000,tYES,at_Expenses,INR,tNO
+34,500200,Purchase - Import,500000,tYES,at_Expenses,INR,tNO
+35,500300,Freight Inward,500000,tYES,at_Expenses,INR,tNO
+36,500400,Cost of Goods Sold,500000,tYES,at_Expenses,INR,tNO
+37,500500,Inventory Price Difference,500000,tYES,at_Expenses,INR,tNO
+38,500600,Inventory Variance,500000,tYES,at_Expenses,INR,tNO
+39,510100,Salaries and Wages,510000,tYES,at_Expenses,INR,tNO
+40,510200,Contribution to PF,510000,tYES,at_Expenses,INR,tNO
+41,510300,Contribution to ESI,510000,tYES,at_Expenses,INR,tNO
+42,510400,Staff Welfare,510000,tYES,at_Expenses,INR,tNO
+43,520100,Power and Fuel,520000,tYES,at_Expenses,INR,tNO
+44,520200,Repairs - Machinery,520000,tYES,at_Expenses,INR,tNO
+45,520300,Job Work Charges,520000,tYES,at_Expenses,INR,tNO
+46,520400,Consumables,520000,tYES,at_Expenses,INR,tNO
+47,530100,Rent - Building,530000,tYES,at_Expenses,INR,tNO
+48,530200,Rent - Machinery Hire,530000,tYES,at_Expenses,INR,tNO
+49,530300,Professional Fees,530000,tYES,at_Expenses,INR,tNO
+50,530400,Technical Service Fees,530000,tYES,at_Expenses,INR,tNO
+51,530500,Audit Fees,530000,tYES,at_Expenses,INR,tNO
+52,530600,Commission on Sales,530000,tYES,at_Expenses,INR,tNO
+53,530700,Telephone and Internet,530000,tYES,at_Expenses,INR,tNO
+54,530800,Printing and Stationery,530000,tYES,at_Expenses,INR,tNO
+55,530900,Travelling and Conveyance,530000,tYES,at_Expenses,INR,tNO
+56,531000,Freight Outward,530000,tYES,at_Expenses,INR,tNO
+57,531100,Advertisement,530000,tYES,at_Expenses,INR,tNO
+58,531200,Insurance,530000,tYES,at_Expenses,INR,tNO
+59,531300,Bank Charges,530000,tYES,at_Expenses,INR,tNO
+60,540100,Interest on Term Loan,540000,tYES,at_Expenses,INR,tNO
+61,540200,Interest on Unsecured Loans,540000,tYES,at_Expenses,INR,tNO
+62,550100,Depreciation,550000,tYES,at_Expenses,INR,tNO
+63,550200,Income Tax Expense,550000,tYES,at_Expenses,INR,tNO

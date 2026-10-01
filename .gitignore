@@ -1,0 +1,13 @@
+# Service Layer credentials - never commit
+.env
+*.env
+sl_credentials*
+~$*
+logs/
+
+# generated print formats (re-create with python tools/print_docs.py)
+prints/
+
+# Python cache, server certificate (copied manually to each machine)
+__pycache__/
+*.crt

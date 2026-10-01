@@ -1,0 +1,23 @@
+RecordKey,Code,Name,FatherAccountKey,ActiveAccount,AccountType,AcctCurrency,LockManualTransaction
+RecordKey,AcctCode,AcctName,FatherNum,Postable,ActType,ActCurr,LocManTran
+1,5001,Fixed Assets,<Assets drawer code>,tNO,at_Other,,tNO
+2,5002,Current Assets,<Assets drawer code>,tNO,at_Other,,tNO
+3,3001,Non Current Lability,<Liabilities drawer code>,tNO,at_Other,,tNO
+4,3002,accounts payable,<Liabilities drawer code>,tNO,at_Other,,tNO
+5,3003,Provisions,<Liabilities drawer code>,tNO,at_Other,,tNO
+6,1001,SHARE CAPITAL,<Capital and Reserves drawer code>,tNO,at_Other,,tNO
+7,1002,Reserves and Surplus,<Capital and Reserves drawer code>,tNO,at_Other,,tNO
+8,1003,Opening Balance Offset Account,<Capital and Reserves drawer code>,tYES,at_Other,INR,tNO
+9,2001,Sales,<Revenue drawer code>,tNO,at_Revenues,,tNO
+10,2002,Export Sales,<Revenue drawer code>,tNO,at_Revenues,,tNO
+11,2003,Other Operating Income,<Revenue drawer code>,tNO,at_Revenues,,tNO
+12,2004,Income from Investments,<Revenue drawer code>,tNO,at_Revenues,,tNO
+13,2005,Indirect Incomes,<Revenue drawer code>,tNO,at_Revenues,,tNO
+14,4001,Material Consumed,<Expenses drawer code>,tNO,at_Expenses,,tNO
+15,4002,Other Manufacturing Expenses,<Expenses drawer code>,tNO,at_Expenses,,tNO
+16,4003,Employee Benifit Expenses,<Expenses drawer code>,tNO,at_Expenses,,tNO
+17,4004,Adminstrative Expenses,<Expenses drawer code>,tNO,at_Expenses,,tNO
+18,4005,Selling and Distrubution Expenses,<Expenses drawer code>,tNO,at_Expenses,,tNO
+19,4006,Financial Expenses,<Expenses drawer code>,tNO,at_Expenses,,tNO
+20,4007,Depreciation,<Expenses drawer code>,tNO,at_Expenses,,tNO
+21,4008,Purchase Account,<Expenses drawer code>,tNO,at_Expenses,,tNO

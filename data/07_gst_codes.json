@@ -1,0 +1,52 @@
+{
+  "Accounts": {
+    "CGST": {
+      "Type": -100,
+      "Output": "3002-03-24",
+      "Input": "5002-05-02-02"
+    },
+    "SGST": {
+      "Type": -110,
+      "Output": "3002-03-25",
+      "Input": "5002-05-02-01"
+    },
+    "IGST": {
+      "Type": -120,
+      "Output": "3002-03-22",
+      "Input": "5002-05-02-03"
+    }
+  },
+  "NewSlabs": [
+    {
+      "Code": "CG+SG@40",
+      "Name": "CGST 20% + SGST 20%",
+      "From": "CG+SG@18",
+      "EffectiveFrom": "2025-09-22",
+      "Authorities": {
+        "CGST@9": [
+          "CGST@20",
+          "CGST @ 20%",
+          20
+        ],
+        "SGST@9": [
+          "SGST@20",
+          "SGST @ 20%",
+          20
+        ]
+      }
+    },
+    {
+      "Code": "IGST@40",
+      "Name": "IGST 40%",
+      "From": "IGST@18",
+      "EffectiveFrom": "2025-09-22",
+      "Authorities": {
+        "IGST@18": [
+          "IGST@40",
+          "IGST @ 40%",
+          40
+        ]
+      }
+    }
+  ]
+}

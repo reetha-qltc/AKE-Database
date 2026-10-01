@@ -1,0 +1,191 @@
+RecordKey,Code,Name,FatherAccountKey,ActiveAccount,AccountType,AcctCurrency,LockManualTransaction
+RecordKey,AcctCode,AcctName,FatherNum,Postable,ActType,ActCurr,LocManTran
+1,5001-01-01-01,LAND AT D'PET-UNIT-2 (24P),5001-01-01,tYES,at_Other,INR,tNO
+2,5001-01-01-02,LAND AT D'PET-UNIT-2 (25P),5001-01-01,tYES,at_Other,INR,tNO
+3,5001-01-01-03,FINAL PRICE DIFF.IN COST OF LAND-KIADB,5001-01-01,tYES,at_Other,INR,tNO
+4,5002-03-01-05,(No name in AKE COA) 5002-03-01-05,5001-01-01,tYES,at_Other,INR,tNO
+5,5001-01-02-01,Factory Buildings,5001-01-02,tYES,at_Other,INR,tNO
+6,5001-01-02-02,Adminstrative Buildings,5001-01-02,tYES,at_Other,INR,tNO
+7,5001-01-02-10,Accumulated Depreciation - Buildings,5001-01-02,tYES,at_Other,INR,tNO
+8,5001-01-03-01,Production Machinery,5001-01-03,tYES,at_Other,INR,tNO
+9,5001-01-03-02,Fixtures,5001-01-03,tYES,at_Other,INR,tNO
+10,5001-01-03-03,Instruments,5001-01-03,tYES,at_Other,INR,tNO
+11,5001-01-03-10,Accumulated Depreciation - Plant and Machinery,5001-01-03,tYES,at_Other,INR,tNO
+12,5001-01-03-11,Accumulated Depreciation - Plant and Machinery - Retirement Proceeds,5001-01-03,tYES,at_Other,INR,tNO
+13,5001-01-04-01,Office Equipment,5001-01-04,tYES,at_Other,INR,tNO
+14,5001-01-04-02,Furniture and Fixtures,5001-01-04,tYES,at_Other,INR,tNO
+15,5001-01-04-03,Electrical Fittings,5001-01-04,tYES,at_Other,INR,tNO
+16,5001-01-04-10,Accumulated Depreciation - Furniture and Fittingss,5001-01-04,tYES,at_Other,INR,tNO
+17,5001-01-05-01,Server and Software,5001-01-05,tYES,at_Other,INR,tNO
+18,5001-01-05-02,Computers and Printers,5001-01-05,tYES,at_Other,INR,tNO
+19,5001-01-05-10,Accumulated Depreciation - Computers and Software,5001-01-05,tYES,at_Other,INR,tNO
+20,5001-01-06-01,Four Wheel Vehicles,5001-01-06,tYES,at_Other,INR,tNO
+21,5001-01-06-02,Two Wheeler Vechicles,5001-01-06,tYES,at_Other,INR,tNO
+22,5001-01-06-10,Accumulated Depreciation - Motor Cars,5001-01-06,tYES,at_Other,INR,tNO
+23,5001-01-08-01,Capital Work in Progress - Land,5001-01-08,tYES,at_Other,INR,tNO
+24,5001-01-08-02,Capital Work in Progress - Buildings,5001-01-08,tYES,at_Other,INR,tNO
+25,5001-01-08-03,Capital Work in Progress - Plant and machinery,5001-01-08,tYES,at_Other,INR,tNO
+26,5001-01-08-04,Capital Work in Progress - Furnitures and Fittlings,5001-01-08,tYES,at_Other,INR,tNO
+27,5001-01-08-05,Capital Work in Progress - Computers and Softwares,5001-01-08,tYES,at_Other,INR,tNO
+28,5001-01-08-06,Capital Work in Progress - Moter Vehicles,5001-01-08,tYES,at_Other,INR,tNO
+29,5001-02-01-01,New Product Development - Expediture,5001-02-01,tYES,at_Other,INR,tNO
+30,5001-02-01-02,Accumulated Ammortisation,5001-02-01,tYES,at_Other,INR,tNO
+31,5002-01-01-01,Sub Assembly,5002-01-01,tYES,at_Other,INR,tNO
+32,5002-01-01-02,Fixtures,5002-01-01,tYES,at_Other,INR,tNO
+33,5002-01-01-03,FG,5002-01-01,tYES,at_Other,INR,tNO
+34,5002-01-01-04,PPE,5002-01-01,tYES,at_Other,INR,tNO
+35,5002-01-01-05,Tools,5002-01-01,tYES,at_Other,INR,tNO
+36,5002-01-01-06,RM Plates,5002-01-01,tYES,at_Other,INR,tNO
+37,5002-01-01-07,RM Special Grades,5002-01-01,tYES,at_Other,INR,tNO
+38,5002-01-01-08,RM Structurals,5002-01-01,tYES,at_Other,INR,tNO
+39,5002-01-01-09,Consumables,5002-01-01,tYES,at_Other,INR,tNO
+40,5002-01-01-10,Fuels and Olis,5002-01-01,tYES,at_Other,INR,tNO
+41,5002-01-01-11,Spare Parts and Others,5002-01-01,tYES,at_Other,INR,tNO
+42,5002-01-01-12,Office stationery,5002-01-01,tYES,at_Other,INR,tNO
+43,5002-01-01-13,fixed assets,5002-01-01,tYES,at_Other,INR,tNO
+44,5002-01-01-14,(No name in AKE COA) 5002-01-01-14,5002-01-01,tYES,at_Other,INR,tNO
+45,5002-01-01-15,work-in-progress,5002-01-01,tYES,at_Other,INR,tNO
+46,5002-01-01-16,Instruments,5002-01-01,tYES,at_Other,INR,tNO
+47,5002-01-01-17,Packaging Materials,5002-01-01,tYES,at_Other,INR,tNO
+48,5002-01-01-18,TMT Rod,5002-01-01,tYES,at_Other,INR,tNO
+49,5002-01-01-19,(No name in AKE COA) 5002-01-01-19,5002-01-01,tYES,at_Other,INR,tNO
+50,5002-01-01-20,Machining,5002-01-01,tYES,at_Other,INR,tNO
+51,5002-01-01-21,(No name in AKE COA) 5002-01-01-21,5002-01-01,tYES,at_Other,INR,tNO
+52,5002-01-01-22,(No name in AKE COA) 5002-01-01-22,5002-01-01,tYES,at_Other,INR,tNO
+53,5002-01-01-23,ROLLING,5002-01-01,tYES,at_Other,INR,tNO
+54,5002-01-01-24,(No name in AKE COA) 5002-01-01-24,5002-01-01,tYES,at_Other,INR,tNO
+55,5002-01-01-25,(No name in AKE COA) 5002-01-01-25,5002-01-01,tYES,at_Other,INR,tNO
+56,5002-01-01-26,(No name in AKE COA) 5002-01-01-26,5002-01-01,tYES,at_Other,INR,tNO
+57,5002-01-01-27,(No name in AKE COA) 5002-01-01-27,5002-01-01,tYES,at_Other,INR,tNO
+58,5002-01-01-28,(No name in AKE COA) 5002-01-01-28,5002-01-01,tYES,at_Other,INR,tNO
+59,5002-01-01-29,(No name in AKE COA) 5002-01-01-29,5002-01-01,tYES,at_Other,INR,tNO
+60,5002-02-02-01,UI SBI-CURRENT ACCOUNT A/c,5002-02-02,tYES,at_Other,INR,tNO
+61,5002-02-02-02,UI SBI-CURRENT ACCOUNT A/c 33741859012,5002-02-02,tYES,at_Other,INR,tNO
+62,5002-02-02-03,STD.PUR.OTH-A/C NO.397445410077,5002-02-02,tYES,at_Other,INR,tNO
+63,5002-02-02-04,Kotak Mahindra Bank C/A 3049757973,5002-02-02,tYES,at_Other,INR,tNO
+64,5002-02-02-05,IndusInd Bank,5002-02-02,tYES,at_Other,INR,tNO
+65,5002-02-03-01,Petty Cash,5002-02-03,tYES,at_Other,INR,tNO
+66,5002-02-04-01,Trade Debtors (Domestic),5002-02-04,tYES,at_Other,INR,tYES
+67,5002-02-04-02,Trade Debtors (Foreign),5002-02-04,tYES,at_Other,INR,tNO
+68,5002-03-01-06,(No name in AKE COA) 5002-03-01-06,5002-03-01,tYES,at_Other,INR,tNO
+69,5002-03-02-01,SGST Input carry forward,5002-03-02,tYES,at_Other,INR,tNO
+70,5002-03-02-02,CGST Input carry forward,5002-03-02,tYES,at_Other,INR,tNO
+71,5002-03-02-03,IGST Input carry forward,5002-03-02,tYES,at_Other,INR,tNO
+72,5002-03-02-04,SGST Electronic Credit Ledger,5002-03-02,tYES,at_Other,INR,tNO
+73,5002-03-02-05,CGST Electronic Credit Ledger,5002-03-02,tYES,at_Other,INR,tNO
+74,5002-03-02-06,IGST Electronic Credit Ledger,5002-03-02,tYES,at_Other,INR,tNO
+75,5002-03-03-01,Interest Receivable on KEB Deposit,5002-03-03,tYES,at_Other,INR,tNO
+76,5002-03-03-02,TDS Receivable from L&T,5002-03-03,tYES,at_Other,INR,tNO
+77,5002-03-03-03,TDS Receivable from TDPS,5002-03-03,tYES,at_Other,INR,tNO
+78,5002-03-03-04,TDS Receivable from Bajaj Housing Finance,5002-03-03,tYES,at_Other,INR,tNO
+79,5002-03-03-05,(No name in AKE COA) 5002-03-03-05,5002-03-03,tYES,at_Other,INR,tNO
+80,5002-03-03-08,(No name in AKE COA) 5002-03-03-08,5002-03-03,tYES,at_Other,INR,tNO
+81,5002-03-03-06,TDS Receivable from Ugro Capital,5002-03-03,tYES,at_Other,INR,tNO
+82,5002-03-03-07,TDS Receivable from Clix Capital,5002-03-03,tYES,at_Other,INR,tNO
+83,5002-03-03-09,TDS Receivable from IDFC Bank,5002-03-03,tYES,at_Other,INR,tNO
+84,5002-03-03-10,TDS Receivable from Bajaj Finance,5002-03-03,tYES,at_Other,INR,tNO
+85,5002-03-04-01,Advance Income Tax Refundable,5002-03-04,tYES,at_Other,INR,tNO
+86,5002-04-01-01,Advance to Suppliers,5002-04-01,tYES,at_Other,INR,tNO
+87,5002-04-02-01,Advance  Salary,5002-04-02,tYES,at_Other,INR,tNO
+88,5002-04-02-02,Salary Loans to staffs,5002-04-02,tYES,at_Other,INR,tNO
+89,5002-04-02-03,(No name in AKE COA) 5002-04-02-03,5002-04-02,tYES,at_Other,INR,tNO
+90,5002-04-03-01,(No name in AKE COA) 5002-04-03-01,5002-04-03,tYES,at_Other,INR,tNO
+91,5002-04-04-01,(No name in AKE COA) 5002-04-04-01,5002-04-04,tYES,at_Other,INR,tNO
+92,5002-04-05-01,(No name in AKE COA) 5002-04-05-01,5002-04-05,tYES,at_Other,INR,tNO
+93,5002-04-05-02,(No name in AKE COA) 5002-04-05-02,5002-04-05,tYES,at_Other,INR,tNO
+94,5002-05-01-01,Deposit - Bescom,5002-05-01,tYES,at_Other,INR,tNO
+95,5002-05-01-02,Deposits - Aswathi Hardware Stores,5002-05-01,tYES,at_Other,INR,tNO
+96,5002-05-01-03,Deposits - Sri Manjunatha Enterprises (Gas Advance),5002-05-01,tYES,at_Other,INR,tNO
+97,5002-05-01-04,Deposits - Goyal Gas,5002-05-01,tYES,at_Other,INR,tNO
+98,5002-05-01-05,Deposits - Sales Tax Deposit NSC,5002-05-01,tYES,at_Other,INR,tNO
+99,5002-05-01-06,Deposits - Telephone,5002-05-01,tYES,at_Other,INR,tNO
+100,5002-05-01-07,Deposits - Yeshaswani Gas Agency,5002-05-01,tYES,at_Other,INR,tNO
+101,5002-05-01-08,Deposits -BLDG ADV.  K R YADAV KUMAR,5002-05-01,tYES,at_Other,INR,tNO
+102,5002-05-01-09,DEPOSITS- Bescom - UNIT 2,5002-05-01,tYES,at_Other,INR,tNO
+103,5002-05-01-10,Earnest Money Deposit,5002-05-01,tYES,at_Other,INR,tNO
+104,5002-05-01-11,Bank Gaurantee Deposit - BEML,5002-05-01,tYES,at_Other,INR,tNO
+105,5002-05-01-12,SBI BK FD Deposit,5002-05-01,tYES,at_Other,INR,tNO
+106,5002-05-01-13,Bharath Petroleun Corporation Limited,5002-05-01,tYES,at_Other,INR,tNO
+107,5002-05-01-14,DEPOSIT- K R YADHU KUMSR ROOM ADVANCE,5002-05-01,tYES,at_Other,INR,tNO
+108,5002-05-02-01,SGST Receivable,5002-05-02,tYES,at_Other,INR,tNO
+109,5002-05-02-02,CGST Receivable,5002-05-02,tYES,at_Other,INR,tNO
+110,5002-05-02-03,IGST Receivable,5002-05-02,tYES,at_Other,INR,tNO
+111,5002-05-02-04,TCS Receivable,5002-05-02,tYES,at_Other,INR,tNO
+112,5002-05-02-05,TDS Receivables,5002-05-02,tYES,at_Other,INR,tNO
+113,5002-05-02-06,RCM,5002-05-02,tYES,at_Other,INR,tNO
+114,5002-05-03-01,SGST Reverse Charges,5002-05-03,tYES,at_Other,INR,tNO
+115,5002-05-03-02,CGST Reverse Charges,5002-05-03,tYES,at_Other,INR,tNO
+116,5002-05-03-03,IGST Reverse Charges,5002-05-03,tYES,at_Other,INR,tNO
+117,5002-05-04-01,INCOME TAX REFUND,5002-05-04,tYES,at_Other,INR,tNO
+118,5002-05-04-02,Interest on INCOME TAX REFUND,5002-05-04,tYES,at_Other,INR,tNO
+119,5002-05-04-03,SUSPENSE A/C,5002-05-04,tYES,at_Other,INR,tNO
+120,5002-05-04-04,Interest Receivable on FD,5002-05-04,tYES,at_Other,INR,tNO
+121,5002-05-05-01,SGST Unclaimed Inputs,5002-05-05,tYES,at_Other,INR,tNO
+122,5002-05-05-02,CGST Unclaimed Inputs,5002-05-05,tYES,at_Other,INR,tNO
+123,5002-05-05-03,IGST Unclaimed Inputs,5002-05-05,tYES,at_Other,INR,tNO
+124,3002007-35,Kumar Arts,5002-05-06,tYES,at_Other,INR,tNO
+125,5002-05-06-01,Deferred Tax Asset,5002-05-06,tYES,at_Other,INR,tNO
+126,3002-07-10,J R Consultancy,5002-05-06,tYES,at_Other,INR,tNO
+127,3002-01-11,Kotak CA A/c - 3049757973,5002-05-06,tYES,at_Other,INR,tNO
+128,3002-01-12,KOTAK LOAN A/C LAP.19510148,5002-05-06,tYES,at_Other,INR,tNO
+129,3002-01-13,JSW ONE FINANCE LTD,5002-05-06,tYES,at_Other,INR,tNO
+130,3002-07-14,EKTA D AHUJA,5002-05-06,tYES,at_Other,INR,tNO
+131,3002-07-19,Ashish Combines,5002-05-06,tYES,at_Other,INR,tNO
+132,3002-07-20,R R Enterprises,5002-05-06,tYES,at_Other,INR,tNO
+133,3002-07-21,Sanvi Bathija,5002-05-06,tYES,at_Other,INR,tNO
+134,3002-07-22,L M Credits,5002-05-06,tYES,at_Other,INR,tNO
+135,3002-07-23,Amit Batra-HUF,5002-05-06,tYES,at_Other,INR,tNO
+136,3002-07-24,GK Associates,5002-05-06,tYES,at_Other,INR,tNO
+137,3002-07-25,Kishandas Jetanand,5002-05-06,tYES,at_Other,INR,tNO
+138,3002-07-26,Raja B jumani,5002-05-06,tYES,at_Other,INR,tNO
+139,3002-07-27,R Kumarlal,5002-05-06,tYES,at_Other,INR,tNO
+140,3002-07-28,Skyfin Finance,5002-05-06,tYES,at_Other,INR,tNO
+141,3002-07-29,Barnala Ravi Teja,5002-05-06,tYES,at_Other,INR,tNO
+142,3002-07-30,S K Rahamath,5002-05-06,tYES,at_Other,INR,tNO
+143,3002-07-31,Nagaraj G Jutlad,5002-05-06,tYES,at_Other,INR,tNO
+144,3002-07-32,K R Yadhu Kumar-Rent Advance,5002-05-06,tYES,at_Other,INR,tNO
+145,3002-07-15,PUJA P BAJAJ,5002-05-06,tYES,at_Other,INR,tNO
+146,3002-07-16,YASHVIN V UTMANI,5002-05-06,tYES,at_Other,INR,tNO
+147,3002-07-17,BANSILAL F UTMANI HUF,5002-05-06,tYES,at_Other,INR,tNO
+148,3002-07-18,MAHESH J,5002-05-06,tYES,at_Other,INR,tNO
+149,3002-07-33,Radhika D Ahuja,5002-05-06,tYES,at_Other,INR,tNO
+150,3002-07-34,SURYAKIRAN ENTERPRISES,5002-05-06,tYES,at_Other,INR,tNO
+151,3002-07-35,Kumar Arts,5002-05-06,tYES,at_Other,INR,tNO
+152,3002-07-37,National Highways Authority of India,5002-05-06,tYES,at_Other,INR,tNO
+153,3002-07-38,Lean On Us Business Excellence Pvt. Ltd.,5002-05-06,tYES,at_Other,INR,tNO
+154,3002-07-39,AAA NORTH CAPITAL HDFC BANK LTD,5002-05-06,tYES,at_Other,INR,tNO
+155,3002-07-40,MRS RENU SAINANI STATE BANK OF INDIA,5002-05-06,tYES,at_Other,INR,tNO
+156,3002-07-41,MR ROSHAN L CHAWLA STATE BANK OF INDIA,5002-05-06,tYES,at_Other,INR,tNO
+157,3002-07-36,Herspace Manufacturing Private Limited,5002-05-06,tYES,at_Other,INR,tNO
+158,3002-01-14,Deautch bank Loan A/c - 300041248540037,5002-05-06,tYES,at_Other,INR,tNO
+159,3001-01-01-01,Arun Kumar TS Loan Account,3001-01-01,tYES,at_Other,INR,tNO
+160,3001-01-01-02,Rashmi Arun Loan Account,3001-01-01,tYES,at_Other,INR,tNO
+161,3002-01-10,Kotak Loan A/c - LAP19404642,3001-01-01,tYES,at_Other,INR,tNO
+162,3002-02-06-01,Professional Charges Payable,3002-02-06,tYES,at_Other,INR,tNO
+163,3002-02-06-02,Interest Payable On Delayed Payment,3002-02-06,tYES,at_Other,INR,tNO
+164,3002-02-06-03,Security Charges Payable,3002-02-06,tYES,at_Other,INR,tNO
+165,3002-02-06-04,Manpower charges payable,3002-02-06,tYES,at_Other,INR,tNO
+166,3002-02-06-05,Garden maintenance payable,3002-02-06,tYES,at_Other,INR,tNO
+167,3002-02-06-06,Transportation charges payable,3002-02-06,tYES,at_Other,INR,tNO
+168,3002-02-06-07,Weighment charges payable,3002-02-06,tYES,at_Other,INR,tNO
+169,3002-02-06-08,Deutsche bank Loan A/c,3002-02-06,tYES,at_Other,INR,tNO
+170,3002-02-07-01,Down Payment,3002-02-07,tYES,at_Other,INR,tNO
+171,3002-02-08-01,(No name in AKE COA) 3002-02-08-01,3002-02-08,tYES,at_Other,INR,tNO
+172,3002-02-08-02,(No name in AKE COA) 3002-02-08-02,3002-02-08,tYES,at_Other,INR,tNO
+173,2001-01-01-01,(No name in AKE COA) 2001-01-01-01,2001-01-01,tYES,at_Revenues,INR,tNO
+174,4002-02-07-01,INTEREST ON MAINTENANCE CHARGES-KIADB LAND,4002-02-07,tYES,at_Expenses,INR,tNO
+175,4002-02-07-02,KIADB LEASE RENT UPTO 2022,4002-02-07,tYES,at_Expenses,INR,tNO
+176,4002-02-07-03,KIADB LAND- INTEREST ON LEASE RENT- UPTO 2022,4002-02-07,tYES,at_Expenses,INR,tNO
+177,4002-07-04-01,Blasting & Primer,4002-07-04,tYES,at_Expenses,INR,tNO
+178,4002-07-04-02,Boring,4002-07-04,tYES,at_Expenses,INR,tNO
+179,4002-07-04-03,Dish Forming,4002-07-04,tYES,at_Expenses,INR,tNO
+180,4002-07-04-04,Labour Charges,4002-07-04,tYES,at_Expenses,INR,tNO
+181,4002-07-04-05,Machining,4002-07-04,tYES,at_Expenses,INR,tNO
+182,4002-07-04-06,Milling & Drilling,4002-07-04,tYES,at_Expenses,INR,tNO
+183,4002-07-04-07,Rolling,4002-07-04,tYES,at_Expenses,INR,tNO
+184,4002-07-04-08,Stress Relieving,4002-07-04,tYES,at_Expenses,INR,tNO
+185,4002-07-04-09,Zinc Plating,4002-07-04,tYES,at_Expenses,INR,tNO
+186,4002-07-04-10,Galvanizing,4002-07-04,tYES,at_Expenses,INR,tNO
+187,4002-07-04-11,Cutting,4002-07-04,tYES,at_Expenses,INR,tNO
+188,4002-07-04-12,Bending,4002-07-04,tYES,at_Expenses,INR,tNO
+189,4002-07-04-13,Fabrication & Erection,4002-07-04,tYES,at_Expenses,INR,tNO

@@ -1,0 +1,26 @@
+[
+  {
+    "WarehouseCode": "RM-STR",
+    "WarehouseName": "Raw Material Store - Dabaspet"
+  },
+  {
+    "WarehouseCode": "CONS",
+    "WarehouseName": "Consumables & PPE Store"
+  },
+  {
+    "WarehouseCode": "SHOP",
+    "WarehouseName": "Shop Floor / Fabrication Bay"
+  },
+  {
+    "WarehouseCode": "FG",
+    "WarehouseName": "Finished Goods Yard"
+  },
+  {
+    "WarehouseCode": "SCRAP",
+    "WarehouseName": "Scrap & Off-cuts"
+  },
+  {
+    "WarehouseCode": "SITE",
+    "WarehouseName": "Project Site Store"
+  }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "Code": "5002-03-01-05",
+    "Name": "",
+    "Section": "Asset",
+    "PlacedUnder": "5001-01-01"
+  },
+  {
+    "Code": "3002007-35",
+    "Name": "Kumar Arts",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-10",
+    "Name": "J R Consultancy",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-01-11",
+    "Name": "Kotak CA A/c - 3049757973",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-01-12",
+    "Name": "KOTAK LOAN A/C LAP.19510148",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-01-13",
+    "Name": "JSW ONE FINANCE LTD",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-14",
+    "Name": "EKTA D AHUJA",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-19",
+    "Name": "Ashish Combines",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-20",
+    "Name": "R R Enterprises",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-21",
+    "Name": "Sanvi Bathija",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-22",
+    "Name": "L M Credits",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-23",
+    "Name": "Amit Batra-HUF",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-24",
+    "Name": "GK Associates",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-25",
+    "Name": "Kishandas Jetanand",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-26",
+    "Name": "Raja B jumani",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-27",
+    "Name": "R Kumarlal",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-28",
+    "Name": "Skyfin Finance",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-29",
+    "Name": "Barnala Ravi Teja",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-30",
+    "Name": "S K Rahamath",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-31",
+    "Name": "Nagaraj G Jutlad",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-32",
+    "Name": "K R Yadhu Kumar-Rent Advance",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-15",
+    "Name": "PUJA P BAJAJ",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-16",
+    "Name": "YASHVIN V UTMANI",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-17",
+    "Name": "BANSILAL F UTMANI HUF",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-18",
+    "Name": "MAHESH J",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-33",
+    "Name": "Radhika D Ahuja",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-34",
+    "Name": "SURYAKIRAN ENTERPRISES",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-35",
+    "Name": "Kumar Arts",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-37",
+    "Name": "National Highways Authority of India",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-38",
+    "Name": "Lean On Us Business Excellence Pvt. Ltd.",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-39",
+    "Name": "AAA NORTH CAPITAL HDFC BANK LTD",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-40",
+    "Name": "MRS RENU SAINANI STATE BANK OF INDIA",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-41",
+    "Name": "MR ROSHAN L CHAWLA STATE BANK OF INDIA",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-07-36",
+    "Name": "Herspace Manufacturing Private Limited",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-01-14",
+    "Name": "Deautch bank Loan A/c - 300041248540037",
+    "Section": "Asset",
+    "PlacedUnder": "5002-05-06"
+  },
+  {
+    "Code": "3002-01-10",
+    "Name": "Kotak Loan A/c - LAP19404642",
+    "Section": "Liability",
+    "PlacedUnder": "3001-01-01"
+  },
+  {
+    "Code": "3003-09-03",
+    "Name": "IGST Output Payable",
+    "Section": "Liability",
+    "PlacedUnder": "3002-09"
+  },
+  {
+    "Code": "3003-09-04",
+    "Name": "RCM Payable",
+    "Section": "Liability",
+    "PlacedUnder": "3002-09"
+  },
+  {
+    "Code": "3003-09-05",
+    "Name": "TCS on Scrap",
+    "Section": "Liability",
+    "PlacedUnder": "3002-09"
+  },
+  {
+    "Code": "3003-09-06",
+    "Name": "IGST RCM Payable",
+    "Section": "Liability",
+    "PlacedUnder": "3002-09"
+  },
+  {
+    "Code": "3003-09-07",
+    "Name": "SGST RCM Payable",
+    "Section": "Liability",
+    "PlacedUnder": "3002-09"
+  },
+  {
+    "Code": "3003-09-08",
+    "Name": "CGST RCM Payable",
+    "Section": "Liability",
+    "PlacedUnder": "3002-09"
+  }
+]

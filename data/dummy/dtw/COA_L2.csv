@@ -1,0 +1,16 @@
+RecordKey,Code,Name,FatherAccountKey,ActiveAccount,AccountType,AcctCurrency,LockManualTransaction
+RecordKey,AcctCode,AcctName,FatherNum,Postable,ActType,ActCurr,LocManTran
+1,100000,Fixed Assets,<Assets drawer code>,tNO,at_Other,,tNO
+2,110000,Current Assets,<Assets drawer code>,tNO,at_Other,,tNO
+3,200000,Non-Current Liabilities,<Liabilities drawer code>,tNO,at_Other,,tNO
+4,210000,Current Liabilities,<Liabilities drawer code>,tNO,at_Other,,tNO
+5,300000,Share Capital,<Capital and Reserves drawer code>,tNO,at_Other,,tNO
+6,310000,Reserves and Surplus,<Capital and Reserves drawer code>,tNO,at_Other,,tNO
+7,400000,Revenue from Operations,<Revenue / Turnover drawer code>,tNO,at_Revenues,,tNO
+8,410000,Other Income,<Revenue / Turnover drawer code>,tNO,at_Revenues,,tNO
+9,500000,Cost of Materials,<Cost of Sales drawer code>,tNO,at_Expenses,,tNO
+10,510000,Employee Costs,<Operating Costs / Expenses drawer code>,tNO,at_Expenses,,tNO
+11,520000,Manufacturing Expenses,<Operating Costs / Expenses drawer code>,tNO,at_Expenses,,tNO
+12,530000,Administrative and Selling Expenses,<Operating Costs / Expenses drawer code>,tNO,at_Expenses,,tNO
+13,540000,Finance Costs,<Operating Costs / Expenses drawer code>,tNO,at_Expenses,,tNO
+14,550000,Depreciation and Tax,<Operating Costs / Expenses drawer code>,tNO,at_Expenses,,tNO

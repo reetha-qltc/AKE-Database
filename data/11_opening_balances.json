@@ -1,0 +1,254 @@
+{
+  "Date": "2026-04-01",
+  "OffsetAccount": "1003",
+  "Stock": [
+    {
+      "ItemCode": "RM-PL-0010",
+      "Warehouse": "RM-STR",
+      "Qty": 4200,
+      "Price": 62
+    },
+    {
+      "ItemCode": "RM-PL-0012",
+      "Warehouse": "RM-STR",
+      "Qty": 3800,
+      "Price": 61
+    },
+    {
+      "ItemCode": "RM-PL-0016",
+      "Warehouse": "RM-STR",
+      "Qty": 2500,
+      "Price": 60
+    },
+    {
+      "ItemCode": "RM-PL-0020",
+      "Warehouse": "RM-STR",
+      "Qty": 3000,
+      "Price": 60
+    },
+    {
+      "ItemCode": "RM-PL-0006",
+      "Warehouse": "RM-STR",
+      "Qty": 1800,
+      "Price": 66
+    },
+    {
+      "ItemCode": "RM-ST-MB200",
+      "Warehouse": "RM-STR",
+      "Qty": 2200,
+      "Price": 58
+    },
+    {
+      "ItemCode": "RM-ST-MB300",
+      "Warehouse": "RM-STR",
+      "Qty": 3500,
+      "Price": 58
+    },
+    {
+      "ItemCode": "RM-ST-MC100",
+      "Warehouse": "RM-STR",
+      "Qty": 1500,
+      "Price": 57
+    },
+    {
+      "ItemCode": "RM-ST-MC150",
+      "Warehouse": "RM-STR",
+      "Qty": 1600,
+      "Price": 57
+    },
+    {
+      "ItemCode": "RM-ST-A50",
+      "Warehouse": "RM-STR",
+      "Qty": 1200,
+      "Price": 56
+    },
+    {
+      "ItemCode": "RM-ST-A75",
+      "Warehouse": "RM-STR",
+      "Qty": 900,
+      "Price": 56
+    },
+    {
+      "ItemCode": "RM-ST-PIPE50",
+      "Warehouse": "RM-STR",
+      "Qty": 800,
+      "Price": 68
+    },
+    {
+      "ItemCode": "RM-SG-E350-12",
+      "Warehouse": "RM-STR",
+      "Qty": 1000,
+      "Price": 72
+    },
+    {
+      "ItemCode": "RM-SG-SS304-3",
+      "Warehouse": "RM-STR",
+      "Qty": 250,
+      "Price": 245
+    },
+    {
+      "ItemCode": "RM-TMT-12",
+      "Warehouse": "RM-STR",
+      "Qty": 2000,
+      "Price": 55
+    },
+    {
+      "ItemCode": "RM-TMT-16",
+      "Warehouse": "RM-STR",
+      "Qty": 1500,
+      "Price": 55
+    },
+    {
+      "ItemCode": "CN-ELEC-E6013",
+      "Warehouse": "CONS",
+      "Qty": 120,
+      "Price": 165
+    },
+    {
+      "ItemCode": "CN-MIG-ER70",
+      "Warehouse": "CONS",
+      "Qty": 150,
+      "Price": 140
+    },
+    {
+      "ItemCode": "CN-GRIND-4",
+      "Warehouse": "CONS",
+      "Qty": 200,
+      "Price": 38
+    },
+    {
+      "ItemCode": "CN-CUT-14",
+      "Warehouse": "CONS",
+      "Qty": 40,
+      "Price": 210
+    },
+    {
+      "ItemCode": "CN-OXY",
+      "Warehouse": "CONS",
+      "Qty": 12,
+      "Price": 420
+    },
+    {
+      "ItemCode": "CN-LPG",
+      "Warehouse": "CONS",
+      "Qty": 6,
+      "Price": 1850
+    },
+    {
+      "ItemCode": "CN-PRIMER",
+      "Warehouse": "CONS",
+      "Qty": 80,
+      "Price": 210
+    },
+    {
+      "ItemCode": "CN-ENAMEL",
+      "Warehouse": "CONS",
+      "Qty": 60,
+      "Price": 290
+    },
+    {
+      "ItemCode": "PPE-HELMET",
+      "Warehouse": "CONS",
+      "Qty": 40,
+      "Price": 180
+    },
+    {
+      "ItemCode": "PPE-GLOVE-W",
+      "Warehouse": "CONS",
+      "Qty": 60,
+      "Price": 145
+    },
+    {
+      "ItemCode": "PPE-SHOE",
+      "Warehouse": "CONS",
+      "Qty": 25,
+      "Price": 950
+    },
+    {
+      "ItemCode": "PPE-SHIELD",
+      "Warehouse": "CONS",
+      "Qty": 20,
+      "Price": 260
+    },
+    {
+      "ItemCode": "TL-GRINDER",
+      "Warehouse": "CONS",
+      "Qty": 6,
+      "Price": 3200
+    },
+    {
+      "ItemCode": "TL-CLAMP",
+      "Warehouse": "CONS",
+      "Qty": 30,
+      "Price": 420
+    }
+  ],
+  "BP": [
+    {
+      "CardCode": "C0001",
+      "Amount": 1250000
+    },
+    {
+      "CardCode": "C0002",
+      "Amount": 860000
+    },
+    {
+      "CardCode": "C0003",
+      "Amount": 415000
+    },
+    {
+      "CardCode": "V0001",
+      "Amount": -640000
+    },
+    {
+      "CardCode": "V0002",
+      "Amount": -385000
+    },
+    {
+      "CardCode": "V0004",
+      "Amount": -42000
+    }
+  ],
+  "GL": [
+    {
+      "Account": "5001-01-03-01",
+      "Amount": 18500000
+    },
+    {
+      "Account": "5001-01-03-10",
+      "Amount": -6200000
+    },
+    {
+      "Account": "5001-01-02-01",
+      "Amount": 12000000
+    },
+    {
+      "Account": "5001-01-02-10",
+      "Amount": -2400000
+    },
+    {
+      "Account": "5002-02-02-01",
+      "Amount": 2350000
+    },
+    {
+      "Account": "5002-02-03-01",
+      "Amount": 45000
+    },
+    {
+      "Account": "3002-01-02",
+      "Amount": -9500000
+    },
+    {
+      "Account": "1001-01-01-01",
+      "Amount": -5000000
+    },
+    {
+      "Account": "1001-01-01-02",
+      "Amount": -3000000
+    },
+    {
+      "Account": "1001-01-01-03",
+      "Amount": -2000000
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "WTCode": "Q01",
+    "Name": "TDS on Purchase of Goods 0.1%",
+    "Section": "194Q",
+    "Assessee": "COM",
+    "Rate": 0.1,
+    "Account": "3002-03-23"
+  },
+  {
+    "WTCode": "C1",
+    "Name": "TDS Contractor Individual/HUF 1%",
+    "Section": "194C",
+    "Assessee": "IND",
+    "Rate": 1,
+    "Account": "3002-03-18"
+  },
+  {
+    "WTCode": "C2",
+    "Name": "TDS Contractor Others 2%",
+    "Section": "194C",
+    "Assessee": "COM",
+    "Rate": 2,
+    "Account": "3002-03-14"
+  },
+  {
+    "WTCode": "J10",
+    "Name": "TDS Professional Fees 10%",
+    "Section": "194J",
+    "Assessee": "COM",
+    "Rate": 10,
+    "Account": "3002-03-16"
+  },
+  {
+    "WTCode": "I10",
+    "Name": "TDS on Rent 10%",
+    "Section": "194I",
+    "Assessee": "COM",
+    "Rate": 10,
+    "Account": "3002-03-15"
+  },
+  {
+    "WTCode": "A10",
+    "Name": "TDS on Interest 10%",
+    "Section": "194A",
+    "Assessee": "COM",
+    "Rate": 10,
+    "Account": "3002-03-26"
+  }
+]

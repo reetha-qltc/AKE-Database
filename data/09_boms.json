@@ -1,0 +1,291 @@
+[
+  {
+    "TreeCode": "SA-BASEPL-400",
+    "Qty": 1,
+    "Warehouse": "SHOP",
+    "Lines": [
+      {
+        "Code": "RM-PL-0020",
+        "Qty": 25.1,
+        "Warehouse": "RM-STR",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-ELEC-E6013",
+        "Qty": 0.4,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-CUT-PLASMA",
+        "Qty": 0.25,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-WELDER",
+        "Qty": 0.5,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      }
+    ]
+  },
+  {
+    "TreeCode": "SA-GUSSET-12",
+    "Qty": 1,
+    "Warehouse": "SHOP",
+    "Lines": [
+      {
+        "Code": "RM-PL-0012",
+        "Qty": 6.8,
+        "Warehouse": "RM-STR",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-CUT-PLASMA",
+        "Qty": 0.2,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      }
+    ]
+  },
+  {
+    "TreeCode": "FG-COL-MB300-6M",
+    "Qty": 1,
+    "Warehouse": "FG",
+    "Lines": [
+      {
+        "Code": "RM-ST-MB300",
+        "Qty": 265.2,
+        "Warehouse": "RM-STR",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "SA-BASEPL-400",
+        "Qty": 1,
+        "Warehouse": "SHOP",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "SA-GUSSET-12",
+        "Qty": 1,
+        "Warehouse": "SHOP",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-MIG-ER70",
+        "Qty": 1.5,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-PRIMER",
+        "Qty": 2.5,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-ENAMEL",
+        "Qty": 2.0,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-SAW",
+        "Qty": 0.5,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-DRILL",
+        "Qty": 0.5,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-WELD-MIG",
+        "Qty": 2,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-FITTER",
+        "Qty": 3,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-WELDER",
+        "Qty": 2,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-BLAST",
+        "Qty": 1,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      }
+    ]
+  },
+  {
+    "TreeCode": "FG-PLAT-HR",
+    "Qty": 1,
+    "Warehouse": "FG",
+    "Lines": [
+      {
+        "Code": "RM-PL-0006",
+        "Qty": 212.0,
+        "Warehouse": "RM-STR",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "RM-ST-MC150",
+        "Qty": 96.0,
+        "Warehouse": "RM-STR",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "RM-ST-PIPE50",
+        "Qty": 58.0,
+        "Warehouse": "RM-STR",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-MIG-ER70",
+        "Qty": 3.0,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-PRIMER",
+        "Qty": 4.0,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-ENAMEL",
+        "Qty": 3.5,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-CUT-PLASMA",
+        "Qty": 1,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-WELD-MIG",
+        "Qty": 5,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-FITTER",
+        "Qty": 8,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-WELDER",
+        "Qty": 6,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-BLAST",
+        "Qty": 2,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      }
+    ]
+  },
+  {
+    "TreeCode": "FG-CTRAY-300",
+    "Qty": 1,
+    "Warehouse": "FG",
+    "Lines": [
+      {
+        "Code": "RM-ST-A50",
+        "Qty": 11.3,
+        "Warehouse": "RM-STR",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-ELEC-E6013",
+        "Qty": 0.15,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "CN-ENAMEL",
+        "Qty": 0.3,
+        "Warehouse": "CONS",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-SAW",
+        "Qty": 0.2,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      },
+      {
+        "Code": "R-WELDER",
+        "Qty": 0.5,
+        "Warehouse": null,
+        "Type": "pit_Resource",
+        "IssueMethod": "im_Manual"
+      }
+    ]
+  },
+  {
+    "TreeCode": "FG-COL-MB300-6M",
+    "Qty": 1,
+    "Warehouse": "FG",
+    "DemoWrongVariant": true,
+    "Note": "Training exercise only - NOT loaded. Trainer edits the live BOM line to 2652 to show the effect, then corrects it.",
+    "Lines": [
+      {
+        "Code": "RM-ST-MB300",
+        "Qty": 2652,
+        "Warehouse": "RM-STR",
+        "Type": "pit_Item",
+        "IssueMethod": "im_Manual"
+      }
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "PriceListName": "Purchase Price (Dummy)",
+    "Key": "PUR"
+  },
+  {
+    "PriceListName": "Sales Price (Dummy - Restricted)",
+    "Key": "SAL"
+  }
+]
