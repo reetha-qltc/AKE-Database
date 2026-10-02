@@ -112,9 +112,9 @@ VENDORS = [
     ("U1V009", "Ramesh Fabrication Job Works", "Karnataka", "Doddaballapur", "BQRPR6153A", 30, "C1", "Fabrication subcontracting - TDS 194C 1%"),
 ]
 # BP groups (name max 20 chars) - customers by segment, vendors by what they supply
-CUSTOMER_GROUPS = ["EPC & Infra", "Industrial Developer", "Power & Process"]
+CUSTOMER_GROUPS = ["EPC & Infra", "Industrial Developer", "Power & Process", "Manufacturing"]
 VENDOR_GROUPS = ["Steel Suppliers", "Building Materials", "Elec & Plumbing", "Safety & Consumable",
-                 "Tools & Equipment", "Transporters", "Subcontractors"]
+                 "Tools & Equipment", "Transporters", "Subcontractors", "Consultants"]
 # code -> group, credit limit (INR), contact (first, last, position), mobile, mail domain,
 #         bill-to / pay-to (building, street, area, city, PIN), ship-to (site, building, street, area, city, PIN)
 # Training data only: mobiles are a dummy 90000 1xxxx series, e-mails use the reserved .example domain.
@@ -161,6 +161,52 @@ DETAILS = {
     "U1V009": ("Subcontractors", 500000, ("Ramesh", "R", "Proprietor"), "+91 90000 10109", "rameshfabrication",
                ("Shed No. 11", "Apparel Park Road", "KIADB Industrial Area", "Doddaballapur", "561203"),
                ("Workshop", "Shed No. 12", "Apparel Park Road", "KIADB Industrial Area", "Doddaballapur", "561203")),
+    # demo BPs loaded by sl_loader.py from data/06_business_partners.json (only completed here, never created)
+    "C0001": ("EPC & Infra", 7500000, ("Rahul", "Shinde", "Procurement Manager"), "+91 90000 20001", "sahyadriinfra",
+              ("Sahyadri House, 7th Floor", "Bandra Kurla Complex", "Bandra East", "Mumbai", "400051"),
+              ("Site - Navi Mumbai Logistics Hub", "Plot 18", "TTC Industrial Area", "Mahape", "Navi Mumbai", "400710")),
+    "C0002": ("Power & Process", 10000000, ("Ganesan", "R", "Purchase Manager"), "+91 90000 20002", "coromandelpower",
+              ("Coromandel Towers, 4th Floor", "Mount Road", "Nandanam", "Chennai", "600035"),
+              ("Site - Ennore Power Station", "Ennore Port Road", "Ennore", "Ennore", "Chennai", "600057")),
+    "C0003": ("Power & Process", 6000000, ("Prasanna", "Hegde", "Materials Manager"), "+91 90000 20003", "vijayanagarpetrochem",
+              ("Vijayanagar Petrochem Complex", "Sandur Road", "Toranagallu", "Ballari", "583123"),
+              ("Site - Refinery Expansion", "Plant Gate 3", "Sandur Road", "Toranagallu", "Ballari", "583123")),
+    "C0004": ("Power & Process", 3000000, ("Anoop", "Menon", "Purchase Manager"), "+91 90000 20004", "nilacement",
+              ("Nila Cement Works", "Kanjikode Industrial Area", "Kanjikode", "Palakkad", "678621"),
+              ("Site - Kiln Upgrade", "Plant Gate 1", "Kanjikode Industrial Area", "Kanjikode", "Palakkad", "678621")),
+    "C0005": ("EPC & Infra", 8000000, ("Ramana", "Murthy", "Project Manager"), "+91 90000 20005", "telanganametro",
+              ("Plot 45, Metro Bhavan", "Begumpet Road", "Begumpet", "Hyderabad", "500016"),
+              ("Site - Metro Phase 2 Depot", "Sy. No. 301", "Miyapur Depot Road", "Miyapur", "Hyderabad", "500049")),
+    "C0006": ("Manufacturing", 2000000, ("Vignesh", "K", "Purchase Manager"), "+91 90000 20006", "hosurauto",
+              ("Plot 88, SIPCOT Phase I", "Bagalur Road", "SIPCOT Industrial Area", "Hosur", "635126"),
+              ("Plant 2", "Plot 92", "SIPCOT Phase II", "Mookandapalli", "Hosur", "635126")),
+    "V0001": ("Steel Suppliers", 2500000, ("Ganesh", "Rao", "Partner"), "+91 90000 20101", "shreeganeshsteel",
+              ("No. 14, Shree Ganesh Complex", "Old Madras Road", "KR Puram", "Bengaluru", "560036"),
+              ("Stock Yard", "Plot 5", "Hoskote Industrial Area", "Hoskote", "Hoskote", "562114")),
+    "V0002": ("Steel Suppliers", 5000000, ("Srinivas", "Rao", "Sales Manager"), "+91 90000 20102", "deccanstructural",
+              ("Plot 31, Deccan Steel House", "IDA Jeedimetla", "Jeedimetla", "Hyderabad", "500055"),
+              ("Rolling Yard", "Sy. No. 120", "Medchal Industrial Area", "Medchal", "Medchal", "501401")),
+    "V0003": ("Steel Suppliers", 2000000, ("Arun", "Prakash", "Sales Head"), "+91 90000 20103", "kaverialloys",
+              ("No. 9, Kaveri Alloys Building", "GST Road", "Guindy Industrial Estate", "Chennai", "600032"),
+              ("Warehouse", "Plot C-14", "Ambattur Industrial Estate", "Ambattur", "Chennai", "600058")),
+    "V0004": ("Safety & Consumable", 500000, ("Nagaraj", "N", "Proprietor"), "+91 90000 20104", "nandiwelding",
+              ("No. 41, 3rd Cross", "Magadi Road", "Kamakshipalya", "Bengaluru", "560079"),
+              ("Godown", "No. 18", "Peenya 3rd Phase", "Peenya", "Bengaluru", "560058")),
+    "V0005": ("Safety & Consumable", 500000, ("Kiran", "Kumar", "Plant Manager"), "+91 90000 20105", "vayugases",
+              ("Plot 22, Vayu Gas Plant", "NH-48", "Antharasanahalli Industrial Area", "Tumakuru", "572106"),
+              ("Cylinder Filling Station", "Plot 23", "NH-48", "Antharasanahalli Industrial Area", "Tumakuru", "572106")),
+    "V0006": ("Safety & Consumable", 500000, ("Sneha", "Joshi", "Sales Manager"), "+91 90000 20106", "surakshasafety",
+              ("Office 204, Suraksha Plaza", "Mumbai-Pune Highway", "Pimpri", "Pune", "411018"),
+              ("Warehouse", "Gat No. 112", "Chakan MIDC", "Chakan", "Pune", "410501")),
+    "V0007": ("Subcontractors", 500000, ("Bharath", "B", "Proprietor"), "+91 90000 20107", "bharathicoating",
+              ("Shed No. 4, Bharathi Works", "Tumkur Road", "Nelamangala Industrial Area", "Nelamangala", "562123"),
+              ("Blasting Yard", "Sy. No. 77", "Tumkur Road", "Nelamangala Industrial Area", "Nelamangala", "562123")),
+    "V0008": ("Transporters", 300000, ("Mohammed", "Rafi", "Operations Manager"), "+91 90000 20108", "mysorefreight",
+              ("No. 8, Transport Layout", "Hunsur Road", "Hebbal", "Mysuru", "570017"),
+              ("Truck Terminal", "Plot 9", "Bengaluru-Mysuru Road", "Bannimantap", "Mysuru", "570015")),
+    "V0009": ("Consultants", 200000, ("Prakash", "S", "Partner"), "+91 90000 20109", "prakashassociates",
+              ("No. 112, 2nd Floor, Prakash Chambers", "Residency Road", "Shanthala Nagar", "Bengaluru", "560025"),
+              ("Office", "No. 112, 2nd Floor", "Residency Road", "Shanthala Nagar", "Bengaluru", "560025")),
 }
 GST_STATE = {"Karnataka": "29", "Telangana": "36", "Tamil Nadu": "33", "Maharashtra": "27"}
 
@@ -174,15 +220,21 @@ def gstin(state, pan):
 
 
 def bps():
-    for kind, rows, acct in (("cCustomer", CUSTOMERS, "5002-02-04-01"), ("cSupplier", VENDORS, "3002-02-01")):
-        for code, name, state, city, pan, days, wt, note in rows:
-            grp, credit, (first, last, pos), mobile, dom, bill, ship = DETAILS[code]
-            yield {"CardCode": code, "CardName": name, "CardType": kind, "State": state, "City": city, "PAN": pan,
-                   "GSTIN": gstin(state, pan), "PaymentTermsDays": days, "WTCode": wt, "ControlAccount": acct, "Note": note,
-                   "Group": grp, "CreditLimit": credit, "Contact": f"{first} {last}", "First": first, "Last": last,
-                   "Position": pos, "Mobile": mobile, "Email": f"accounts@{dom}.example",
-                   "ContactEmail": f"{first.lower()}@{dom}.example", "Bill": bill, "Ship": ship,
-                   "PriceList": "SAL" if kind == "cCustomer" else "PUR"}
+    """U1 BPs, then the demo BPs from data/06_business_partners.json (Legacy: completed, never created here)."""
+    rows = [(kind, acct, False, *r) for kind, rs, acct in (("cCustomer", CUSTOMERS, "5002-02-04-01"),
+                                                          ("cSupplier", VENDORS, "3002-02-01")) for r in rs]
+    rows += [(b["CardType"], b["ControlAccount"], b["GSTIN"], b["CardCode"], b["CardName"], b["State"], b["City"],
+              b["PAN"], b["PaymentTermsDays"], b["WTCode"], None)
+             for b in sorted(L.load("06_business_partners"), key=lambda b: (b["CardType"], b["CardCode"]))]
+    for kind, acct, legacy_gstin, code, name, state, city, pan, days, wt, note in rows:
+        grp, credit, (first, last, pos), mobile, dom, bill, ship = DETAILS[code]
+        yield {"CardCode": code, "CardName": name, "CardType": kind, "State": state, "City": city, "PAN": pan,
+               "GSTIN": legacy_gstin or gstin(state, pan), "Legacy": bool(legacy_gstin),
+               "PaymentTermsDays": days, "WTCode": wt, "ControlAccount": acct, "Note": note,
+               "Group": grp, "CreditLimit": credit, "Contact": f"{first} {last}", "First": first, "Last": last,
+               "Position": pos, "Mobile": mobile, "Email": f"accounts@{dom}.example",
+               "ContactEmail": f"{first.lower()}@{dom}.example", "Bill": bill, "Ship": ship,
+               "PriceList": "SAL" if kind == "cCustomer" else "PUR"}
 
 
 # ---------------------------------------------------------------------------------------------- Excel
@@ -346,8 +398,10 @@ def load_sap(sl):
         details = {"GroupCode": bpgrp[b["Group"]], "CreditLimit": b["CreditLimit"], "PriceListNum": plist[b["PriceList"]],
                    "Cellular": b["Mobile"], "EmailAddress": b["Email"], "ContactPerson": b["Contact"],
                    "DebitorAccount": b["ControlAccount"], "PayTermsGrpCode": terms.get(f"Net {b['PaymentTermsDays']} Days"),
-                   "Notes": b["Note"], "BPAddresses": [addr("bo_BillTo", "Bill To", "", bb, bs, ba, bc, bz),
-                                                       addr("bo_ShipTo", "Ship To", sn, sb, ss, sa, sc, sz)]}
+                   "BPAddresses": [addr("bo_BillTo", "Bill To", "", bb, bs, ba, bc, bz),
+                                   addr("bo_ShipTo", "Ship To", sn, sb, ss, sa, sc, sz)]}
+        if b["Note"]:
+            details["Notes"] = b["Note"]
         contact = {"Name": b["Contact"], "FirstName": b["First"], "LastName": b["Last"], "Position": b["Position"],
                    "MobilePhone": b["Mobile"], "E_Mail": b["ContactEmail"]}
         if sl.exists("BusinessPartners", b["CardCode"]):
@@ -360,6 +414,9 @@ def load_sap(sl):
                 if (a["AddressName"], a["AddressType"]) in rows:
                     a.update({"RowNum": rows[(a["AddressName"], a["AddressType"])], "BPCode": b["CardCode"]})
             sl.patch("BusinessPartners", b["CardCode"], details, f"{b['CardCode']} details")
+            continue
+        if b["Legacy"]:
+            sl.log(f"WARN {b['CardCode']} missing - create it with sl_loader.py --step bps, then re-run")
             continue
         body = {"CardCode": b["CardCode"], "CardName": b["CardName"], "CardType": b["CardType"], "Currency": "INR",
                 **details, "ContactEmployees": [contact], "BPFiscalTaxIDCollection": [{"Address": "", "TaxId0": b["PAN"]}]}
