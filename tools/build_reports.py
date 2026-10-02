@@ -1,8 +1,8 @@
-"""Query Manager report pack for AKE_DEMO: categories OTC, PTP, PTS, FIN with HANA SQL reports.
+"""Query Manager report pack for AKE_DEMO: categories OTC, PTP, PTS, FICO with HANA SQL reports.
 
 Run:  python tools/build_reports.py --test     (run every report against AKE_DEMO via Service Layer, save nothing)
       python tools/build_reports.py            (test, then create/update the categories and saved queries)
-In SAP: Tools -> Queries -> Query Manager -> OTC / PTP / PTS / FIN. Date-range reports prompt for From / To date
+In SAP: Tools -> Queries -> Query Manager -> OTC / PTP / PTS / FICO. Date-range reports prompt for From / To date
 ([%0] / [%1]); the GL ledger also asks for the account ([%2]).
 """
 import argparse, pathlib, re, sys
@@ -10,8 +10,8 @@ import argparse, pathlib, re, sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import sl_loader as L
 
-CATEGORIES = {"OTC": "OTC - Order to Cash", "PTP": "PTP - Procure to Pay", "PTS": "PTS - Plan to Stock (Production & Inventory)",
-              "FIN": "FIN - Finance"}
+# OTC = Order to Cash, PTP = Procure to Pay, PTS = Plan to Stock (production & inventory), FICO = Finance & Controlling
+CATEGORIES = {"OTC": "OTC", "PTP": "PTP", "PTS": "PTS", "FICO": "FICO"}
 TEST_PARAMS = {"[%0]": "'2026-04-01'", "[%1]": "'2027-03-31'", "[%2]": "'3002-02-01'"}
 
 NO = lambda t, n="N": f'IFNULL({n}."BeginStr", \'\') || TO_NVARCHAR({t}."DocNum")'      # series prefix + number
@@ -170,26 +170,26 @@ SELECT {NO("T0")} AS "Transfer No", T0."DocDate" AS "Date", T1."ItemCode" AS "It
 FROM "OWTR" T0 INNER JOIN "WTR1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
 WHERE {DATES("T0")} ORDER BY T0."DocDate", T0."DocNum"'''),
     # ---------------------------------------------------------------------------------------------- FIN
-    ("FIN", "FIN01 Trial Balance", f'''
+    ("FICO", "FIN01 Trial Balance", f'''
 SELECT T1."Account" AS "Account", A."AcctName" AS "Account Name",
        CASE A."GroupMask" WHEN 1 THEN 'Assets' WHEN 2 THEN 'Liabilities' WHEN 3 THEN 'Equity' WHEN 4 THEN 'Revenue'
             WHEN 5 THEN 'Cost of Sales' WHEN 6 THEN 'Expenses' ELSE 'Other' END AS "Drawer",
        SUM(T1."Debit") AS "Debit", SUM(T1."Credit") AS "Credit", SUM(T1."Debit") - SUM(T1."Credit") AS "Closing (Dr +/Cr -)"
 FROM "JDT1" T1 INNER JOIN "OACT" A ON A."AcctCode" = T1."Account"
 WHERE {DATES("T1", "RefDate")} GROUP BY T1."Account", A."AcctName", A."GroupMask" ORDER BY A."GroupMask", T1."Account"'''),
-    ("FIN", "FIN02 General Ledger - Account", '''
+    ("FICO", "FIN02 General Ledger - Account", '''
 SELECT T1."RefDate" AS "Date", T0."Number" AS "JE No", T1."TransType" AS "Origin", T0."BaseRef" AS "Origin No",
        T1."ShortName" AS "BP / Account", T1."LineMemo" AS "Narration", T1."Debit" AS "Debit", T1."Credit" AS "Credit",
        SUM(T1."Debit" - T1."Credit") OVER (ORDER BY T1."RefDate", T1."TransId", T1."Line_ID") AS "Running Balance"
 FROM "JDT1" T1 INNER JOIN "OJDT" T0 ON T0."TransId" = T1."TransId"
 WHERE T1."RefDate" >= [%0] AND T1."RefDate" <= [%1] AND T1."Account" = [%2] ORDER BY T1."RefDate", T1."TransId", T1."Line_ID"'''),
-    ("FIN", "FIN03 Journal Entry Register", f'''
+    ("FICO", "FIN03 Journal Entry Register", f'''
 SELECT T0."Number" AS "JE No", T0."RefDate" AS "Date", T0."TransType" AS "Origin", T0."BaseRef" AS "Origin No",
        T0."Memo" AS "Memo", T1."Account" AS "Account", A."AcctName" AS "Account Name", T1."ShortName" AS "BP",
        T1."Debit" AS "Debit", T1."Credit" AS "Credit"
 FROM "OJDT" T0 INNER JOIN "JDT1" T1 ON T1."TransId" = T0."TransId" INNER JOIN "OACT" A ON A."AcctCode" = T1."Account"
 WHERE {DATES("T0", "RefDate")} ORDER BY T0."RefDate", T0."Number", T1."Line_ID"'''),
-    ("FIN", "FIN04 GST Summary - Output vs Input (3B)", f'''
+    ("FICO", "FIN04 GST Summary - Output vs Input (3B)", f'''
 SELECT 'Output (Sales)' AS "Side", T1."TaxCode" AS "Tax Code", SUM(T1."LineTotal") AS "Taxable",
        SUM({CGST("T1")}) AS "CGST", SUM({CGST("T1")}) AS "SGST", SUM({IGST("T1")}) AS "IGST", SUM(T1."VatSum") AS "Total GST"
 FROM "OINV" T0 INNER JOIN "INV1" T1 ON T1."DocEntry" = T0."DocEntry"
@@ -204,7 +204,7 @@ SELECT 'Input reversed (A/P credit notes)', T1."TaxCode", -SUM(T1."LineTotal"), 
 FROM "ORPC" T0 INNER JOIN "RPC1" T1 ON T1."DocEntry" = T0."DocEntry"
 WHERE {DATES("T0")} AND T0."CANCELED" = 'N' GROUP BY T1."TaxCode"
 ORDER BY 1, 2'''),
-    ("FIN", "FIN05 GSTR-1 B2B Invoice List", f'''
+    ("FICO", "FIN05 GSTR-1 B2B Invoice List", f'''
 SELECT C."GSTRegnNo" AS "Customer GSTIN", T0."CardName" AS "Customer", {NO("T0")} AS "Invoice No", T0."DocDate" AS "Invoice Date",
        T0."DocTotal" AS "Invoice Value", LEFT(C."GSTRegnNo", 2) AS "Place of Supply", T1."VatPrcnt" AS "Rate %",
        SUM(T1."LineTotal") AS "Taxable", SUM({IGST("T1")}) AS "IGST", SUM({CGST("T1")}) AS "CGST", SUM({CGST("T1")}) AS "SGST"
@@ -213,12 +213,12 @@ LEFT JOIN "CRD1" C ON C."CardCode" = T0."CardCode" AND C."AdresType" = 'B' AND C
 WHERE {DATES("T0")} AND T0."CANCELED" = 'N'
 GROUP BY C."GSTRegnNo", T0."CardName", N."BeginStr", T0."DocNum", T0."DocDate", T0."DocTotal", T1."VatPrcnt"
 ORDER BY T0."DocDate", T0."DocNum"'''),
-    ("FIN", "FIN06 TDS Payable by Section", f'''
+    ("FICO", "FIN06 TDS Payable by Section", f'''
 SELECT X."WTCode" AS "TDS Code", X."WTName" AS "Description", W."Rate" AS "Rate %", COUNT(*) AS "Deductions",
        SUM(W."TaxbleAmnt") AS "Taxable", SUM(W."WTAmnt") AS "TDS Deducted", X."Account" AS "Payable Account"
 FROM "OPCH" T0 INNER JOIN "PCH5" W ON W."AbsEntry" = T0."DocEntry" INNER JOIN "OWHT" X ON X."WTCode" = W."WTCode"
 WHERE {DATES("T0")} AND T0."CANCELED" = 'N' GROUP BY X."WTCode", X."WTName", W."Rate", X."Account" ORDER BY X."WTCode"'''),
-    ("FIN", "FIN07 Profit & Loss Summary", f'''
+    ("FICO", "FIN07 Profit & Loss Summary", f'''
 SELECT CASE WHEN A."GroupMask" = 4 THEN '1 Revenue' WHEN A."GroupMask" = 5 THEN '2 Cost of Sales' ELSE '3 Expenses' END AS "Section",
        T1."Account" AS "Account", A."AcctName" AS "Account Name", SUM(T1."Credit") - SUM(T1."Debit") AS "Amount (Income +/Cost -)"
 FROM "JDT1" T1 INNER JOIN "OACT" A ON A."AcctCode" = T1."Account"
@@ -242,12 +242,28 @@ def run_sql(sl, code, sql):
     return r.json()["value"], None
 
 
+def create_categories(sl):
+    """Create the missing Query Manager categories; return {name: code}."""
+    cats = {c["Name"]: c["Code"] for c in sl.get("QueryCategories")["value"]}
+    for name in CATEGORIES.values():
+        if name not in cats:
+            res = sl.post("QueryCategories", {"Name": name, "Permissions": "YYYYYYYYYYYYYYY"}, name)
+            if res:
+                cats[name] = res["Code"]
+    return cats
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--test", action="store_true", help="only run the SQL, do not save queries")
+    ap.add_argument("--categories", action="store_true", help="only create the Query Manager categories")
     a = ap.parse_args()
     sl = L.SL(L.read_env(), False, print)
     sl.login()
+    if a.categories:
+        cats = create_categories(sl)
+        print("Categories:", {n: cats.get(n) for n in CATEGORIES.values()}, f"Failures: {sl.failures}")
+        return
     bad = 0
     for cat, title, sql in REPORTS:
         rows, err = run_sql(sl, "zz_" + title.split()[0].lower(), sql.strip())
@@ -259,11 +275,7 @@ def main():
     if a.test or bad:
         print(f"Tested {len(REPORTS)} reports, {bad} failed." + ("" if a.test else " Nothing saved."))
         return
-    cats = {c["Name"]: c["Code"] for c in sl.get("QueryCategories")["value"]}
-    for key, name in CATEGORIES.items():
-        if name not in cats:
-            res = sl.post("QueryCategories", {"Name": name, "Permissions": "YYYYYYYYYYYYYYY"}, name)
-            cats[name] = res["Code"]
+    cats = create_categories(sl)
     have = {(q["QueryCategory"], q["QueryDescription"]): q["InternalKey"]
             for q in sl.get(f"UserQueries?$select=InternalKey,QueryCategory,QueryDescription&$filter=QueryCategory gt 0")["value"]}
     for cat, title, sql in REPORTS:

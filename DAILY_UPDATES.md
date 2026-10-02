@@ -5,6 +5,28 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 
 ---
 
+## 2026-10-02 (Friday)
+
+### ✅ Completed
+| # | Task | Result / where |
+|---|---|---|
+| 1 | Query Manager categories created in AKE_DEMO | OTC (18), PTP (19), PTS (20), FICO (21) – `python tools/build_reports.py --categories` |
+
+### 🔄 In progress
+| Task | Status |
+|---|---|
+| Query Manager reports (28) | Categories exist; reports to be tested and saved into them |
+| Crystal Reports print layouts (.rpt) | Continue on SAP server SSO-WINDOWS1 |
+
+### ⛔ Waiting on user / AKE
+- Same open items as 2026-10-01 (HANA read-only user, TDS 194Q, USD rate, company address, `manager` password, bank details, Claude Code on SSO-WINDOWS1)
+
+### 📌 Next
+1. Test the 28 reports (`python tools/build_reports.py --test`), then save them into OTC / PTP / PTS / FICO
+2. Crystal Tax Invoice layout on the SAP server
+
+---
+
 ## 2026-10-01 (Thursday)
 
 ### ✅ Completed
@@ -28,13 +50,13 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 16 | TDS correction | Invoice without TDS reversed by PCN/26-27/1; re-posted PINV/26-27/4 with TDS ₹6,000 |
 | 17 | Print formats (PDF) | 15 formats, 34 PDFs – Tax Invoice, Delivery Challan, PO, GRN, Job Card … (`tools/print_docs.py` → `prints/`) |
 | 18 | Handover for SAP server session | `docs/02_Handover_SAP_Server.md` |
-| 19 | Report pack written | 28 HANA SQL reports in categories OTC / PTP / PTS / FIN (`tools/build_reports.py`) |
+| 19 | Report pack written | 28 HANA SQL reports in categories OTC / PTP / PTS / FIN – FIN renamed FICO on 02-10 (`tools/build_reports.py`) |
 | 20 | Daily update tracker | This file; pushed to GitHub |
 
 ### 🔄 In progress
 | Task | Status |
 |---|---|
-| Query Manager reports OTC / PTP / PTS / FIN | SQL written; needs testing on HANA before saving into SAP |
+| Query Manager reports OTC / PTP / PTS / FICO | SQL written; needs testing on HANA before saving into SAP |
 | Crystal Reports print layouts (.rpt) | Option B chosen – continue on SAP server SSO-WINDOWS1 |
 
 ### ⛔ Waiting on user / AKE
