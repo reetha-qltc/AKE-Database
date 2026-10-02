@@ -11,18 +11,19 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | # | Task | Result / where |
 |---|---|---|
 | 1 | Query Manager categories created in AKE_DEMO | OTC (18), PTP (19), PTS (20), FICO (21) – `python tools/build_reports.py --categories` |
+| 2 | 28 reports saved into Query Manager | 7 each in OTC / PTP / PTS / FICO – `python tools/build_reports.py --no-test` |
 
 ### 🔄 In progress
 | Task | Status |
 |---|---|
-| Query Manager reports (28) | Categories exist; reports to be tested and saved into them |
+| Query Manager reports (28) | Saved; not yet run – Service Layer SQLQueries cannot test them (rejects `\|\|`, CASE, arithmetic, OACT/OWHT), so run each once in the SAP client |
 | Crystal Reports print layouts (.rpt) | Continue on SAP server SSO-WINDOWS1 |
 
 ### ⛔ Waiting on user / AKE
 - Same open items as 2026-10-01 (HANA read-only user, TDS 194Q, USD rate, company address, `manager` password, bank details, Claude Code on SSO-WINDOWS1)
 
 ### 📌 Next
-1. Test the 28 reports (`python tools/build_reports.py --test`), then save them into OTC / PTP / PTS / FICO
+1. Run each of the 28 reports in the SAP client (dates 01-04-2026 to 31-03-2027) and fix any that fail
 2. Crystal Tax Invoice layout on the SAP server
 
 ---

@@ -1,6 +1,7 @@
 """Query Manager report pack for AKE_DEMO: categories OTC, PTP, PTS, FICO with HANA SQL reports.
 
 Run:  python tools/build_reports.py --test     (run every report against AKE_DEMO via Service Layer, save nothing)
+      python tools/build_reports.py --no-test  (save without testing; test each report in the SAP client)
       python tools/build_reports.py            (test, then create/update the categories and saved queries)
 In SAP: Tools -> Queries -> Query Manager -> OTC / PTP / PTS / FICO. Date-range reports prompt for From / To date
 ([%0] / [%1]); the GL ledger also asks for the account ([%2]).
@@ -256,6 +257,8 @@ def create_categories(sl):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--test", action="store_true", help="only run the SQL, do not save queries")
+    ap.add_argument("--no-test", action="store_true",
+                    help="save without the Service Layer test (SQLQueries rejects ||, CASE, arithmetic and some tables)")
     ap.add_argument("--categories", action="store_true", help="only create the Query Manager categories")
     a = ap.parse_args()
     sl = L.SL(L.read_env(), False, print)
@@ -265,7 +268,7 @@ def main():
         print("Categories:", {n: cats.get(n) for n in CATEGORIES.values()}, f"Failures: {sl.failures}")
         return
     bad = 0
-    for cat, title, sql in REPORTS:
+    for cat, title, sql in ([] if a.no_test else REPORTS):
         rows, err = run_sql(sl, "zz_" + title.split()[0].lower(), sql.strip())
         if err:
             bad += 1
