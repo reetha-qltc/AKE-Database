@@ -123,6 +123,22 @@ SELECT T0."CardCode" AS "Vendor", MAX(T0."CardName") AS "Vendor Name", COUNT(DIS
        SUM(T0."DocTotal" - T0."VatSum" + T0."WTSum") AS "Taxable", SUM(T0."VatSum") AS "GST", SUM(T0."WTSum") AS "TDS",
        SUM(T0."DocTotal") AS "Net Payable"
 FROM "OPCH" T0 WHERE {DATES("T0")} AND T0."CANCELED" = 'N' GROUP BY T0."CardCode" ORDER BY SUM(T0."DocTotal") DESC'''),
+    ("PTP", "PTP08 Purchase Quotation Comparison", f'''
+SELECT T1."ItemCode" AS "Item", T1."Dscription" AS "Description", T0."DocNum" AS "PQ No", T0."DocDate" AS "PQ Date",
+       T0."CardCode" AS "Vendor", T0."CardName" AS "Vendor Name", T1."Quantity" AS "Qty", T1."unitMsr" AS "UoM",
+       T1."Price" AS "Rate", T1."LineTotal" AS "Net", T1."VatSum" AS "GST", T1."LineTotal" + T1."VatSum" AS "Total",
+       T1."ShipDate" AS "Delivery Date", T0."DocDueDate" AS "Valid Until", T1."BaseRef" AS "Purchase Request",
+       T0."DocStatus" AS "Status"
+FROM "OPQT" T0 INNER JOIN "PQT1" T1 ON T1."DocEntry" = T0."DocEntry"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T1."ItemCode", T1."Price", T1."ShipDate"'''),
+    ("PTP", "PTP09 PO Receipt Status by GRPO", f'''
+SELECT T0."DocNum" AS "PO No", T0."DocDate" AS "PO Date", T0."CardName" AS "Vendor", T1."ItemCode" AS "Item",
+       T1."Quantity" AS "PO Qty", T1."unitMsr" AS "UoM", G."DocNum" AS "GRPO No", G."DocDate" AS "GRPO Date",
+       GL."Quantity" AS "GRPO Qty", T1."OpenQty" AS "Open Qty Now", T0."DocStatus" AS "PO Status"
+FROM "OPOR" T0 INNER JOIN "POR1" T1 ON T1."DocEntry" = T0."DocEntry"
+LEFT JOIN "PDN1" GL ON GL."BaseType" = 22 AND GL."BaseEntry" = T1."DocEntry" AND GL."BaseLine" = T1."LineNum"
+LEFT JOIN "OPDN" G ON G."DocEntry" = GL."DocEntry"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocNum", T1."LineNum", G."DocNum"'''),
     # ---------------------------------------------------------------------------------------------- PTS
     ("PTS", "PTS01 Production Order Status", f'''
 SELECT {NO("T0")} AS "Order No", T0."PostDate" AS "Order Date", T0."DueDate" AS "Due Date", T0."ItemCode" AS "Product",

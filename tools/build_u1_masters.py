@@ -71,7 +71,7 @@ ITEMS = [
     ("EL003", "LED Flood Light 100W", RM, 1, 1, 1, "NOS", "NOS", "NOS", "NOS", "U1WH02", MA, "9405", 18, 2300, 2400, 2900, 0, 0),
     ("PL001", "PVC Pipe 110mm 6 kgf", RM, 1, 1, 1, "LENGTH", "MTR", "FT", "MTR", "U1WH02", MA, "3917", 18, 290, 300, 350, 0, 0),
     ("PL002", "GI Pipe 50mm Medium", RM, 1, 1, 1, "LENGTH", "MTR", "MTR", "MTR", "U1WH02", MA, "7306", 18, 520, 540, 620, 0, 0),
-    ("SF001", "Safety Helmet", SF, 1, 1, 0, "NOS", "NOS", "NOS", "NOS", "U1WH01", FIFO, "6506", 18, 180, 190, None, 0, 0),
+    ("SF001", "Safety Helmet", SF, 1, 1, 1, "NOS", "NOS", "NOS", "NOS", "U1WH01", FIFO, "6506", 18, 180, 190, 250, 0, 0),
     ("SF002", "Safety Shoes", SF, 1, 1, 0, "NOS", "NOS", "NOS", "NOS", "U1WH01", FIFO, "6403", 5, 950, 990, None, 0, 0),
     ("SF003", "Safety Harness Full Body with Lanyard", SF, 1, 1, 0, "SET", "SET", "SET", "SET", "U1WH01", FIFO, "6307", 5, 2600, 2700, None, 0, 0),
     ("CN001", "Welding Rod E6013 3.15mm", CN, 1, 1, 0, "ELECTRODE", "KG", "BOX", "KG", "U1WH01", FIFO, "8311", 18, 210, 220, None, 0, 0),
@@ -99,6 +99,7 @@ CUSTOMERS = [
     ("U1C003", "Godavari Power Plant Constructions Pvt Ltd", "Telangana", "Hyderabad", "AAGCG4410P", 60, None, "Pipe racks, platforms, base plates"),
     ("U1C004", "Palar Warehousing & Logistics LLP", "Tamil Nadu", "Chennai", "AAPFP2287D", 45, None, "PEB warehouses - trusses & columns"),
     ("U1C005", "Deccan Highway Bridges Ltd", "Maharashtra", "Pune", "AADCD9063R", 60, None, "Bridge girders, TMT & site electricals"),
+    ("U1C006", "ABC Developers Pvt Ltd", "Karnataka", "Bengaluru", "AABCA7781K", 30, None, "Residential towers - TMT bars, safety items (O2C demo)"),
 ]
 VENDORS = [
     ("U1V001", "Tungabhadra Steel Distributors", "Karnataka", "Ballari", "AAKFT3318L", 30, None, "TMT bars, structural steel (194Q pending)"),
@@ -134,6 +135,9 @@ DETAILS = {
     "U1C005": ("EPC & Infra", ("Amit", "Deshpande", "Project Manager"), "+91 90000 10005", "deccanbridges",
                ("Deccan House, 5th Floor", "Senapati Bapat Road", "Shivajinagar", "Pune", "411016"),
                ("Site - Bhima River Bridge", "NH-65, Km 42", "Bhigwan Road", "Indapur", "Indapur", "413106")),
+    "U1C006": ("EPC & Infra", ("Naveen", "Shetty", "Purchase Manager"), "+91 90000 10006", "abcdevelopers",
+               ("No. 21, ABC Towers, 4th Floor", "Outer Ring Road", "Marathahalli", "Bengaluru", "560037"),
+               ("Site - ABC Residency Towers", "Sy. No. 54", "Sarjapur Road", "Dommasandra", "Bengaluru", "562125")),
     "U1V001": ("Steel Suppliers", ("Mahesh", "Gowda", "Sales Manager"), "+91 90000 10101", "tungabhadrasteel",
                ("Plot 7, Tungabhadra Steel Yard", "Hospet Road", "Kurugodu Cross", "Ballari", "583101"),
                ("Stock Yard", "Plot 22", "KIADB Industrial Area", "Sanklapur", "Hosapete", "583201")),

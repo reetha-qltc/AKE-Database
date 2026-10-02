@@ -273,6 +273,12 @@ GL_DETERMINATION = {
     "InventoryOffsetIncrease": "4001-20", "InventoryOffsetDecrease": "4001-21",
     "WIPMaterialAccount": "5002-01-02", "WIPMaterialVarianceAccount": "4001-23",
     "NegativeInventoryAdjustmentAccount": "4001-21",
+    # system currency is USD: payments post realized conversion differences in SC (needed by incoming payments)
+    # credit memos (A/R returns reduce sales, A/P credits reduce purchases)
+    "SalesCreditAcc": "2001-01-01-01", "PurchaseCreditAcc": "4008-01",
+    "ARGainRealizedConversionDiff": "2003-02", "ARLossRealizedConversionDiff": "4006-07",
+    "APGainRealizedConversionDiff": "2003-02", "APLossRealizedConversionDiff": "4006-07",
+    "GLGainRealizedConversionDiff": "2003-02", "GLLossRealizedConversionDiff": "4006-07",
 }
 
 

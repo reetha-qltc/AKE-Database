@@ -21,6 +21,10 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 3f | Full BP details on all 14 U1 BPs (checked in SAP) | Bill-to + ship-to with PIN, state, dummy GSTIN/PAN, payment terms, contact person, mobile, e-mail (.example), BP group (3 customer + 7 vendor groups), control account, price list (customers: Sales, vendors: Purchase) |
 | 3g | Same full details on the 15 demo BPs C0001–C0006, V0001–V0009 | All 29 BPs verified in SAP (13 fields each); new BP groups Manufacturing (C0006) and Consultants (V0009); existing GSTINs kept (valid check digits) |
 | 3h | Credit limits removed (user request) | Credit limit and commitment limit = 0 on all 29 BPs; removed from loader and Excel |
+| 4 | P2P demo – RM001 1,000 KG | PR/26-27/1 → PQ/26-27/1-3 (U1V001 ₹62 / V0001 ₹64 / V0002 ₹63.50) → PO/26-27/3 → GRN/26-27/3 600 KG (validated 1000 / 600 / 400) → PINV/26-27/5 → PAY/26-27/1 ₹25,000 partial → GRN/26-27/4 400 KG → PINV/26-27/6 |
+| 5 | O2C demo – ABC Developers (U1C006) | SQ/26-27/2 → SO/26-27/6 → DN/26-27/6 (600 KG partial + 20 Nos full) → SR/26-27/1 return 2 Nos → INV/26-27/5 → RCT/26-27/2 → DN/26-27/7 400 KG → INV/26-27/6 → SCN/26-27/1 50 KG → RCT/26-27/3 |
+| 6 | Demo guide + reports | `docs/03_O2C_P2P_Demo.md`, `tools/demo_o2c_p2p.py`; new queries PTP08 Quotation Comparison, PTP09 PO Receipt Status (both tested) |
+| 7 | Setup fixes found by the demo | Realized conversion difference accounts (2003-02 / 4006-07); sales/purchase credit accounts on item groups + G/L determination; SF001 made a sales item |
 
 ### 🔄 In progress
 | Task | Status |
@@ -34,8 +38,9 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 - Same open items as 2026-10-01 (HANA read-only user, TDS 194Q, USD rate, company address, `manager` password, bank details, Claude Code on SSO-WINDOWS1)
 
 ### 📌 Next
-1. Run each of the 28 reports in the SAP client (dates 01-04-2026 to 31-03-2027) and fix any that fail
-2. Crystal Tax Invoice layout on the SAP server
+1. Walk through `docs/03_O2C_P2P_Demo.md` in the SAP client (Relationship Map per document)
+2. Run each of the 30 reports in the SAP client (dates 01-04-2026 to 31-03-2027) and fix any that fail
+3. Crystal Tax Invoice layout on the SAP server
 
 ---
 
