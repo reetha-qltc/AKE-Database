@@ -71,6 +71,46 @@ SELECT T1."ItemCode" AS "Item", MAX(T1."Dscription") AS "Description", SUM(T1."Q
        CASE WHEN SUM(T1."LineTotal") = 0 THEN 0 ELSE ROUND(SUM(T1."GrssProfit") * 100 / SUM(T1."LineTotal"), 2) END AS "GP %"
 FROM "OINV" T0 INNER JOIN "INV1" T1 ON T1."DocEntry" = T0."DocEntry"
 WHERE {DATES("T0")} AND T0."CANCELED" = 'N' GROUP BY T1."ItemCode" ORDER BY SUM(T1."LineTotal") DESC'''),
+    ("OTC", "OTC08 Open Sales Quotations", f'''
+SELECT {NO("T0")} AS "Quotation No", T0."DocDate" AS "Date", T0."DocDueDate" AS "Valid Until",
+       DAYS_BETWEEN(CURRENT_DATE, T0."DocDueDate") AS "Days to Expiry", T0."CardCode" AS "Customer",
+       T0."CardName" AS "Customer Name", T1."ItemCode" AS "Item", T1."Dscription" AS "Description", T1."Quantity" AS "Qty",
+       T1."unitMsr" AS "UoM", T1."OpenQty" AS "Open Qty", T1."Price" AS "Rate", T1."OpenQty" * T1."Price" AS "Open Value"
+FROM "OQUT" T0 INNER JOIN "QUT1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE T1."LineStatus" = 'O' AND T0."CANCELED" = 'N' ORDER BY T0."DocDueDate", T0."DocNum"'''),
+    ("OTC", "OTC09 Sales Order Register", f'''
+SELECT {NO("T0")} AS "SO No", T0."DocDate" AS "SO Date", T0."DocDueDate" AS "Delivery Date", T0."NumAtCard" AS "Customer PO",
+       T0."CardCode" AS "Customer", T0."CardName" AS "Customer Name", T0."DocTotal" - T0."VatSum" AS "Taxable",
+       T0."VatSum" AS "GST", T0."DocTotal" AS "Total",
+       CASE T0."DocStatus" WHEN 'O' THEN 'Open' ELSE 'Closed' END AS "Status"
+FROM "ORDR" T0 LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum"'''),
+    ("OTC", "OTC10 Sales Order vs Delivery", f'''
+SELECT {NO("T0")} AS "SO No", T0."DocDate" AS "SO Date", T0."CardName" AS "Customer", T1."ItemCode" AS "Item",
+       T1."Quantity" AS "SO Qty", T1."unitMsr" AS "UoM", IFNULL(D."BeginStr", '') || TO_NVARCHAR(G."DocNum") AS "Delivery No",
+       G."DocDate" AS "Delivery Date", GL."Quantity" AS "Delivered Qty", T1."OpenQty" AS "Open Qty Now",
+       CASE T0."DocStatus" WHEN 'O' THEN 'Open' ELSE 'Closed' END AS "SO Status"
+FROM "ORDR" T0 INNER JOIN "RDR1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+LEFT JOIN "DLN1" GL ON GL."BaseType" = 17 AND GL."BaseEntry" = T1."DocEntry" AND GL."BaseLine" = T1."LineNum"
+LEFT JOIN "ODLN" G ON G."DocEntry" = GL."DocEntry" AND G."CANCELED" = 'N' LEFT JOIN "NNM1" D ON D."Series" = G."Series"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocNum", T1."LineNum", G."DocNum"'''),
+    ("OTC", "OTC11 Open Sales Orders - Summary", f'''
+SELECT {NO("T0")} AS "SO No", T0."DocDate" AS "SO Date", T0."DocDueDate" AS "Delivery Date", T0."CardCode" AS "Customer",
+       T0."CardName" AS "Customer Name", T0."DocTotal" AS "SO Value (incl. GST)", SUM(T1."LineTotal") AS "Taxable Value",
+       SUM((T1."Quantity" - T1."OpenQty") * T1."Price") AS "Delivered Value", SUM(T1."OpenQty" * T1."Price") AS "Pending Value",
+       DAYS_BETWEEN(T0."DocDueDate", CURRENT_DATE) AS "Days Overdue"
+FROM "ORDR" T0 INNER JOIN "RDR1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE T0."DocStatus" = 'O' AND T0."CANCELED" = 'N'
+GROUP BY N."BeginStr", T0."DocNum", T0."DocDate", T0."DocDueDate", T0."CardCode", T0."CardName", T0."DocTotal"
+ORDER BY T0."DocDueDate", T0."DocNum"'''),
+    ("OTC", "OTC12 A/R Credit Memo Register", f'''
+SELECT {NO("T0")} AS "Credit Memo No", T0."DocDate" AS "Date", T0."CardCode" AS "Customer", T0."CardName" AS "Customer Name",
+       T1."BaseRef" AS "Base Invoice / Return", T1."ItemCode" AS "Item", T1."Dscription" AS "Description",
+       T1."Quantity" AS "Qty", T1."unitMsr" AS "UoM", T1."WhsCode" AS "Return Whse", T1."LineTotal" AS "Taxable",
+       T1."TaxCode" AS "Tax Code", {CGST("T1")} AS "CGST", {CGST("T1")} AS "SGST", {IGST("T1")} AS "IGST",
+       T1."LineTotal" + T1."VatSum" AS "Line Total", T0."Comments" AS "Reason"
+FROM "ORIN" T0 INNER JOIN "RIN1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum"'''),
     # ---------------------------------------------------------------------------------------------- PTP
     ("PTP", "PTP01 Open Purchase Orders - Pending GRPO", f'''
 SELECT {NO("T0")} AS "PO No", T0."DocDate" AS "PO Date", T1."ShipDate" AS "Expected", T0."CardName" AS "Vendor",
@@ -139,6 +179,38 @@ FROM "OPOR" T0 INNER JOIN "POR1" T1 ON T1."DocEntry" = T0."DocEntry"
 LEFT JOIN "PDN1" GL ON GL."BaseType" = 22 AND GL."BaseEntry" = T1."DocEntry" AND GL."BaseLine" = T1."LineNum"
 LEFT JOIN "OPDN" G ON G."DocEntry" = GL."DocEntry"
 WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocNum", T1."LineNum", G."DocNum"'''),
+    ("PTP", "PTP10 Open Purchase Requests", f'''
+SELECT {NO("T0")} AS "PR No", T0."DocDate" AS "PR Date", T0."ReqName" AS "Requester", T1."PQTReqDate" AS "Required By",
+       T1."ItemCode" AS "Item", T1."Dscription" AS "Description", T1."Quantity" AS "Requested", T1."unitMsr" AS "UoM",
+       T1."OpenQty" AS "Open Qty", T1."LineVendor" AS "Preferred Vendor", T1."WhsCode" AS "Whse",
+       DAYS_BETWEEN(T0."DocDate", CURRENT_DATE) AS "Days Open", T0."Comments" AS "Remarks"
+FROM "OPRQ" T0 INNER JOIN "PRQ1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE T1."LineStatus" = 'O' AND T0."CANCELED" = 'N' ORDER BY T1."PQTReqDate", T0."DocNum"'''),
+    ("PTP", "PTP11 GRPO Register", f'''
+SELECT {NO("T0")} AS "GRPO No", T0."DocDate" AS "GRPO Date", T0."NumAtCard" AS "Vendor DC / Ref", T0."CardCode" AS "Vendor",
+       T0."CardName" AS "Vendor Name", T1."BaseRef" AS "PO No", T1."ItemCode" AS "Item", T1."Dscription" AS "Description",
+       T1."Quantity" AS "Qty Received", T1."unitMsr" AS "UoM", T1."WhsCode" AS "Whse", T1."Price" AS "Rate",
+       T1."LineTotal" AS "Taxable", T1."VatSum" AS "GST", T1."LineTotal" + T1."VatSum" AS "Line Total",
+       CASE T1."LineStatus" WHEN 'O' THEN T1."OpenQty" ELSE 0 END AS "Qty not Invoiced",
+       CASE T1."LineStatus" WHEN 'O' THEN 'Pending invoice' ELSE 'Invoiced / closed' END AS "Status"
+FROM "OPDN" T0 INNER JOIN "PDN1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum"'''),
+    ("PTP", "PTP12 A/P Credit Memo Register", f'''
+SELECT {NO("T0")} AS "Credit Memo No", T0."DocDate" AS "Date", T0."NumAtCard" AS "Vendor Ref", T0."CardCode" AS "Vendor",
+       T0."CardName" AS "Vendor Name", T1."BaseRef" AS "Base Invoice / Return",
+       CASE WHEN T0."DocType" = 'S' THEN T1."Dscription" ELSE T1."ItemCode" END AS "Item / Service",
+       T1."Quantity" AS "Qty", T1."LineTotal" AS "Taxable", T1."TaxCode" AS "Tax Code", {CGST("T1")} AS "CGST",
+       {CGST("T1")} AS "SGST", {IGST("T1")} AS "IGST", T1."LineTotal" + T1."VatSum" AS "Line Total", T0."Comments" AS "Reason"
+FROM "ORPC" T0 INNER JOIN "RPC1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum"'''),
+    ("PTP", "PTP13 Goods Return Register", f'''
+SELECT {NO("T0")} AS "Return No", T0."DocDate" AS "Date", T0."CardCode" AS "Vendor", T0."CardName" AS "Vendor Name",
+       T1."BaseRef" AS "Base GRPO", T1."ItemCode" AS "Item", T1."Dscription" AS "Description", T1."Quantity" AS "Qty Returned",
+       T1."unitMsr" AS "UoM", T1."WhsCode" AS "From Whse", T1."Price" AS "Rate", T1."LineTotal" AS "Value",
+       T1."VatSum" AS "GST", CASE T1."LineStatus" WHEN 'O' THEN 'Credit memo pending' ELSE 'Credited / closed' END AS "Status",
+       T0."Comments" AS "Reason"
+FROM "ORPD" T0 INNER JOIN "RPD1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum"'''),
     # ---------------------------------------------------------------------------------------------- PTS
     ("PTS", "PTS01 Production Order Status", f'''
 SELECT {NO("T0")} AS "Order No", T0."PostDate" AS "Order Date", T0."DueDate" AS "Due Date", T0."ItemCode" AS "Product",

@@ -25,6 +25,9 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 5 | O2C demo – ABC Developers (U1C006) | SQ/26-27/2 → SO/26-27/6 → DN/26-27/6 (600 KG partial + 20 Nos full) → SR/26-27/1 return 2 Nos → INV/26-27/5 → RCT/26-27/2 → DN/26-27/7 400 KG → INV/26-27/6 → SCN/26-27/1 50 KG → RCT/26-27/3 |
 | 6 | Demo guide + reports | `docs/03_O2C_P2P_Demo.md`, `tools/demo_o2c_p2p.py`; new queries PTP08 Quotation Comparison, PTP09 PO Receipt Status (both tested) |
 | 7 | Setup fixes found by the demo | Realized conversion difference accounts (2003-02 / 4006-07); sales/purchase credit accounts on item groups + G/L determination; SF001 made a sales item |
+| 8 | Purchase reports (user list) | New PTP10 Open Purchase Requests, PTP11 GRPO Register, PTP12 A/P Credit Memo Register, PTP13 Goods Return Register; already present: PTP08 quotation comparison, PTP01 open PO, PTP09 PO vs GRPO, PTP02 GRPO pending, PTP03 A/P invoice register |
+| 9 | Sales reports (user list) | New OTC08 Open Sales Quotations, OTC09 Sales Order Register, OTC10 SO vs Delivery, OTC11 Open Sales Orders – Summary, OTC12 A/R Credit Memo Register; already present: OTC01 quotations, OTC02 delivery pending, OTC04 A/R invoice register |
+| 10 | Query Manager now holds 39 reports | OTC 12 · PTP 13 · PTS 7 · FICO 7 – tables/columns of the 9 new ones checked against AKE_DEMO |
 
 ### 🔄 In progress
 | Task | Status |
@@ -39,7 +42,7 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 
 ### 📌 Next
 1. Walk through `docs/03_O2C_P2P_Demo.md` in the SAP client (Relationship Map per document)
-2. Run each of the 30 reports in the SAP client (dates 01-04-2026 to 31-03-2027) and fix any that fail
+2. Run each of the 39 reports in the SAP client (dates 01-04-2026 to 31-03-2027) and fix any that fail
 3. Crystal Tax Invoice layout on the SAP server
 
 ---
