@@ -18,6 +18,7 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 3c | Item groups | Raw material, Finished Goods, Safety Equipment, Tools & Consumables (new); Consumables (existing, reused) |
 | 3d | 27 items | RM001–RM007, EL001–EL003, PL001–PL002, SF001–SF003, CN001–CN003, TR001–TR002, BAT001 (batch), SER001 (serial), SRV001–SRV002 (non-stock), FG001–FG003 (standard cost via revaluation) |
 | 3e | Fabrication customers & vendors | Customers U1C001–U1C005; vendors U1V001–U1V009 (U1V008 TDS C2, U1V009 TDS C1) |
+| 3f | Full BP details on all 14 U1 BPs (checked in SAP) | Bill-to + ship-to with PIN, state, dummy GSTIN/PAN, payment terms, credit limit, contact person, mobile, e-mail (.example), BP group (3 customer + 7 vendor groups), control account, price list (customers: Sales, vendors: Purchase) |
 
 ### 🔄 In progress
 | Task | Status |

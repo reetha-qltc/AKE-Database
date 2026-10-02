@@ -111,6 +111,57 @@ VENDORS = [
     ("U1V008", "Sarathi Roadlines", "Karnataka", "Bengaluru", "AAGFS7740Q", 15, "C2", "Transport (GTA) - TDS 194C 2%"),
     ("U1V009", "Ramesh Fabrication Job Works", "Karnataka", "Doddaballapur", "BQRPR6153A", 30, "C1", "Fabrication subcontracting - TDS 194C 1%"),
 ]
+# BP groups (name max 20 chars) - customers by segment, vendors by what they supply
+CUSTOMER_GROUPS = ["EPC & Infra", "Industrial Developer", "Power & Process"]
+VENDOR_GROUPS = ["Steel Suppliers", "Building Materials", "Elec & Plumbing", "Safety & Consumable",
+                 "Tools & Equipment", "Transporters", "Subcontractors"]
+# code -> group, credit limit (INR), contact (first, last, position), mobile, mail domain,
+#         bill-to / pay-to (building, street, area, city, PIN), ship-to (site, building, street, area, city, PIN)
+# Training data only: mobiles are a dummy 90000 1xxxx series, e-mails use the reserved .example domain.
+DETAILS = {
+    "U1C001": ("EPC & Infra", 5000000, ("Suresh", "Kumar", "Purchase Manager"), "+91 90000 10001", "hampiinfra",
+               ("No. 45, 2nd Floor, Prestige Arcade", "Bannerghatta Road", "JP Nagar", "Bengaluru", "560076"),
+               ("Site - Dabaspet Industrial Shed", "Plot 12", "KIADB Industrial Area", "Dabaspet", "Dabaspet", "562111")),
+    "U1C002": ("Industrial Developer", 3000000, ("Lakshmi", "Narayan", "Projects Head"), "+91 90000 10002", "kaveriparks",
+               ("Kaveri House, 3rd Floor", "Hunsur Road", "Hebbal Industrial Area", "Mysuru", "570016"),
+               ("Site - Kaveri Park Phase 2", "Survey No. 88", "Nanjangud Industrial Area", "Nanjangud", "Nanjangud", "571301")),
+    "U1C003": ("Power & Process", 7500000, ("Venkat", "Reddy", "Procurement Manager"), "+91 90000 10003", "godavaripower",
+               ("8-2-293, Godavari Towers", "Road No. 14", "Banjara Hills", "Hyderabad", "500034"),
+               ("Site - 2x150 MW Power Plant", "Sy. No. 210", "Pashamylaram Industrial Area", "Patancheru", "Sangareddy", "502307")),
+    "U1C004": ("Industrial Developer", 4000000, ("Karthik", "Subramanian", "Purchase Manager"), "+91 90000 10004", "palarlogistics",
+               ("No. 18, Palar Plaza", "Anna Salai", "Teynampet", "Chennai", "600018"),
+               ("Site - Palar Logistics Park", "Plot B-7", "SIPCOT Industrial Park", "Oragadam", "Kancheepuram", "602105")),
+    "U1C005": ("EPC & Infra", 10000000, ("Amit", "Deshpande", "Project Manager"), "+91 90000 10005", "deccanbridges",
+               ("Deccan House, 5th Floor", "Senapati Bapat Road", "Shivajinagar", "Pune", "411016"),
+               ("Site - Bhima River Bridge", "NH-65, Km 42", "Bhigwan Road", "Indapur", "Indapur", "413106")),
+    "U1V001": ("Steel Suppliers", 2500000, ("Mahesh", "Gowda", "Sales Manager"), "+91 90000 10101", "tungabhadrasteel",
+               ("Plot 7, Tungabhadra Steel Yard", "Hospet Road", "Kurugodu Cross", "Ballari", "583101"),
+               ("Stock Yard", "Plot 22", "KIADB Industrial Area", "Sanklapur", "Hosapete", "583201")),
+    "U1V002": ("Building Materials", 1000000, ("Ravi", "Shankar", "Partner"), "+91 90000 10102", "chamundicement",
+               ("No. 112, Chamundi Complex", "Bannur Road", "Alanahalli", "Mysuru", "570028"),
+               ("Crusher Unit", "Sy. No. 45", "Belagola Road", "Srirangapatna Taluk", "Srirangapatna", "571438")),
+    "U1V003": ("Elec & Plumbing", 1000000, ("Anil", "Rao", "Sales Executive"), "+91 90000 10103", "vidyutelectricals",
+               ("No. 23, 1st Floor", "Sadar Patrappa Road", "Chickpet", "Bengaluru", "560002"),
+               ("Godown", "No. 9, 4th Cross", "Peenya 2nd Stage", "Peenya", "Bengaluru", "560058")),
+    "U1V004": ("Elec & Plumbing", 800000, ("Senthil", "Kumar", "Sales Manager"), "+91 90000 10104", "jalavahinipipes",
+               ("No. 56, Jalavahini Buildings", "Avinashi Road", "Peelamedu", "Coimbatore", "641004"),
+               ("Factory", "SF No. 312", "Kurichi Industrial Estate", "Kurichi", "Coimbatore", "641021")),
+    "U1V005": ("Safety & Consumable", 500000, ("Priya", "Patil", "Key Account Manager"), "+91 90000 10105", "rakshaksafety",
+               ("Unit 14, Rakshak Industrial Estate", "LBS Marg", "Ghatkopar West", "Mumbai", "400086"),
+               ("Warehouse", "Gala 3, Bhiwandi Logistics Park", "Mumbai-Nashik Highway", "Bhiwandi", "Bhiwandi", "421302")),
+    "U1V006": ("Safety & Consumable", 500000, ("Manjunath", "H", "Sales Executive"), "+91 90000 10106", "agniwelding",
+               ("No. 77, 1st Main", "Yeshwanthpur Industrial Suburb", "Yeshwanthpur", "Bengaluru", "560022"),
+               ("Store", "Plot 41", "KIADB Industrial Area", "Bommasandra", "Bengaluru", "560099")),
+    "U1V007": ("Tools & Equipment", 700000, ("Basavaraj", "Patil", "Partner"), "+91 90000 10107", "shaktitools",
+               ("No. 5, Shakti Arcade", "Station Road", "Old Hubballi", "Hubballi", "580020"),
+               ("Warehouse", "Plot 18", "Gokul Road Industrial Area", "Gokul Road", "Hubballi", "580030")),
+    "U1V008": ("Transporters", 300000, ("Imran", "Khan", "Operations Manager"), "+91 90000 10108", "sarathiroadlines",
+               ("No. 3, Transport Nagar", "Tumkur Road", "Yeshwanthpur", "Bengaluru", "560022"),
+               ("Truck Terminal", "Plot 61", "Peenya 1st Stage", "Peenya", "Bengaluru", "560058")),
+    "U1V009": ("Subcontractors", 500000, ("Ramesh", "R", "Proprietor"), "+91 90000 10109", "rameshfabrication",
+               ("Shed No. 11", "Apparel Park Road", "KIADB Industrial Area", "Doddaballapur", "561203"),
+               ("Workshop", "Shed No. 12", "Apparel Park Road", "KIADB Industrial Area", "Doddaballapur", "561203")),
+}
 GST_STATE = {"Karnataka": "29", "Telangana": "36", "Tamil Nadu": "33", "Maharashtra": "27"}
 
 
@@ -125,11 +176,30 @@ def gstin(state, pan):
 def bps():
     for kind, rows, acct in (("cCustomer", CUSTOMERS, "5002-02-04-01"), ("cSupplier", VENDORS, "3002-02-01")):
         for code, name, state, city, pan, days, wt, note in rows:
+            grp, credit, (first, last, pos), mobile, dom, bill, ship = DETAILS[code]
             yield {"CardCode": code, "CardName": name, "CardType": kind, "State": state, "City": city, "PAN": pan,
-                   "GSTIN": gstin(state, pan), "PaymentTermsDays": days, "WTCode": wt, "ControlAccount": acct, "Note": note}
+                   "GSTIN": gstin(state, pan), "PaymentTermsDays": days, "WTCode": wt, "ControlAccount": acct, "Note": note,
+                   "Group": grp, "CreditLimit": credit, "Contact": f"{first} {last}", "First": first, "Last": last,
+                   "Position": pos, "Mobile": mobile, "Email": f"accounts@{dom}.example",
+                   "ContactEmail": f"{first.lower()}@{dom}.example", "Bill": bill, "Ship": ship,
+                   "PriceList": "SAL" if kind == "cCustomer" else "PUR"}
 
 
 # ---------------------------------------------------------------------------------------------- Excel
+BP_HEAD = ["Code", "Name", "Billing / pay-to address", "Shipping address", "State", "GSTIN (dummy)", "PAN (dummy)",
+           "Payment terms", "Credit limit (INR)", "Contact person", "Position", "Mobile", "Email", "BP group",
+           "Control account", "Price list", "TDS code", "Buys / supplies"]
+
+
+def bp_row(b):
+    (bb, bs, ba, bc, bz), (sn, sb, ss, sa, sc, sz) = b["Bill"], b["Ship"]
+    lists = {p["Key"]: p["PriceListName"] for p in L.load("04_price_lists")}
+    return (b["CardCode"], b["CardName"], f"{bb}, {bs}, {ba}, {bc} - {bz}", f"{sn}: {sb}, {ss}, {sa}, {sc} - {sz}",
+            b["State"], b["GSTIN"], b["PAN"], f"Net {b['PaymentTermsDays']} Days", b["CreditLimit"], b["Contact"],
+            b["Position"], b["Mobile"], b["Email"], b["Group"], b["ControlAccount"], lists[b["PriceList"]],
+            b["WTCode"] or "-", b["Note"])
+
+
 def write_excel():
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill
@@ -151,12 +221,8 @@ def write_excel():
                     i["UoMGroup"], UOMS[i["InvUoM"]], UOMS[i["PurUoM"]], UOMS[i["SalUoM"]], i["Whse"] or "-",
                     val[i["Valuation"]], i["HSN"], "Regular (Service)" if not i["Inv"] else "Regular (Goods)", i["GST"],
                     i["Cost"], i["PurPrice"], i["SalPrice"], yn(i["Batch"]), yn(i["Serial"])) for i in ITEMS]),
-        "Customers": (["Code", "Name", "State", "City", "PAN", "GSTIN", "Payment terms (days)", "Buys"],
-                      [(b["CardCode"], b["CardName"], b["State"], b["City"], b["PAN"], b["GSTIN"], b["PaymentTermsDays"], b["Note"])
-                       for b in bps() if b["CardType"] == "cCustomer"]),
-        "Vendors": (["Code", "Name", "State", "City", "PAN", "GSTIN", "Payment terms (days)", "TDS code", "Supplies"],
-                    [(b["CardCode"], b["CardName"], b["State"], b["City"], b["PAN"], b["GSTIN"], b["PaymentTermsDays"],
-                      b["WTCode"] or "-", b["Note"]) for b in bps() if b["CardType"] == "cSupplier"]),
+        "Customers": (BP_HEAD, [bp_row(b) for b in bps() if b["CardType"] == "cCustomer"]),
+        "Vendors": (BP_HEAD, [bp_row(b) for b in bps() if b["CardType"] == "cSupplier"]),
     }
     wb = Workbook()
     wb.remove(wb.active)
@@ -263,17 +329,40 @@ def load_sap(sl):
                                                                      for i in new_std for w in whs]},
                 "Standard cost " + ", ".join(i["Code"] for i in new_std))
 
+    for gtype, names in (("bbpgt_CustomerGroup", CUSTOMER_GROUPS), ("bbpgt_VendorGroup", VENDOR_GROUPS)):
+        for name in names:
+            if not sl.find("BusinessPartnerGroups", "Name", name):
+                sl.post("BusinessPartnerGroups", {"Name": name, "Type": gtype}, f"BP group {name}")
+    bpgrp = {g["Name"]: g["Code"] for g in v("BusinessPartnerGroups")}
+    plist = {k: L.price_list_no(sl, k) for k in ("SAL", "PUR")}
     terms = {t["PaymentTermsGroupName"]: t["GroupNumber"] for t in v("PaymentTermsTypes?$select=GroupNumber,PaymentTermsGroupName")}
     for b in bps():
-        if sl.exists("BusinessPartners", b["CardCode"]):
-            continue
         st = L.state_code(sl, b["State"])
-        addr = lambda t, n: {"AddressName": n, "AddressType": t, "City": b["City"], "Country": "IN",
-                             "State": st, "GSTIN": b["GSTIN"], "GstType": "gstRegularTDSISD"}
+        (bb, bs, ba, bc, bz), (sn, sb, ss, sa, sc, sz) = b["Bill"], b["Ship"]
+        addr = lambda t, n, n2, bld, street, block, city, pin: {
+            "AddressName": n, "AddressType": t, "AddressName2": n2, "BuildingFloorRoom": bld, "Street": street,
+            "Block": block, "City": city, "ZipCode": pin, "Country": "IN", "State": st, "GSTIN": b["GSTIN"],
+            "GstType": "gstRegularTDSISD"}
+        details = {"GroupCode": bpgrp[b["Group"]], "CreditLimit": b["CreditLimit"], "PriceListNum": plist[b["PriceList"]],
+                   "Cellular": b["Mobile"], "EmailAddress": b["Email"], "ContactPerson": b["Contact"],
+                   "DebitorAccount": b["ControlAccount"], "PayTermsGrpCode": terms.get(f"Net {b['PaymentTermsDays']} Days"),
+                   "Notes": b["Note"], "BPAddresses": [addr("bo_BillTo", "Bill To", "", bb, bs, ba, bc, bz),
+                                                       addr("bo_ShipTo", "Ship To", sn, sb, ss, sa, sc, sz)]}
+        contact = {"Name": b["Contact"], "FirstName": b["First"], "LastName": b["Last"], "Position": b["Position"],
+                   "MobilePhone": b["Mobile"], "E_Mail": b["ContactEmail"]}
+        if sl.exists("BusinessPartners", b["CardCode"]):
+            # complete BPs created before the details existed; the contact is added only once
+            cur = sl.get(f"BusinessPartners('{b['CardCode']}')?$select=ContactEmployees,BPAddresses")
+            if not any(c["Name"] == b["Contact"] for c in cur["ContactEmployees"]):
+                details["ContactEmployees"] = [contact]
+            rows = {(a["AddressName"], a["AddressType"]): a["RowNum"] for a in cur["BPAddresses"]}
+            for a in details["BPAddresses"]:  # without RowNum the PATCH tries to add the address again
+                if (a["AddressName"], a["AddressType"]) in rows:
+                    a.update({"RowNum": rows[(a["AddressName"], a["AddressType"])], "BPCode": b["CardCode"]})
+            sl.patch("BusinessPartners", b["CardCode"], details, f"{b['CardCode']} details")
+            continue
         body = {"CardCode": b["CardCode"], "CardName": b["CardName"], "CardType": b["CardType"], "Currency": "INR",
-                "DebitorAccount": b["ControlAccount"], "PayTermsGrpCode": terms.get(f"Net {b['PaymentTermsDays']} Days"),
-                "Notes": b["Note"], "BPAddresses": [addr("bo_BillTo", "Bill To"), addr("bo_ShipTo", "Ship To")],
-                "BPFiscalTaxIDCollection": [{"Address": "", "TaxId0": b["PAN"]}]}
+                **details, "ContactEmployees": [contact], "BPFiscalTaxIDCollection": [{"Address": "", "TaxId0": b["PAN"]}]}
         if b["WTCode"]:
             body.update({"TypeReport": "atOthers" if b["PAN"][3] in "PH" else "atCompany",
                          "SubjectToWithholdingTax": "boYES", "BPWithholdingTaxCollection": [{"WTCode": b["WTCode"]}]})
