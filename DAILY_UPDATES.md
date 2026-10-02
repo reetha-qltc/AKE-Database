@@ -12,6 +12,12 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 |---|---|---|
 | 1 | Query Manager categories created in AKE_DEMO | OTC (18), PTP (19), PTS (20), FICO (21) – `python tools/build_reports.py --categories` |
 | 2 | 28 reports saved into Query Manager | 7 each in OTC / PTP / PTS / FICO – `python tools/build_reports.py --no-test` |
+| 3 | U1 (fabrication unit 1) master data | `tools/build_u1_masters.py`, spec in `data/u1_masters/U1_Master_Data.xlsx` |
+| 3a | Units of measure + UoM groups | 9 UoMs (Nos, KG, MT, Bag, Meter, Feet, Liter, Box, Set); 9 groups e.g. 1 MT = 1000 KG, 1 Bag = 50 KG, 1 Box = 5 KG electrode / 25 discs |
+| 3b | Warehouses | U1WH01 Main, U1WH02 Raw Material Store, U1WH03 Quality, U1WH04 Rejected, U1WH06 Rejected 2 (Scrap), U1WH07 Finished |
+| 3c | Item groups | Raw material, Finished Goods, Safety Equipment, Tools & Consumables (new); Consumables (existing, reused) |
+| 3d | 27 items | RM001–RM007, EL001–EL003, PL001–PL002, SF001–SF003, CN001–CN003, TR001–TR002, BAT001 (batch), SER001 (serial), SRV001–SRV002 (non-stock), FG001–FG003 (standard cost via revaluation) |
+| 3e | Fabrication customers & vendors | Customers U1C001–U1C005; vendors U1V001–U1V009 (U1V008 TDS C2, U1V009 TDS C1) |
 
 ### 🔄 In progress
 | Task | Status |
@@ -20,6 +26,8 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | Crystal Reports print layouts (.rpt) | Continue on SAP server SSO-WINDOWS1 |
 
 ### ⛔ Waiting on user / AKE
+- SRV001 / SRV002: set Item Class = Service and SAC (996511 / 998873) in the SAP client – Service Layer ignores these fields
+- Confirm indicative GST rates / HSN / SAC of the U1 items with AKE's tax team; U1V001 steel TDS 194Q still pending
 - Same open items as 2026-10-01 (HANA read-only user, TDS 194Q, USD rate, company address, `manager` password, bank details, Claude Code on SSO-WINDOWS1)
 
 ### 📌 Next
