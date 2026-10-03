@@ -1,4 +1,4 @@
-"""Query Manager report pack for AKE_DEMO: categories OTC, PTP, PTS, FICO with HANA SQL reports.
+"""Query Manager report pack for AKE_DEMO: categories OTC, PTP, PTS, FICO and Monthly Performance Analysis (PAR).
 
 Run:  python tools/build_reports.py --test     (run every report against AKE_DEMO via Service Layer, save nothing)
       python tools/build_reports.py --no-test  (save without testing; test each report in the SAP client)
@@ -313,6 +313,156 @@ SELECT CASE WHEN A."GroupMask" = 4 THEN '1 Revenue' WHEN A."GroupMask" = 5 THEN 
 FROM "JDT1" T1 INNER JOIN "OACT" A ON A."AcctCode" = T1."Account"
 WHERE {DATES("T1", "RefDate")} AND A."GroupMask" IN (4, 5, 6, 7, 8)
 GROUP BY A."GroupMask", T1."Account", A."AcctName" ORDER BY 1, T1."Account"'''),
+    # ---------------------------------------------------------------------------------------------- MPA
+    # Performance Analysis Reports (AKE's PAR list). Valuation rule: bought items Moving Average, made items Standard.
+    ("MPA", "PAR - 001 - Item Master List with Incorrect Valuation Method", """
+SELECT T0."ItemCode" AS "Item", T0."ItemName" AS "Description", G."ItmsGrpNam" AS "Item Group",
+       CASE T0."PrcrmntMtd" WHEN 'M' THEN 'Make' ELSE 'Buy' END AS "Procurement",
+       CASE T0."EvalSystem" WHEN 'A' THEN 'Moving Average' WHEN 'S' THEN 'Standard' WHEN 'F' THEN 'FIFO'
+            ELSE T0."EvalSystem" END AS "Current Valuation",
+       CASE T0."PrcrmntMtd" WHEN 'M' THEN 'Standard' ELSE 'Moving Average' END AS "Expected Valuation",
+       T0."OnHand" AS "In Stock", CASE T0."frozenFor" WHEN 'Y' THEN 'Inactive' ELSE 'Active' END AS "Status"
+FROM "OITM" T0 INNER JOIN "OITB" G ON G."ItmsGrpCod" = T0."ItmsGrpCod"
+WHERE T0."InvntItem" = 'Y'
+  AND ((T0."PrcrmntMtd" = 'M' AND T0."EvalSystem" <> 'S') OR (T0."PrcrmntMtd" <> 'M' AND T0."EvalSystem" <> 'A'))
+ORDER BY G."ItmsGrpNam", T0."ItemCode\""""),
+    ("MPA", "PAR - 002 - Item Master with Item Cost and Production Cost Variance", """
+SELECT B."Code" AS "Item", I."ItemName" AS "Description", I."InvntryUom" AS "UoM", B."ToWH" AS "BOM Whse",
+       CASE I."EvalSystem" WHEN 'S' THEN 'Standard' WHEN 'A' THEN 'Moving Average' ELSE I."EvalSystem" END AS "Valuation",
+       IFNULL(W."AvgPrice", 0) AS "Item Cost",
+       SUM(CASE WHEN L."Type" = 290 THEN L."Quantity" * IFNULL(R."StdCost1", 0)
+                ELSE L."Quantity" * IFNULL(CW."AvgPrice", 0) END) / B."Qauntity" AS "Production Cost (BOM)",
+       IFNULL(W."AvgPrice", 0) - SUM(CASE WHEN L."Type" = 290 THEN L."Quantity" * IFNULL(R."StdCost1", 0)
+                ELSE L."Quantity" * IFNULL(CW."AvgPrice", 0) END) / B."Qauntity" AS "Variance",
+       SUM(CASE WHEN L."Type" = 290 THEN 0 WHEN IFNULL(CW."AvgPrice", 0) = 0 THEN 1 ELSE 0 END) AS "Components without Cost"
+FROM "OITT" B INNER JOIN "OITM" I ON I."ItemCode" = B."Code" INNER JOIN "ITT1" L ON L."Father" = B."Code"
+LEFT JOIN "OITW" W ON W."ItemCode" = B."Code" AND W."WhsCode" = B."ToWH"
+LEFT JOIN "OITW" CW ON CW."ItemCode" = L."Code" AND CW."WhsCode" = L."Warehouse" AND L."Type" <> 290
+LEFT JOIN "ORSC" R ON R."ResCode" = L."Code" AND L."Type" = 290
+WHERE B."TreeType" = 'P'
+GROUP BY B."Code", I."ItemName", I."InvntryUom", B."ToWH", I."EvalSystem", W."AvgPrice", B."Qauntity"
+ORDER BY B."Code\""""),
+    ("MPA", "PAR - 003 - Pending GRPO to AP Invoice", f"""
+SELECT {NO("T0")} AS "GRPO No", T0."DocDate" AS "GRPO Date", T0."CardCode" AS "Vendor", T0."CardName" AS "Vendor Name",
+       T0."NumAtCard" AS "Vendor Ref", T1."ItemCode" AS "Item", T1."Dscription" AS "Description", T1."WhsCode" AS "Whse",
+       T1."Quantity" AS "Received", T1."OpenQty" AS "Pending Invoice Qty", T1."Price" AS "Rate",
+       T1."OpenQty" * T1."Price" AS "Pending Value", DAYS_BETWEEN(T0."DocDate", CURRENT_DATE) AS "Days Pending"
+FROM "OPDN" T0 INNER JOIN "PDN1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE T1."LineStatus" = 'O' AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum\""""),
+    ("MPA", "PAR - 004 - Pending Delivery to AR Invoice", f"""
+SELECT {NO("T0")} AS "Delivery No", T0."DocDate" AS "Delivery Date", T0."CardCode" AS "Customer", T0."CardName" AS "Customer Name",
+       T0."NumAtCard" AS "Customer PO", T1."ItemCode" AS "Item", T1."Dscription" AS "Description", T1."WhsCode" AS "Whse",
+       T1."Quantity" AS "Delivered", T1."OpenQty" AS "Pending Invoice Qty", T1."Price" AS "Rate",
+       T1."OpenQty" * T1."Price" AS "Pending Value", DAYS_BETWEEN(T0."DocDate", CURRENT_DATE) AS "Days Pending"
+FROM "ODLN" T0 INNER JOIN "DLN1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE T1."LineStatus" = 'O' AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum\""""),
+    ("MPA", "PAR - 005 - List of Production orders to be closed", f"""
+SELECT {NO("T0")} AS "Order No", T0."PostDate" AS "Order Date", T0."DueDate" AS "Due Date", T0."ItemCode" AS "Product",
+       I."ItemName" AS "Description", T0."PlannedQty" AS "Planned", T0."CmpltQty" AS "Completed", T0."RjctQty" AS "Rejected",
+       (SELECT COUNT(*) FROM "WOR1" W WHERE W."DocEntry" = T0."DocEntry" AND W."ItemType" = 4 AND W."PlannedQty" > 0
+           AND W."IssuedQty" < W."PlannedQty") AS "Lines not fully issued",
+       DAYS_BETWEEN(T0."DueDate", CURRENT_DATE) AS "Days past Due",
+       CASE WHEN T0."CmpltQty" + T0."RjctQty" >= T0."PlannedQty" THEN 'Fully received - close'
+            ELSE 'Past due date - review and close' END AS "Reason"
+FROM "OWOR" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE T0."Status" = 'R' AND (T0."CmpltQty" + T0."RjctQty" >= T0."PlannedQty" OR T0."DueDate" < CURRENT_DATE)
+ORDER BY T0."DueDate", T0."DocNum\""""),
+    ("MPA", "PAR - 006 - Production Order with Pending Issue or Receipt", f"""
+SELECT {NO("T0")} AS "Order No", T0."PostDate" AS "Order Date", T0."DueDate" AS "Due Date", T0."ItemCode" AS "Product",
+       T0."PlannedQty" AS "Planned", T0."CmpltQty" + T0."RjctQty" AS "Received", T0."PlannedQty" - T0."CmpltQty" - T0."RjctQty" AS "Pending Receipt",
+       T1."ItemCode" AS "Component", T1."PlannedQty" AS "Component Planned", T1."IssuedQty" AS "Issued",
+       T1."PlannedQty" - T1."IssuedQty" AS "Pending Issue", T1."wareHouse" AS "Issue Whse",
+       CASE T1."IssueType" WHEN 'B' THEN 'Backflush' ELSE 'Manual' END AS "Issue Method"
+FROM "OWOR" T0 INNER JOIN "WOR1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE T0."Status" = 'R' AND T1."ItemType" = 4
+  AND ((T1."PlannedQty" > 0 AND T1."IssuedQty" < T1."PlannedQty") OR T0."CmpltQty" + T0."RjctQty" < T0."PlannedQty")
+ORDER BY T0."DueDate", T0."DocNum", T1."VisOrder\""""),
+    ("MPA", "PAR - 007 - Rejection RC Conversion to Return", f"""
+SELECT {NO("T0")} AS "GRPO No", T0."DocDate" AS "GRPO Date", T0."CardCode" AS "Vendor", T0."CardName" AS "Vendor Name",
+       T1."ItemCode" AS "Item", T1."Dscription" AS "Description", T1."WhsCode" AS "Rejection Whse", WH."WhsName" AS "Whse Name",
+       T1."Quantity" AS "Rejected Qty",
+       IFNULL((SELECT SUM(R."Quantity") FROM "RPD1" R WHERE R."BaseType" = 20 AND R."BaseEntry" = T1."DocEntry"
+               AND R."BaseLine" = T1."LineNum"), 0) AS "Returned Qty",
+       T1."Quantity" - IFNULL((SELECT SUM(R."Quantity") FROM "RPD1" R WHERE R."BaseType" = 20 AND R."BaseEntry" = T1."DocEntry"
+               AND R."BaseLine" = T1."LineNum"), 0) AS "Pending Return Qty",
+       T1."Price" AS "Rate", DAYS_BETWEEN(T0."DocDate", CURRENT_DATE) AS "Days Pending"
+FROM "OPDN" T0 INNER JOIN "PDN1" T1 ON T1."DocEntry" = T0."DocEntry" INNER JOIN "OWHS" WH ON WH."WhsCode" = T1."WhsCode"
+LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+WHERE T0."CANCELED" = 'N' AND (UPPER(WH."WhsName") LIKE '%REJECT%' OR UPPER(WH."WhsName") LIKE '%REWORK%')
+  AND T1."Quantity" > IFNULL((SELECT SUM(R."Quantity") FROM "RPD1" R WHERE R."BaseType" = 20
+               AND R."BaseEntry" = T1."DocEntry" AND R."BaseLine" = T1."LineNum"), 0)
+ORDER BY T0."DocDate", T0."DocNum\""""),
+    ("MPA", "PAR - 008 - Purchase Register in a Period", f"""
+SELECT {NO("T0")} AS "Invoice No", T0."DocDate" AS "Date", T0."NumAtCard" AS "Vendor Inv No", T0."CardCode" AS "Vendor",
+       T0."CardName" AS "Vendor Name", C."GSTRegnNo" AS "Vendor GSTIN",
+       CASE WHEN T0."DocType" = 'S' THEN T1."Dscription" ELSE T1."ItemCode" END AS "Item / Service",
+       T1."Dscription" AS "Description", G."ItmsGrpNam" AS "Item Group", IFNULL(H."ChapterID", S."ServCode") AS "HSN/SAC",
+       T1."Quantity" AS "Qty", T1."Price" AS "Rate", T1."LineTotal" AS "Taxable", T1."TaxCode" AS "Tax Code",
+       {CGST("T1")} AS "CGST", {CGST("T1")} AS "SGST", {IGST("T1")} AS "IGST", T1."LineTotal" + T1."VatSum" AS "Line Total",
+       T0."WTSum" AS "TDS (invoice)", T0."DocTotal" AS "Invoice Total"
+FROM "OPCH" T0 INNER JOIN "PCH1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+LEFT JOIN "OITM" I ON I."ItemCode" = T1."ItemCode" LEFT JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+LEFT JOIN "OCHP" H ON H."AbsEntry" = T1."HsnEntry" LEFT JOIN "OSAC" S ON S."AbsEntry" = T1."SacEntry"
+LEFT JOIN "CRD1" C ON C."CardCode" = T0."CardCode" AND C."AdresType" = 'B' AND C."Address" = T0."PayToCode"
+WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum\""""),
+    ("MPA", "PAR - 009 - List of Grade Items with Stock in Hand", """
+SELECT CASE WHEN UPPER(I."ItemName") LIKE '%S355%' THEN 'S355JR'
+            WHEN UPPER(I."ItemName") LIKE '%E350%' THEN 'E350'
+            WHEN UPPER(I."ItemName") LIKE '%E250%' OR UPPER(I."ItemName") LIKE '%GR. BR%' THEN 'E250 / Gr. BR'
+            WHEN UPPER(I."ItemName") LIKE '%FE500%' THEN 'Fe500D'
+            WHEN UPPER(I."ItemName") LIKE '%SS304%' THEN 'SS304'
+            WHEN UPPER(I."ItemName") LIKE '%IS:2062%' OR UPPER(I."ItemName") LIKE '%IS2062%' THEN 'IS 2062'
+            ELSE 'Other / not graded' END AS "Grade",
+       T0."ItemCode" AS "Item", I."ItemName" AS "Description", G."ItmsGrpNam" AS "Item Group", T0."WhsCode" AS "Whse",
+       I."InvntryUom" AS "UoM", T0."OnHand" AS "In Stock", T0."IsCommited" AS "Committed", T0."OnHand" - T0."IsCommited" AS "Free Stock",
+       T0."AvgPrice" AS "Avg Cost", T0."OnHand" * T0."AvgPrice" AS "Stock Value"
+FROM "OITW" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+WHERE T0."OnHand" > 0
+  AND (G."ItmsGrpNam" LIKE 'RM%' OR G."ItmsGrpNam" LIKE 'Raw%' OR G."ItmsGrpNam" = 'TMT Rod'
+       OR UPPER(I."ItemName") LIKE '%GR.%' OR UPPER(I."ItemName") LIKE '%IS:2062%' OR UPPER(I."ItemName") LIKE '%IS2062%')
+ORDER BY 1, T0."ItemCode", T0."WhsCode\""""),
+    ("MPA", "PAR - 010 - Closing Inventory in a Period (Detailed)", """
+SELECT T0."ItemCode" AS "Item", I."ItemName" AS "Description", G."ItmsGrpNam" AS "Item Group", T0."Warehouse" AS "Whse",
+       I."InvntryUom" AS "UoM",
+       SUM(CASE WHEN T0."DocDate" < [%0] THEN T0."InQty" - T0."OutQty" ELSE 0 END) AS "Opening Qty",
+       SUM(CASE WHEN T0."DocDate" >= [%0] THEN T0."InQty" ELSE 0 END) AS "Receipts Qty",
+       SUM(CASE WHEN T0."DocDate" >= [%0] THEN T0."OutQty" ELSE 0 END) AS "Issues Qty",
+       SUM(T0."InQty" - T0."OutQty") AS "Closing Qty",
+       SUM(CASE WHEN T0."DocDate" < [%0] THEN T0."TransValue" ELSE 0 END) AS "Opening Value",
+       SUM(T0."TransValue") AS "Closing Value"
+FROM "OINM" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+WHERE T0."DocDate" <= [%1]
+GROUP BY T0."ItemCode", I."ItemName", G."ItmsGrpNam", T0."Warehouse", I."InvntryUom"
+HAVING SUM(T0."InQty" - T0."OutQty") <> 0 OR SUM(CASE WHEN T0."DocDate" >= [%0] THEN T0."InQty" + T0."OutQty" ELSE 0 END) <> 0
+ORDER BY G."ItmsGrpNam", T0."ItemCode", T0."Warehouse\""""),
+    ("MPA", "PAR - 011 - Closing Inventory in a Period (ItemGroup Level)", """
+SELECT G."ItmsGrpNam" AS "Item Group", COUNT(DISTINCT T0."ItemCode") AS "Items",
+       SUM(CASE WHEN T0."DocDate" < [%0] THEN T0."TransValue" ELSE 0 END) AS "Opening Value",
+       SUM(CASE WHEN T0."DocDate" >= [%0] AND T0."TransValue" > 0 THEN T0."TransValue" ELSE 0 END) AS "Receipts Value",
+       -SUM(CASE WHEN T0."DocDate" >= [%0] AND T0."TransValue" < 0 THEN T0."TransValue" ELSE 0 END) AS "Issues Value",
+       SUM(T0."TransValue") AS "Closing Value"
+FROM "OINM" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+WHERE T0."DocDate" <= [%1]
+GROUP BY G."ItmsGrpNam" ORDER BY G."ItmsGrpNam\""""),
+    ("MPA", "PAR - 012 - Consumption in a Period (Detailed)", f"""
+SELECT {NO("T0")} AS "Issue No", T0."DocDate" AS "Date",
+       CASE WHEN T1."BaseType" = 202 THEN 'Issue for Production' ELSE 'Goods Issue' END AS "Type",
+       CASE WHEN T1."BaseType" = 202 THEN T1."BaseRef" END AS "Production Order", P."ItemCode" AS "Product",
+       T1."ItemCode" AS "Item", T1."Dscription" AS "Description", G."ItmsGrpNam" AS "Item Group", T1."WhsCode" AS "Whse",
+       I."InvntryUom" AS "UoM", T1."Quantity" AS "Qty", T1."StockPrice" AS "Unit Cost", T1."Quantity" * T1."StockPrice" AS "Value",
+       T0."Comments" AS "Remarks"
+FROM "OIGE" T0 INNER JOIN "IGE1" T1 ON T1."DocEntry" = T0."DocEntry" INNER JOIN "OITM" I ON I."ItemCode" = T1."ItemCode"
+INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+LEFT JOIN "OWOR" P ON P."DocEntry" = T1."BaseEntry" AND T1."BaseType" = 202
+WHERE {DATES("T0")} ORDER BY T0."DocDate", T0."DocNum", T1."LineNum\""""),
+    ("MPA", "PAR - 013 - Consumption in a Period (ItemGroup)", f"""
+SELECT G."ItmsGrpNam" AS "Item Group",
+       SUM(CASE WHEN T1."BaseType" = 202 THEN T1."Quantity" * T1."StockPrice" ELSE 0 END) AS "Production Consumption",
+       SUM(CASE WHEN T1."BaseType" <> 202 THEN T1."Quantity" * T1."StockPrice" ELSE 0 END) AS "Other Goods Issues",
+       SUM(T1."Quantity" * T1."StockPrice") AS "Total Consumption", COUNT(DISTINCT T1."ItemCode") AS "Items"
+FROM "OIGE" T0 INNER JOIN "IGE1" T1 ON T1."DocEntry" = T0."DocEntry" INNER JOIN "OITM" I ON I."ItemCode" = T1."ItemCode"
+INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+WHERE {DATES("T0")} GROUP BY G."ItmsGrpNam" ORDER BY 4 DESC"""),
 ]
 
 
