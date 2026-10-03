@@ -20,6 +20,7 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 8 | Planning method by procurement method (user request) | 13 Make items (FG001–FG005, FG-* , SA001, SA-*) → **MRP**; 69 Buy items already **None**; loader sets this on new items |
 | 9 | All 17 **Consumables** items → UoM group Each, inventory / purchase / sales UoM and pricing unit NOS (user request) | Changed from Volume (BAT001, CN005, CN008), Weight (CN006), Area (CN004), Each-Pairs (CN007), Box packs (CN001–CN003) and Manual (5 inactive items); price figures kept, now per NOS |
 | 10 | All other items without transactions → Each / NOS everywhere (user request) | 36 items: steel RM002–RM007, RM-PL/RM-SG/RM-ST/RM-TMT (were KGS, bought in Tonnes), RM008–RM011, EL001, PL001–PL002 (Meters/Feet), BO002–BO003, PM001, PM003, PPE-GLOVE-W, SF003, TR002, FG001, FG002, FG005, SRV002; price figures and standard costs kept. Left unchanged (transactions/stock): RM001, CN-LPG, the 15 inactive items |
+| 11 | 10 new TDS codes (user list), effective 01-04-2026, eTDS, Invoice, 100 % Net base | P7.5 194J COM 7.5 % · T.75 194C 0.75 % · T1.5 194C 1.5 % · TDS1 194C 1 % · TDS2 194C 2 % · T7.5 194I IND 7.5 % · TD10 194I IND 10 % · TI10 194A 10 % · TJ10 194J COM 10 % · TP10 194J IND 10 % – each on its own AKE "TDS Payable @ x %" ledger; `data/07_tds_codes.json`, `python tools/sl_loader.py --step tds` |
 
 ### ⛔ Waiting on user / AKE
 - Rename in the SAP client (they have transactions, Service Layer cannot change a BP code): **U1C006 → C0012** ABC Developers and **U1V001 → V0010** Tungabhadra Steel. The demo script and guide already use C0012 / V0010.
@@ -27,6 +28,7 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 - Inactive items still hold stock (e.g. RM-PL-0012 486.4 KG, RM-PL-0020 299.8 KG, RM-ST-A50 300 KG, RM-ST-MB300 219.6 KG, FG-COL-MB300-6M 2 Nos, SF001 7 Nos) and sit in the old BOMs FG-COL-MB300-6M, FG-PLAT-HR, FG-CTRAY-300, SA-BASEPL-400, SA-GUSSET-12 – decide: issue / write off the stock, and replace those BOM lines with active items
 - Items now counted in NOS: steel prices (₹55–72) and FG001/FG002 standard cost (85 / 82) were per KG, RM008 ₹48 per SQFT, RM011 ₹5,600 per m3 – set real per-piece prices / costs; BOM quantities (e.g. SA001 6.5 × RM003, FG005 1.05 × RM008) now mean NOS
 - Consumables now counted in NOS: check the price figures (e.g. CN005 degreaser ₹180, CN006 brazing rod ₹38 were per LTR / Gram) and the BOM quantities SA001 → CN001 0.3 and FG004 → CN005 0.2 (now NOS)
+- **T0.1** TDS @ 0.1 % Purchase (and Q01) not created: section **194Q** is missing in B1 and cannot be added via Service Layer – add it in the client (Administration > Setup > Financials > Tax > Section), then re-run `--step tds`
 - Confirm standard costs (indicative) and the Packet = 100 NOS / Set = 1 NOS conversions
 
 ### 📌 Next

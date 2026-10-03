@@ -211,7 +211,7 @@ TDS_LOCATION = 1  # WarehouseLocations code holding GSTIN/TAN - set to AKE Peeny
 
 def tds_line(t):
     # 206AA (no PAN): 20%, 5% for 194Q. 206AB (non-filer) was omitted by Finance Act 2025 -> normal rate.
-    return {"Effectivefrom": "2025-04-01", "Rate": t["Rate"], "TDSRate": t["Rate"], "SurchargeRate": 0, "CessRate": 0,
+    return {"Effectivefrom": t.get("EffectiveFrom", "2025-04-01"), "Rate": t["Rate"], "TDSRate": t["Rate"], "SurchargeRate": 0, "CessRate": 0,
             "HSCRate": 0, "PANNonCompliantRate": 5 if t["Section"] == "194Q" else 20, "ITRNonCompliantRate": t["Rate"]}
 
 

@@ -1,50 +1,149 @@
 [
-  {
-    "WTCode": "Q01",
-    "Name": "TDS on Purchase of Goods 0.1%",
-    "Section": "194Q",
-    "Assessee": "COM",
-    "Rate": 0.1,
-    "Account": "3002-03-23"
-  },
-  {
-    "WTCode": "C1",
-    "Name": "TDS Contractor Individual/HUF 1%",
-    "Section": "194C",
-    "Assessee": "IND",
-    "Rate": 1,
-    "Account": "3002-03-18"
-  },
-  {
-    "WTCode": "C2",
-    "Name": "TDS Contractor Others 2%",
-    "Section": "194C",
-    "Assessee": "COM",
-    "Rate": 2,
-    "Account": "3002-03-14"
-  },
-  {
-    "WTCode": "J10",
-    "Name": "TDS Professional Fees 10%",
-    "Section": "194J",
-    "Assessee": "COM",
-    "Rate": 10,
-    "Account": "3002-03-16"
-  },
-  {
-    "WTCode": "I10",
-    "Name": "TDS on Rent 10%",
-    "Section": "194I",
-    "Assessee": "COM",
-    "Rate": 10,
-    "Account": "3002-03-15"
-  },
-  {
-    "WTCode": "A10",
-    "Name": "TDS on Interest 10%",
-    "Section": "194A",
-    "Assessee": "COM",
-    "Rate": 10,
-    "Account": "3002-03-26"
-  }
+ {
+  "WTCode": "Q01",
+  "Name": "TDS on Purchase of Goods 0.1%",
+  "Section": "194Q",
+  "Assessee": "COM",
+  "Rate": 0.1,
+  "Account": "3002-03-23"
+ },
+ {
+  "WTCode": "C1",
+  "Name": "TDS Contractor Individual/HUF 1%",
+  "Section": "194C",
+  "Assessee": "IND",
+  "Rate": 1,
+  "Account": "3002-03-18"
+ },
+ {
+  "WTCode": "C2",
+  "Name": "TDS Contractor Others 2%",
+  "Section": "194C",
+  "Assessee": "COM",
+  "Rate": 2,
+  "Account": "3002-03-14"
+ },
+ {
+  "WTCode": "J10",
+  "Name": "TDS Professional Fees 10%",
+  "Section": "194J",
+  "Assessee": "COM",
+  "Rate": 10,
+  "Account": "3002-03-16"
+ },
+ {
+  "WTCode": "I10",
+  "Name": "TDS on Rent 10%",
+  "Section": "194I",
+  "Assessee": "COM",
+  "Rate": 10,
+  "Account": "3002-03-15"
+ },
+ {
+  "WTCode": "A10",
+  "Name": "TDS on Interest 10%",
+  "Section": "194A",
+  "Assessee": "COM",
+  "Rate": 10,
+  "Account": "3002-03-26"
+ },
+ {
+  "WTCode": "P7.5",
+  "Name": "TDS@7.5% Professional",
+  "Section": "194J",
+  "Assessee": "COM",
+  "Rate": 7.5,
+  "Account": "3002-03-20",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "T.75",
+  "Name": "TDS@0.75% Sub Contractor",
+  "Section": "194C",
+  "Assessee": "COM",
+  "Rate": 0.75,
+  "Account": "3002-03-10",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "T0.1",
+  "Name": "TDS @ 0.1% Purchase",
+  "Section": "194Q",
+  "Assessee": "COM",
+  "Rate": 0.1,
+  "Account": "3002-03-23",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "T1.5",
+  "Name": "TDS@1.5% Sub Contractor",
+  "Section": "194C",
+  "Assessee": "COM",
+  "Rate": 1.5,
+  "Account": "3002-03-11",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "T7.5",
+  "Name": "TDS@7.5% Rent",
+  "Section": "194I",
+  "Assessee": "IND",
+  "Rate": 7.5,
+  "Account": "3002-03-13",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "TD10",
+  "Name": "TDS@10% Rent",
+  "Section": "194I",
+  "Assessee": "IND",
+  "Rate": 10,
+  "Account": "3002-03-15",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "TDS1",
+  "Name": "TDS@1% Sub Contractor",
+  "Section": "194C",
+  "Assessee": "COM",
+  "Rate": 1,
+  "Account": "3002-03-18",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "TDS2",
+  "Name": "TDS@2% Sub Contractor",
+  "Section": "194C",
+  "Assessee": "COM",
+  "Rate": 2,
+  "Account": "3002-03-14",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "TI10",
+  "Name": "TDS@10% Interest",
+  "Section": "194A",
+  "Assessee": "COM",
+  "Rate": 10,
+  "Account": "3002-03-26",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "TJ10",
+  "Name": "TDS@10% Professional Invoice",
+  "Section": "194J",
+  "Assessee": "COM",
+  "Rate": 10,
+  "Account": "3002-03-16",
+  "EffectiveFrom": "2026-04-01"
+ },
+ {
+  "WTCode": "TP10",
+  "Name": "TDS@10% Professional",
+  "Section": "194J",
+  "Assessee": "IND",
+  "Rate": 10,
+  "Account": "3002-03-16",
+  "EffectiveFrom": "2026-04-01"
+ }
 ]
