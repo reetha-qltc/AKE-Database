@@ -5,6 +5,24 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 
 ---
 
+## 2026-10-03 (Saturday)
+
+### ✅ Completed
+| # | Task | Result / where |
+|---|---|---|
+| 1 | U1 BPs moved onto the normal numbering (user request) | U1C002–U1C005 → C0008–C0011; U1V002–U1V009 → V0011–V0018 (re-created with all details incl. TDS, old codes deleted) – `tools/renumber_bps.py`; U1C001 → C0007 done by user in the client |
+| 2 | BP groups by GST place of supply (company state Karnataka) | Customers: Intrastate / Interstate / Export; vendors: Intrastate Vendor / Interstate Vendor / Import Vendor (B1 group names must be unique across types). All 30 BPs regrouped from the bill-to state; old segment groups (incl. default Customers / Suppliers) deleted |
+| 3 | Scripts and docs on the new codes | `build_u1_masters.py` (group follows state), `demo_o2c_p2p.py`, `docs/03_O2C_P2P_Demo.md`, `U1_Master_Data.xlsx` |
+
+### ⛔ Waiting on user / AKE
+- Rename in the SAP client (they have transactions, Service Layer cannot change a BP code): **U1C006 → C0012** ABC Developers and **U1V001 → V0010** Tungabhadra Steel. The demo script and guide already use C0012 / V0010.
+- New BPs: choose the group by address – Karnataka → Intrastate, other Indian state → Interstate, outside India → Export / Import Vendor
+
+### 📌 Next
+1. After the two client renames, re-check the demo documents (Relationship Map) under C0012 / V0010
+
+---
+
 ## 2026-10-02 (Friday)
 
 ### ✅ Completed

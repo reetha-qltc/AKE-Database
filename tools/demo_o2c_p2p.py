@@ -2,7 +2,7 @@
 
 P2P  RM001 1,000 KG: Purchase Request -> 3 Purchase Quotations -> comparison -> PO -> GRPO #1 600 KG (validate
      ordered 1000 / received 600 / open 400) -> A/P invoice 600 -> partial vendor payment -> GRPO #2 400 -> A/P invoice 400.
-O2C  ABC Developers (U1C006), RM001 1,000 KG + SF001 20 Nos: Sales Quotation -> Sales Order -> Delivery #1 (RM001 600
+O2C  ABC Developers (C0012), RM001 1,000 KG + SF001 20 Nos: Sales Quotation -> Sales Order -> Delivery #1 (RM001 600
      partial, SF001 20 full) -> open qty 400 -> Return 2 helmets before invoice -> A/R invoice #1 -> payment ->
      Delivery #2 400 (order fully delivered) -> A/R invoice #2 -> A/R credit memo 50 KG -> payment net of credit memo.
 
@@ -21,7 +21,7 @@ D = {"PR": "2026-09-21", "PQ": "2026-09-22", "PO": "2026-09-24", "GRN1": "2026-0
      "GRN2": "2026-10-01", "SQ": "2026-09-25", "SO": "2026-09-26", "DN1": "2026-09-28", "RET": "2026-09-29",
      "INV1": "2026-09-29", "RCT1": "2026-09-30", "DN2": "2026-10-01", "INV2": "2026-10-01", "CM": "2026-10-02",
      "RCT2": "2026-10-02"}
-QUOTES = [("U1V001", 62.00, "2026-09-30"), ("V0001", 64.00, "2026-10-03"), ("V0002", 63.50, "2026-10-05")]  # vendor, rate, delivery
+QUOTES = [("V0010", 62.00, "2026-09-30"), ("V0001", 64.00, "2026-10-03"), ("V0002", 63.50, "2026-10-05")]  # vendor, rate, delivery
 
 
 class Run(T.Run):
@@ -92,7 +92,7 @@ def P2P(run):
         "DocDate": D["PR"], "DocDueDate": "2026-10-21", "TaxDate": D["PR"], "RequriedDate": "2026-09-30",
         "ReqType": 12, "Requester": "manager", "Comments": "AKE training demo P2P - TMT 12mm for fabrication job U1",
         "DocumentLines": [{"ItemCode": "RM001", "Quantity": 1000, "UoMEntry": kg, "WarehouseCode": RM_WH,
-                           "RequiredDate": "2026-09-30", "LineVendor": "U1V001", "TaxCode": run.gst18("U1V001")}]},
+                           "RequiredDate": "2026-09-30", "LineVendor": "V0010", "TaxCode": run.gst18("V0010")}]},
         "Purchase Request RM001 1,000 KG")
     pqs = []
     for n, (card, rate, ship) in enumerate(QUOTES, 1):
@@ -141,7 +141,7 @@ def P2P(run):
 
 # ------------------------------------------------------------------------------------------------ Order to Cash
 def O2C(run):
-    card = "U1C006"
+    card = "C0012"
     run.doc("O2C-GR", "InventoryGenEntries", {"DocDate": D["SQ"], "Reference2": "O2C",
         "Comments": "AKE training demo O2C - opening stock of safety helmets",
         "DocumentLines": [{"ItemCode": "SF001", "Quantity": 25, "UnitPrice": 180, "WarehouseCode": MAIN_WH}]},

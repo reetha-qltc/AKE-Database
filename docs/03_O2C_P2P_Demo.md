@@ -18,11 +18,11 @@ supply the RM001 stock that the O2C deliveries use.
 
 | # | Step | Document | Date | Amount (₹) | What to show |
 |---|---|---|---|---|---|
-| 1 | Purchase Request | PR/26-27/1 | 21-09 | – | 1,000 KG for U1WH02, required by 30-09, preferred vendor U1V001 |
-| 2 | Purchase Quotation – U1V001 Tungabhadra Steel | PQ/26-27/1 | 22-09 | 73,160.00 | ₹62.00/KG, delivery 30-09 – **lowest** |
+| 1 | Purchase Request | PR/26-27/1 | 21-09 | – | 1,000 KG for U1WH02, required by 30-09, preferred vendor V0010 |
+| 2 | Purchase Quotation – V0010 Tungabhadra Steel | PQ/26-27/1 | 22-09 | 73,160.00 | ₹62.00/KG, delivery 30-09 – **lowest** |
 | 3 | Purchase Quotation – V0001 Shree Ganesh Steel | PQ/26-27/2 | 22-09 | 75,520.00 | ₹64.00/KG, delivery 03-10 |
 | 4 | Purchase Quotation – V0002 Deccan Structural | PQ/26-27/3 | 22-09 | 74,930.00 | ₹63.50/KG, delivery 05-10, IGST (Telangana) |
-| 5 | Quotation comparison | Query **PTP08** | – | – | Sorted by rate; U1V001 is cheapest and fastest |
+| 5 | Quotation comparison | Query **PTP08** | – | – | Sorted by rate; V0010 is cheapest and fastest |
 | 6 | Purchase Order (copied from PQ/26-27/1) | PO/26-27/3 | 24-09 | 73,160.00 | 1,000 KG @ ₹62; B1 closed the PR and the two losing quotations |
 | 7 | GRPO #1 – partial | GRN/26-27/3 | 26-09 | 43,896.00 | 600 KG received |
 | 8 | **Validate the PO** | PO/26-27/3 | – | – | Ordered **1,000** · Received **600** · Open **400** |
@@ -31,7 +31,7 @@ supply the RM001 stock that the O2C deliveries use.
 | 11 | GRPO #2 – remaining | GRN/26-27/4 | 01-10 | 29,264.00 | 400 KG → PO closes |
 | 12 | A/P Invoice for GRPO #2 | PINV/26-27/6 | 01-10 | 29,264.00 | 24,800 + CGST 2,232 + SGST 2,232 |
 
-**Result:** U1V001 is still owed ₹48,160.00 (18,896.00 left on invoice 1 + 29,264.00 on invoice 2).
+**Result:** V0010 is still owed ₹48,160.00 (18,896.00 left on invoice 1 + 29,264.00 on invoice 2).
 
 ### How to show each point in SAP
 
@@ -43,13 +43,13 @@ supply the RM001 stock that the O2C deliveries use.
 - **GST:** in either A/P invoice, open the Tax amount (golden arrow) or the Tax tab: tax code CG+SG@18 splits into
   CGST 9% and SGST 9%. Query **FIN04 GST Summary** shows the input credit.
 - **Partial vendor payment:** open PINV/26-27/5. Paid to date is 25,000.00 and the balance is 18,896.00. Business Partner
-  Master Data U1V001 → Account Balance shows 48,160.00.
+  Master Data V0010 → Account Balance shows 48,160.00.
 
 > Re-doing the open-PO step live: create a new PO, receive part of it, run PTP01, then receive the rest.
 
 ---
 
-## 2. Order to Cash – ABC Developers Pvt Ltd (U1C006)
+## 2. Order to Cash – ABC Developers Pvt Ltd (C0012)
 
 Stock setup: Goods Receipt GR/26-27/6 (25-09) brought 25 Nos SF001 into U1WH01 at ₹180. RM001 came from the P2P GRPOs.
 
@@ -95,4 +95,4 @@ sets the demo USD rate (88.00) for each posting date, because AKE_DEMO's system 
   failed without them (system currency USD).
 - **Sales credit / purchase credit** accounts (2001-01-01-01 / 4008-01) on all item groups and in G/L determination –
   A/R credit memos failed with "G/L account is missing".
-- SF001 Safety Helmet made a sales item (₹250); new customer U1C006 ABC Developers Pvt Ltd (Bengaluru).
+- SF001 Safety Helmet made a sales item (₹250); new customer C0012 ABC Developers Pvt Ltd (Bengaluru).

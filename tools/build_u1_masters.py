@@ -1,5 +1,5 @@
 """U1 master data for AKE_DEMO (fabrication unit 1): UoMs, UoM groups, warehouses U1WH*, item groups, 27 items,
-fabrication customers (U1C*) and vendors (U1V*).
+fabrication customers (C0007-C0012, created as U1C001-U1C006) and vendors (V0010-V0018, created as U1V001-U1V009).
 
 Run:  python tools/build_u1_masters.py --excel   (only write data/u1_masters/U1_Master_Data.xlsx)
       python tools/build_u1_masters.py           (write the Excel, then create everything missing in AKE_DEMO)
@@ -94,75 +94,75 @@ ITEMS = [dict(zip(ITEM_COLS, r)) for r in ITEMS]
 # ---------------------------------------------------------------------------------------------- business partners
 # code, name, state, city, PAN, payment days, TDS code, what they buy / supply
 CUSTOMERS = [
-    ("U1C001", "Hampi Infra Developers Pvt Ltd", "Karnataka", "Bengaluru", "AAHCH5521K", 45, None, "Industrial sheds - roof trusses, columns"),
-    ("U1C002", "Kaveri Industrial Parks Ltd", "Karnataka", "Mysuru", "AABCK7734M", 30, None, "Factory buildings - structural steel"),
-    ("U1C003", "Godavari Power Plant Constructions Pvt Ltd", "Telangana", "Hyderabad", "AAGCG4410P", 60, None, "Pipe racks, platforms, base plates"),
-    ("U1C004", "Palar Warehousing & Logistics LLP", "Tamil Nadu", "Chennai", "AAPFP2287D", 45, None, "PEB warehouses - trusses & columns"),
-    ("U1C005", "Deccan Highway Bridges Ltd", "Maharashtra", "Pune", "AADCD9063R", 60, None, "Bridge girders, TMT & site electricals"),
-    ("U1C006", "ABC Developers Pvt Ltd", "Karnataka", "Bengaluru", "AABCA7781K", 30, None, "Residential towers - TMT bars, safety items (O2C demo)"),
+    ("C0007", "Hampi Infra Developers Pvt Ltd", "Karnataka", "Bengaluru", "AAHCH5521K", 45, None, "Industrial sheds - roof trusses, columns"),
+    ("C0008", "Kaveri Industrial Parks Ltd", "Karnataka", "Mysuru", "AABCK7734M", 30, None, "Factory buildings - structural steel"),
+    ("C0009", "Godavari Power Plant Constructions Pvt Ltd", "Telangana", "Hyderabad", "AAGCG4410P", 60, None, "Pipe racks, platforms, base plates"),
+    ("C0010", "Palar Warehousing & Logistics LLP", "Tamil Nadu", "Chennai", "AAPFP2287D", 45, None, "PEB warehouses - trusses & columns"),
+    ("C0011", "Deccan Highway Bridges Ltd", "Maharashtra", "Pune", "AADCD9063R", 60, None, "Bridge girders, TMT & site electricals"),
+    ("C0012", "ABC Developers Pvt Ltd", "Karnataka", "Bengaluru", "AABCA7781K", 30, None, "Residential towers - TMT bars, safety items (O2C demo)"),
 ]
 VENDORS = [
-    ("U1V001", "Tungabhadra Steel Distributors", "Karnataka", "Ballari", "AAKFT3318L", 30, None, "TMT bars, structural steel (194Q pending)"),
-    ("U1V002", "Chamundi Cement & Aggregates", "Karnataka", "Mysuru", "AAJFC6620B", 15, None, "Cement, river sand, M-sand, aggregate"),
-    ("U1V003", "Vidyut Electricals & Lighting", "Karnataka", "Bengaluru", "AAQFV1145H", 30, None, "Cables, distribution boards, flood lights"),
-    ("U1V004", "Jalavahini Pipes & Fittings", "Tamil Nadu", "Coimbatore", "AAEFJ8872N", 30, None, "PVC and GI pipes"),
-    ("U1V005", "Rakshak Safety Equipments", "Maharashtra", "Mumbai", "AAMFR4409G", 30, None, "Helmets, safety shoes, harness"),
-    ("U1V006", "Agni Welding & Abrasives", "Karnataka", "Bengaluru", "AABFA5536E", 15, None, "Welding rods, cutting & grinding discs"),
-    ("U1V007", "Shakti Tools & Construction Chemicals", "Karnataka", "Hubballi", "AAKFS2291C", 30, None, "Pumps, power tools, drills, epoxy grout"),
-    ("U1V008", "Sarathi Roadlines", "Karnataka", "Bengaluru", "AAGFS7740Q", 15, "C2", "Transport (GTA) - TDS 194C 2%"),
-    ("U1V009", "Ramesh Fabrication Job Works", "Karnataka", "Doddaballapur", "BQRPR6153A", 30, "C1", "Fabrication subcontracting - TDS 194C 1%"),
+    ("V0010", "Tungabhadra Steel Distributors", "Karnataka", "Ballari", "AAKFT3318L", 30, None, "TMT bars, structural steel (194Q pending)"),
+    ("V0011", "Chamundi Cement & Aggregates", "Karnataka", "Mysuru", "AAJFC6620B", 15, None, "Cement, river sand, M-sand, aggregate"),
+    ("V0012", "Vidyut Electricals & Lighting", "Karnataka", "Bengaluru", "AAQFV1145H", 30, None, "Cables, distribution boards, flood lights"),
+    ("V0013", "Jalavahini Pipes & Fittings", "Tamil Nadu", "Coimbatore", "AAEFJ8872N", 30, None, "PVC and GI pipes"),
+    ("V0014", "Rakshak Safety Equipments", "Maharashtra", "Mumbai", "AAMFR4409G", 30, None, "Helmets, safety shoes, harness"),
+    ("V0015", "Agni Welding & Abrasives", "Karnataka", "Bengaluru", "AABFA5536E", 15, None, "Welding rods, cutting & grinding discs"),
+    ("V0016", "Shakti Tools & Construction Chemicals", "Karnataka", "Hubballi", "AAKFS2291C", 30, None, "Pumps, power tools, drills, epoxy grout"),
+    ("V0017", "Sarathi Roadlines", "Karnataka", "Bengaluru", "AAGFS7740Q", 15, "C2", "Transport (GTA) - TDS 194C 2%"),
+    ("V0018", "Ramesh Fabrication Job Works", "Karnataka", "Doddaballapur", "BQRPR6153A", 30, "C1", "Fabrication subcontracting - TDS 194C 1%"),
 ]
-# BP groups (name max 20 chars) - customers by segment, vendors by what they supply
-CUSTOMER_GROUPS = ["EPC & Infra", "Industrial Developer", "Power & Process", "Manufacturing"]
-VENDOR_GROUPS = ["Steel Suppliers", "Building Materials", "Elec & Plumbing", "Safety & Consumable",
-                 "Tools & Equipment", "Transporters", "Subcontractors", "Consultants"]
-# code -> group, contact (first, last, position), mobile, mail domain,
+# BP groups by GST place of supply (company state Karnataka); B1 group names are unique across customers and vendors
+HOME_STATE = "Karnataka"
+CUSTOMER_GROUPS = {"Intrastate": "Intrastate", "Interstate": "Interstate", "Export": "Export"}
+VENDOR_GROUPS = {"Intrastate": "Intrastate Vendor", "Interstate": "Interstate Vendor", "Export": "Import Vendor"}
+# code -> segment (informational only - the BP group follows the state), contact (first, last, position), mobile, mail domain,
 #         bill-to / pay-to (building, street, area, city, PIN), ship-to (site, building, street, area, city, PIN)
 # Training data only: mobiles are a dummy 90000 1xxxx series, e-mails use the reserved .example domain.
 DETAILS = {
-    "U1C001": ("EPC & Infra", ("Suresh", "Kumar", "Purchase Manager"), "+91 90000 10001", "hampiinfra",
+    "C0007": ("EPC & Infra", ("Suresh", "Kumar", "Purchase Manager"), "+91 90000 10001", "hampiinfra",
                ("No. 45, 2nd Floor, Prestige Arcade", "Bannerghatta Road", "JP Nagar", "Bengaluru", "560076"),
                ("Site - Dabaspet Industrial Shed", "Plot 12", "KIADB Industrial Area", "Dabaspet", "Dabaspet", "562111")),
-    "U1C002": ("Industrial Developer", ("Lakshmi", "Narayan", "Projects Head"), "+91 90000 10002", "kaveriparks",
+    "C0008": ("Industrial Developer", ("Lakshmi", "Narayan", "Projects Head"), "+91 90000 10002", "kaveriparks",
                ("Kaveri House, 3rd Floor", "Hunsur Road", "Hebbal Industrial Area", "Mysuru", "570016"),
                ("Site - Kaveri Park Phase 2", "Survey No. 88", "Nanjangud Industrial Area", "Nanjangud", "Nanjangud", "571301")),
-    "U1C003": ("Power & Process", ("Venkat", "Reddy", "Procurement Manager"), "+91 90000 10003", "godavaripower",
+    "C0009": ("Power & Process", ("Venkat", "Reddy", "Procurement Manager"), "+91 90000 10003", "godavaripower",
                ("8-2-293, Godavari Towers", "Road No. 14", "Banjara Hills", "Hyderabad", "500034"),
                ("Site - 2x150 MW Power Plant", "Sy. No. 210", "Pashamylaram Industrial Area", "Patancheru", "Sangareddy", "502307")),
-    "U1C004": ("Industrial Developer", ("Karthik", "Subramanian", "Purchase Manager"), "+91 90000 10004", "palarlogistics",
+    "C0010": ("Industrial Developer", ("Karthik", "Subramanian", "Purchase Manager"), "+91 90000 10004", "palarlogistics",
                ("No. 18, Palar Plaza", "Anna Salai", "Teynampet", "Chennai", "600018"),
                ("Site - Palar Logistics Park", "Plot B-7", "SIPCOT Industrial Park", "Oragadam", "Kancheepuram", "602105")),
-    "U1C005": ("EPC & Infra", ("Amit", "Deshpande", "Project Manager"), "+91 90000 10005", "deccanbridges",
+    "C0011": ("EPC & Infra", ("Amit", "Deshpande", "Project Manager"), "+91 90000 10005", "deccanbridges",
                ("Deccan House, 5th Floor", "Senapati Bapat Road", "Shivajinagar", "Pune", "411016"),
                ("Site - Bhima River Bridge", "NH-65, Km 42", "Bhigwan Road", "Indapur", "Indapur", "413106")),
-    "U1C006": ("EPC & Infra", ("Naveen", "Shetty", "Purchase Manager"), "+91 90000 10006", "abcdevelopers",
+    "C0012": ("EPC & Infra", ("Naveen", "Shetty", "Purchase Manager"), "+91 90000 10006", "abcdevelopers",
                ("No. 21, ABC Towers, 4th Floor", "Outer Ring Road", "Marathahalli", "Bengaluru", "560037"),
                ("Site - ABC Residency Towers", "Sy. No. 54", "Sarjapur Road", "Dommasandra", "Bengaluru", "562125")),
-    "U1V001": ("Steel Suppliers", ("Mahesh", "Gowda", "Sales Manager"), "+91 90000 10101", "tungabhadrasteel",
+    "V0010": ("Steel Suppliers", ("Mahesh", "Gowda", "Sales Manager"), "+91 90000 10101", "tungabhadrasteel",
                ("Plot 7, Tungabhadra Steel Yard", "Hospet Road", "Kurugodu Cross", "Ballari", "583101"),
                ("Stock Yard", "Plot 22", "KIADB Industrial Area", "Sanklapur", "Hosapete", "583201")),
-    "U1V002": ("Building Materials", ("Ravi", "Shankar", "Partner"), "+91 90000 10102", "chamundicement",
+    "V0011": ("Building Materials", ("Ravi", "Shankar", "Partner"), "+91 90000 10102", "chamundicement",
                ("No. 112, Chamundi Complex", "Bannur Road", "Alanahalli", "Mysuru", "570028"),
                ("Crusher Unit", "Sy. No. 45", "Belagola Road", "Srirangapatna Taluk", "Srirangapatna", "571438")),
-    "U1V003": ("Elec & Plumbing", ("Anil", "Rao", "Sales Executive"), "+91 90000 10103", "vidyutelectricals",
+    "V0012": ("Elec & Plumbing", ("Anil", "Rao", "Sales Executive"), "+91 90000 10103", "vidyutelectricals",
                ("No. 23, 1st Floor", "Sadar Patrappa Road", "Chickpet", "Bengaluru", "560002"),
                ("Godown", "No. 9, 4th Cross", "Peenya 2nd Stage", "Peenya", "Bengaluru", "560058")),
-    "U1V004": ("Elec & Plumbing", ("Senthil", "Kumar", "Sales Manager"), "+91 90000 10104", "jalavahinipipes",
+    "V0013": ("Elec & Plumbing", ("Senthil", "Kumar", "Sales Manager"), "+91 90000 10104", "jalavahinipipes",
                ("No. 56, Jalavahini Buildings", "Avinashi Road", "Peelamedu", "Coimbatore", "641004"),
                ("Factory", "SF No. 312", "Kurichi Industrial Estate", "Kurichi", "Coimbatore", "641021")),
-    "U1V005": ("Safety & Consumable", ("Priya", "Patil", "Key Account Manager"), "+91 90000 10105", "rakshaksafety",
+    "V0014": ("Safety & Consumable", ("Priya", "Patil", "Key Account Manager"), "+91 90000 10105", "rakshaksafety",
                ("Unit 14, Rakshak Industrial Estate", "LBS Marg", "Ghatkopar West", "Mumbai", "400086"),
                ("Warehouse", "Gala 3, Bhiwandi Logistics Park", "Mumbai-Nashik Highway", "Bhiwandi", "Bhiwandi", "421302")),
-    "U1V006": ("Safety & Consumable", ("Manjunath", "H", "Sales Executive"), "+91 90000 10106", "agniwelding",
+    "V0015": ("Safety & Consumable", ("Manjunath", "H", "Sales Executive"), "+91 90000 10106", "agniwelding",
                ("No. 77, 1st Main", "Yeshwanthpur Industrial Suburb", "Yeshwanthpur", "Bengaluru", "560022"),
                ("Store", "Plot 41", "KIADB Industrial Area", "Bommasandra", "Bengaluru", "560099")),
-    "U1V007": ("Tools & Equipment", ("Basavaraj", "Patil", "Partner"), "+91 90000 10107", "shaktitools",
+    "V0016": ("Tools & Equipment", ("Basavaraj", "Patil", "Partner"), "+91 90000 10107", "shaktitools",
                ("No. 5, Shakti Arcade", "Station Road", "Old Hubballi", "Hubballi", "580020"),
                ("Warehouse", "Plot 18", "Gokul Road Industrial Area", "Gokul Road", "Hubballi", "580030")),
-    "U1V008": ("Transporters", ("Imran", "Khan", "Operations Manager"), "+91 90000 10108", "sarathiroadlines",
+    "V0017": ("Transporters", ("Imran", "Khan", "Operations Manager"), "+91 90000 10108", "sarathiroadlines",
                ("No. 3, Transport Nagar", "Tumkur Road", "Yeshwanthpur", "Bengaluru", "560022"),
                ("Truck Terminal", "Plot 61", "Peenya 1st Stage", "Peenya", "Bengaluru", "560058")),
-    "U1V009": ("Subcontractors", ("Ramesh", "R", "Proprietor"), "+91 90000 10109", "rameshfabrication",
+    "V0018": ("Subcontractors", ("Ramesh", "R", "Proprietor"), "+91 90000 10109", "rameshfabrication",
                ("Shed No. 11", "Apparel Park Road", "KIADB Industrial Area", "Doddaballapur", "561203"),
                ("Workshop", "Shed No. 12", "Apparel Park Road", "KIADB Industrial Area", "Doddaballapur", "561203")),
     # demo BPs loaded by sl_loader.py from data/06_business_partners.json (only completed here, never created)
@@ -235,7 +235,9 @@ def bps():
         yield {"CardCode": code, "CardName": name, "CardType": kind, "State": state, "City": city, "PAN": pan,
                "GSTIN": legacy_gstin or gstin(state, pan), "Legacy": bool(legacy_gstin),
                "PaymentTermsDays": days, "WTCode": wt, "ControlAccount": acct, "Note": note,
-               "Group": grp, "Contact": f"{first} {last}", "First": first, "Last": last,
+               "Group": (CUSTOMER_GROUPS if kind == "cCustomer" else VENDOR_GROUPS)[
+                   "Intrastate" if state == HOME_STATE else "Interstate"],  # all BPs are in India today
+               "Segment": grp, "Contact": f"{first} {last}", "First": first, "Last": last,
                "Position": pos, "Mobile": mobile, "Email": f"accounts@{dom}.example",
                "ContactEmail": f"{first.lower()}@{dom}.example", "Bill": bill, "Ship": ship,
                "PriceList": "SAL" if kind == "cCustomer" else "PUR"}
@@ -386,7 +388,7 @@ def load_sap(sl):
                 "Standard cost " + ", ".join(i["Code"] for i in new_std))
 
     for gtype, names in (("bbpgt_CustomerGroup", CUSTOMER_GROUPS), ("bbpgt_VendorGroup", VENDOR_GROUPS)):
-        for name in names:
+        for name in names.values():
             if not sl.find("BusinessPartnerGroups", "Name", name):
                 sl.post("BusinessPartnerGroups", {"Name": name, "Type": gtype}, f"BP group {name}")
     bpgrp = {g["Name"]: g["Code"] for g in v("BusinessPartnerGroups")}
