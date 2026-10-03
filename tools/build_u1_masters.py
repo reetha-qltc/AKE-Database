@@ -61,7 +61,7 @@ WAREHOUSES = [  # (code, name, stock account)
 # matching existing group (Raw material -> RM Plates, Safety Equipment -> PPE, Tools & Consumables -> Tools, FG -> FG).
 ITEM_GROUPS = {"Raw material": "RM Plates", "Finished Goods": "FG", "Safety Equipment": "PPE",
                "Tools & Consumables": "Tools", "Consumables": "Consumables", "Sub Assembly": "Sub Assembly",
-               "Packing Material": "Consumables", "Bought-out Components": "RM Plates"}
+               "Packing Material": "Consumables", "Bought-out Components": "RM Plates", "Scrap": "RM Plates"}
 
 HSN_TEXT = {"2505": "Natural sands", "2517": "Aggregate, crushed stone, M-sand", "2523": "Portland cement",
             "3824": "Construction chemicals", "3917": "PVC pipes and fittings", "6307": "Safety harness (textile)",
@@ -72,7 +72,7 @@ HSN_TEXT.update({"2710": "Petroleum oils - diesel, lubricants", "3402": "Cleanin
                  "4415": "Wooden pallets and packing cases", "6116": "Knitted gloves", "6806": "Rock wool insulation",
                  "7210": "Coated flat-rolled steel - roofing sheet", "7306": "Steel tubes and hollow sections",
                  "7308": "Steel structures", "7318": "Bolts, nuts, washers", "8311": "Welding and brazing rods",
-                 "8482": "Ball bearings"})
+                 "8482": "Ball bearings", "7208": "Hot-rolled flat steel - HR plate", "7204": "Ferrous scrap"})
 SAC_TEXT = {"996511": "Road transport services of goods (GTA)",
             "998873": "Job work - fabricated metal products (verify SAC)"}
 
@@ -83,7 +83,7 @@ SAC_TEXT = {"996511": "Road transport services of goods (GTA)",
 # Valuation: bought items Moving Average, items made in production (sub-assemblies, finished goods) Standard.
 MA, FIFO, STD = "bis_MovingAverage", "bis_FIFO", "bis_Standard"
 RM, FG, SF, TL, CN = "Raw material", "Finished Goods", "Safety Equipment", "Tools & Consumables", "Consumables"
-SA, PK, BO = "Sub Assembly", "Packing Material", "Bought-out Components"
+SA, PK, BO, SC = "Sub Assembly", "Packing Material", "Bought-out Components", "Scrap"
 ITEMS = [
     ("RM001", "TMT Steel Bar Fe500D 12mm", RM, 1, 1, 1, "WEIGHT", "KG", "MT", "KG", "U1 WH1", MA, "7214", 18, 58, 60, 68, 0, 0),
     ("RM002", "TMT Steel Bar Fe500D 16mm", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "7214", 18, 57, 59, 67, 0, 0),
@@ -130,6 +130,10 @@ ITEMS = [
     ("PM003", "Stretch Wrap Film 500mm", PK, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "3920", 18, None, 210, None, 0, 0),
     ("SA001", "Welded Bearing Bracket (semi-finished)", SA, 1, 0, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", STD, "7308", 18, 750, None, None, 0, 0),
     ("FG004", "Conveyor Idler Support Frame", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH5", STD, "7308", 18, 2600, None, 3400, 0, 0),
+    # 2026-10-03 AKE BOM pattern: plate cut on CNC plasma, scrap returned as by-product, resources backflushed
+    ("Z24631250005", "HR Plate, IS:2062 Gr. BR / S355JR, Size: 1250 x 5 mm", RM, 1, 1, 0, "WEIGHT", "KG", "KG", "KG", "U1 WH1", MA, "7208", 18, None, 62, None, 0, 0),
+    ("SCR220001", "MS Scrap melting", SC, 1, 0, 1, "WEIGHT", "KG", "KG", "KG", "U1 WH7", MA, "7204", 18, None, None, 32, 0, 0),
+    ("PL01", "Anchor Bolt Plate", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH5", STD, "7308", 18, 43, None, 60, 0, 0),
     ("FG005", "Insulated Roof Panel Assembly", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH5", STD, "7308", 18, 1250, None, 1650, 0, 0),
 ]
 ITEM_COLS = ["Code", "Description", "Group", "Inv", "Pur", "Sal", "UoMGroup", "InvUoM", "PurUoM", "SalUoM", "Whse",
@@ -139,13 +143,26 @@ ITEMS = [dict(zip(ITEM_COLS, r)) for r in ITEMS]
 PRICING_UNIT = {}
 for i in ITEMS:
     i["PriceUoM"] = PRICING_UNIT.get(i["Code"], i["InvUoM"])
-# production BOMs of the made items: code -> (warehouse, [(component, qty per 1 inventory unit, warehouse)])
+# resources (time unit minutes): code, name, type, cost per minute (existing hourly rates / 60), warehouse
+RESOURCES = [
+    ("RESPCM2-U1", "CNC Plasma With Dual Torch", "rtMachine", 20, "U1 WH4"),
+    ("RESPCO-U1", "Plasma Cutting Operator", "rtLabor", 6, "U1 WH4"),
+    ("RESHRO-U1", "Helper", "rtLabor", 4, "U1 WH4"),
+    ("RESGGM-U1", "Grinding Machine", "rtMachine", 5, "U1 WH4"),
+]
+# production BOMs of the made items: code -> (warehouse, [(component, qty per 1 inventory unit, warehouse
+#                                               [, "I"tem / "R"esource, "M"anual / "B"ackflush])]) - rows in this order;
+# a negative quantity is a by-product (scrap) received back into stock
 BOMS = {
     "SA001": ("U1WH01", [("RM003", 6.5, "U1 WH1"), ("RM010", 1.2, "U1 WH1"), ("CN001", 0.3, "U1WH01")]),
     "FG004": ("U1 WH5", [("SA001", 2, "U1WH01"), ("BO001", 2, "U1 WH1"), ("BO002", 8, "U1 WH1"),
                          ("CN005", 0.2, "U1WH01"), ("PM001", 4, "U1WH01"), ("PM003", 0.25, "U1WH01")]),
     "FG005": ("U1 WH5", [("RM008", 1.05, "U1 WH1"), ("RM009", 1.05, "U1 WH1"), ("RM010", 0.8, "U1 WH1"),
                          ("BO002", 4, "U1 WH1")]),  # per 1 SQM of panel
+    "PL01": ("U1 WH5", [("Z24631250005", 0.27, "U1 WH8", "I", "M"), ("SCR220001", -0.05, "U1 WH7", "I", "B"),
+                        ("RESPCM2-U1", 0.5, "U1 WH4", "R", "B"), ("RESPCO-U1", 0.5, "U1 WH4", "R", "B"),
+                        ("RESHRO-U1", 1.5, "U1 WH4", "R", "B"), ("RESGGM-U1", 1.0, "U1 WH4", "R", "B"),
+                        ("RESHRO-U1", 1.0, "U1 WH4", "R", "B")]),
 }
 
 # ---------------------------------------------------------------------------------------------- business partners
@@ -328,9 +345,12 @@ def write_excel():
                        [(g, n, UOMS[b], "; ".join(f"{a} {UOMS[u]} = {q} {UOMS[b]}" for u, a, q in alt) or "-")
                         for g, (n, b, alt) in UOM_GROUPS.items()]),
         "Item Groups": (["Item group", "Accounts copied from"], list(ITEM_GROUPS.items())),
-        "BOMs": (["Parent", "Warehouse", "Component", "Qty", "UoM", "Component warehouse"],
-                 [(p, w, c, q, next(UOMS[i["InvUoM"]] for i in ITEMS if i["Code"] == c), cw)
-                  for p, (w, ls) in BOMS.items() for c, q, cw in ls]),
+        "Resources": (["Code", "Name", "Type", "Cost per minute", "Warehouse"], RESOURCES),
+        "BOMs": (["Parent", "Warehouse", "Seq", "Type", "Component", "Qty", "UoM", "Component warehouse", "Issue method"],
+                 [(p, w, n, "Resource" if t == "R" else "Item", c, q,
+                   "Mins" if t == "R" else next(UOMS[i["InvUoM"]] for i in ITEMS if i["Code"] == c), cw,
+                   "Backflush" if m == "B" else "Manual")
+                  for p, (w, ls) in BOMS.items() for n, (c, q, cw, t, m) in enumerate(map(bom_line, ls), 1)]),
         "Items": (["Item Code", "Description", "Item Group", "Inventory Item", "Purchase Item", "Sales Item", "UoM Group",
                    "UOM", "Purchase UOM", "Sales UOM", "Pricing Unit", "Default Warehouse", "Valuation Method", "HSN / SAC",
                    "Tax Category", "GST % (indicative)", "Cost", "Purchase Price", "Sales Price", "Batch Managed",
@@ -357,6 +377,11 @@ def write_excel():
     OUT.mkdir(parents=True, exist_ok=True)
     wb.save(OUT / "U1_Master_Data.xlsx")
     print(f"Wrote {OUT / 'U1_Master_Data.xlsx'}")
+
+
+def bom_line(line):
+    """(code, qty, warehouse[, I/R, M/B]) -> (code, qty, warehouse, type, issue method)"""
+    return (*line, "I", "M")[:5] if len(line) == 3 else line
 
 
 # ---------------------------------------------------------------------------------------------- SAP
@@ -478,11 +503,18 @@ def load_sap(sl):
                                                                      for i in new_std for w in whs]},
                 "Standard cost " + ", ".join(i["Code"] for i in new_std))
 
+    for code, name, rtype, cost, whs_res in RESOURCES:
+        if not sl.find("Resources", "VisCode", code):
+            sl.post("Resources", {"VisCode": code, "Name": name, "Type": rtype, "IssueMethod": "rimBackflush",
+                                  "Cost1": cost, "DefaultWarehouse": whs_res, "ResourceWarehouses": [{"Warehouse": whs_res}]},
+                    f"Resource {code} {name}")
     for code, (whs_bom, lines) in BOMS.items():
         if not sl.exists("ProductTrees", code):
             sl.post("ProductTrees", {"TreeCode": code, "TreeType": "iProductionTree", "Quantity": 1, "Warehouse": whs_bom,
-                                     "ProductTreeLines": [{"ItemCode": c, "Quantity": q, "Warehouse": w, "ItemType": "pit_Item",
-                                                           "IssueMethod": "im_Manual"} for c, q, w in lines]},
+                                     "ProductTreeLines": [{"ItemCode": c, "Quantity": q, "Warehouse": w,
+                                                           "ItemType": "pit_Resource" if t == "R" else "pit_Item",
+                                                           "IssueMethod": "im_Backflush" if m == "B" else "im_Manual"}
+                                                          for c, q, w, t, m in map(bom_line, lines)]},
                     f"BOM {code} ({len(lines)} lines)")
 
     for gtype, names in (("bbpgt_CustomerGroup", CUSTOMER_GROUPS), ("bbpgt_VendorGroup", VENDOR_GROUPS)):
