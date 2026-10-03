@@ -47,6 +47,16 @@ WAREHOUSES = [  # (code, name, stock account)
     ("U1WH04", "Rejected Warehouse", "5002-01-01-06"),
     ("U1WH06", "Rejected Warehouse 2 (Scrap)", "5002-01-01-06"),
     ("U1WH07", "Finished Warehouse", "5002-01-01-03"),
+    # 2026-10-03 Unit-1 warehouse list from AKE (codes exactly as given, with a space)
+    ("U1 WH1", "Unit-1 Raw Material Warehouse", "5002-01-01-06"),
+    ("U1 WH2", "Unit-1 Bin Storage Warehouse", "5002-01-01-06"),
+    ("U1 WH3", "Unit-1 Subcontractor Warehouse", "5002-01-01-06"),
+    ("U1 WH4", "Unit-1 Work In Progress Warehouse", "5002-01-01-06"),
+    ("U1 WH5", "Unit-1 Finished Goods Warehouse", "5002-01-01-03"),
+    ("U1 WH6", "Unit-1 Rework Warehouse", "5002-01-01-06"),
+    ("U1 WH7", "Unit-1 Scrap Warehouse", "5002-01-01-06"),
+    ("U1 WH8", "Unit-1 Cutting Warehouse", "5002-01-01-06"),
+    ("U1 WH9", "Unit-1 Quality Warehouse", "5002-01-01-06"),
 ]
 
 # ---------------------------------------------------------------------------------------------- item groups
@@ -353,6 +363,22 @@ def write_excel():
 
 
 # ---------------------------------------------------------------------------------------------- SAP
+def load_warehouses(sl):
+    """Create missing warehouses; an existing code only gets its name corrected."""
+    for code, name, stock in WAREHOUSES:
+        cur = sl.get(f"Warehouses('{code}')?$select=WarehouseName")
+        if cur:
+            if cur["WarehouseName"] != name:
+                sl.patch("Warehouses", code, {"WarehouseName": name}, f"{code} name {name}")
+            continue
+        sl.post("Warehouses", {"WarehouseCode": code, "WarehouseName": name, "Location": L.TDS_LOCATION,
+                               "StockAccount": stock, "ExpenseAccount": "4001-16", "RevenuesAccount": "2001-01-01-01",
+                               "PurchaseAccount": "4008-01", "PriceDifferencesAccount": "4001-17",
+                               "VarianceAccount": "4001-23", "DecreasingAccount": "4001-21",
+                               "IncreaseGLAccount": "4001-20", "DecreaseGLAccount": "4001-21",
+                               "WIPMaterialAccount": "5002-01-02", "WIPMaterialVarianceAccount": "4001-23"}, f"{code} {name}")
+
+
 def load_sap(sl):
     v = lambda p: (sl.get(p) or {}).get("value", [])
     cur = {u["Code"]: u for u in v("UnitOfMeasurements?$select=AbsEntry,Code,Name")}
@@ -390,14 +416,7 @@ def load_sap(sl):
             if res:
                 ugp[code] = res["AbsEntry"]
 
-    for code, name, stock in WAREHOUSES:
-        if not sl.exists("Warehouses", code):
-            sl.post("Warehouses", {"WarehouseCode": code, "WarehouseName": name, "Location": L.TDS_LOCATION,
-                                   "StockAccount": stock, "ExpenseAccount": "4001-16", "RevenuesAccount": "2001-01-01-01",
-                                   "PurchaseAccount": "4008-01", "PriceDifferencesAccount": "4001-17",
-                                   "VarianceAccount": "4001-23", "DecreasingAccount": "4001-21",
-                                   "IncreaseGLAccount": "4001-20", "DecreaseGLAccount": "4001-21",
-                                   "WIPMaterialAccount": "5002-01-02", "WIPMaterialVarianceAccount": "4001-23"}, code)
+    load_warehouses(sl)
 
     src = {g["GroupName"]: g for g in L.load("03_item_groups")}
     ren = {"WipAccount": "WIPMaterialAccount", "WipVarianceAccount": "WIPMaterialVarianceAccount"}
@@ -521,13 +540,14 @@ def load_sap(sl):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--excel", action="store_true", help="only write the Excel master data sheet")
+    ap.add_argument("--warehouses", action="store_true", help="only create / rename the warehouses")
     a = ap.parse_args()
     write_excel()
     if a.excel:
         return
     sl = L.SL(L.read_env(), False, print)
     sl.login()
-    load_sap(sl)
+    load_warehouses(sl) if a.warehouses else load_sap(sl)
     print(f"Done. Failures: {sl.failures}")
 
 
