@@ -17,6 +17,7 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 5 | 18 sample items + 3 BOMs | RM008–RM011, CN004–CN008, BO001–BO003 (new group Bought-out Components), PM001–PM003 (new group Packing Material), SA001 semi-finished, FG004 / FG005 – every item with pricing unit; BOMs SA001 → FG004 and FG005 (per SQM); Standard cost set by revaluation (SA001 750, FG004 2,600, FG005 1,250/SQM) |
 | 6 | Existing items on the new groups + valuation rule | 32 items updated (`tools/update_item_uoms.py`): 22 Manual-UoM items moved to Each / Weight (steel bought in Tonnes); FIFO → Moving Average (BAT001, CN001–3, SF002–3); FG-CTRAY-300 / FG-PLAT-HR / FG-PRACK-6M / FG-TANK-5KL → Standard (indicative cost 78 % of sales price). Prices cleared by the group change were restored |
 | 7 | 15 items with transactions set **Inactive** (user request) | B1 refused the UoM group / valuation change on them: CN-ELEC-E6013, CN-ENAMEL, CN-GRIND-4, CN-MIG-ER70, CN-PRIMER, PPE-HELMET, PPE-SHOE, RM-PL-0012, RM-PL-0020, RM-ST-A50, RM-ST-MB300, FG-COL-MB300-6M, SA-BASEPL-400, SA-GUSSET-12, SF001 (remark "Old UoM setup"); history kept |
+| 8 | Planning method by procurement method (user request) | 13 Make items (FG001–FG005, FG-* , SA001, SA-*) → **MRP**; 69 Buy items already **None**; loader sets this on new items |
 
 ### ⛔ Waiting on user / AKE
 - Rename in the SAP client (they have transactions, Service Layer cannot change a BP code): **U1C006 → C0012** ABC Developers and **U1V001 → V0010** Tungabhadra Steel. The demo script and guide already use C0012 / V0010.

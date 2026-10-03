@@ -437,11 +437,13 @@ def load_sap(sl):
                 "PricingUnit": uom[i["PriceUoM"]],
                 "GSTRelevnt": "tYES", "GSTTaxCategory": "gtc_Regular",
                 "ItemPrices": [{"PriceList": pl, "Price": p} for pl, p in ((pur, i["PurPrice"]), (sal, i["SalPrice"])) if p]}
+        make = i["Code"] in BOMS or i["Group"] == FG
         if i["Inv"]:
             body.update({"ItemClass": "itcMaterial", "ChapterID": hsn.get(i["HSN"]), "GLMethod": "glm_ItemClass",
                          "CostAccountingMethod": i["Valuation"], "DefaultWarehouse": i["Whse"],
                          "ManageStockByWarehouse": "tYES", "MaterialType": mat.get(i["Group"], "mt_RawMaterial"),
-                         "ProcurementMethod": "bom_Make" if i["Code"] in BOMS or i["Group"] == FG else "bom_Buy",
+                         "ProcurementMethod": "bom_Make" if make else "bom_Buy",
+                         "PlanningSystem": "bop_MRP" if make else "bop_None",  # make items planned by MRP
                          "ItemWarehouseInfoCollection": [{"WarehouseCode": w} for w in whs]})
             if i["Batch"] or i["Serial"]:
                 body.update({"ManageBatchNumbers": yes(i["Batch"]), "ManageSerialNumbers": yes(i["Serial"]),
