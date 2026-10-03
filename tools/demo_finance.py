@@ -5,6 +5,8 @@ APDP  V0012 Vidyut Electricals (Karnataka, CGST+SGST), EL002 Distribution Board 
       A/P Down Payment Request 30 % -> advance paid -> GRPO -> A/P Invoice drawing the advance -> balance paid.
 ARDP  C0009 Godavari Power Plant (Telangana, IGST), EL002 5 Nos from the stock received in APDP: Sales Order ->
       A/R Down Payment Request 50 % -> advance received -> Delivery -> A/R Invoice drawing the advance -> balance received.
+TRQ   Inventory Transfer Request: EL002 3 Nos from U1 WH1 Raw Material to U1 WH2 Bin Storage (left open - copy it to an
+      Inventory Transfer in the client to move the stock).
 
 Run:  python tools/demo_finance.py            (JE, APDP, ARDP - ARDP sells the stock bought in APDP)
       python tools/demo_finance.py JE         (one flow)
@@ -134,7 +136,21 @@ def ARDP(run):
     show(run, "Invoices", inv, "A/R Invoice")
 
 
-FLOWS = ["JE", "APDP", "ARDP"]
+# ------------------------------------------------------------------------------------------- inventory transfer request
+def TRQ(run):
+    frm, to, qty = RM_WH, "U1 WH2", 3
+    trq = run.doc("FIN-TRQ1", "InventoryTransferRequests", {
+        "DocDate": TODAY, "DueDate": TODAY, "TaxDate": TODAY, "FromWarehouse": frm, "ToWarehouse": to,
+        "Comments": "AKE demo - move distribution boards to bin storage",
+        "StockTransferLines": [{"ItemCode": ITEM, "Quantity": qty, "FromWarehouseCode": frm, "WarehouseCode": to}]},
+        f"Transfer request {ITEM} {qty} Nos {frm} -> {to}")
+    d = run.get("InventoryTransferRequests", trq["DocEntry"])
+    for l in d["StockTransferLines"]:
+        print(f"     Request #{d['DocNum']} status {d['DocumentStatus']}: {l['ItemCode']} {l['Quantity']:g} "
+              f"{l['FromWarehouseCode']} -> {l['WarehouseCode']}, open {l['RemainingOpenQuantity']:g}")
+
+
+FLOWS = ["JE", "APDP", "ARDP", "TRQ"]
 
 if __name__ == "__main__":
     run = Run()
