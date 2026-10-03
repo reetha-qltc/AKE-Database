@@ -10,25 +10,34 @@ import argparse, pathlib, sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import sl_loader as L
+from renumber_bps import RENAME
+
+RENAMED_FROM = {new: old for old, new in RENAME.items()}  # BPs created as U1C*/U1V* and renumbered on 2026-10-03
 
 OUT = L.ROOT / "data" / "u1_masters"
-DOC_DATE = "2026-10-02"  # posting date of the FG standard-cost revaluation
+DOC_DATE = "2026-10-03"  # posting date of the standard-cost revaluation of new Standard items
 
 # ---------------------------------------------------------------------------------------------- units of measure
-UOMS = {"NOS": "Nos", "KG": "KG", "MT": "MT", "BAG": "Bag", "MTR": "Meter", "FT": "Feet", "LTR": "Liter",
-        "BOX": "Box", "SET": "Set"}
+UOMS = {"NOS": "NOS", "PAIR": "Pairs", "PKT": "Packet", "SET": "Set",
+        "SQM": "Square Meters", "SQFT": "Square Feet",
+        "CM": "Centimeters", "INCH": "Inches", "MTR": "Meters", "FT": "Feet",
+        "LTR": "LTR", "M3": "Cubic Meters (m3)",  # one UoM for cubic meter / m3
+        "G": "Grams", "KG": "KGS", "MT": "Tonnes",
+        "BAG": "Bag", "BOX": "Box"}
 # group code -> (name, base UoM, [(alternate UoM, alternate qty, base qty)]):  alt qty x alt UoM = base qty x base UoM
+# Standard groups Each / Area / Length / Volume / Weight (+ B1's built-in Manual); the three pack-size groups below
+# them hold item-specific conversions (a bag of cement, a box of electrodes / discs) that cannot be general.
 UOM_GROUPS = {
-    "STEEL":     ("Steel - KG / MT (1 MT = 1000 KG)", "KG", [("MT", 1, 1000)]),
+    "EACH":      ("Each", "NOS", [("PAIR", 1, 2), ("PKT", 1, 100), ("SET", 1, 1)]),
+    "AREA":      ("Area", "SQM", [("SQFT", 10.7639, 1)]),
+    "LENGTH":    ("Length", "MTR", [("CM", 100, 1), ("INCH", 1, 0.0254), ("FT", 1, 0.3048)]),
+    "VOLUME":    ("Volume", "LTR", [("M3", 1, 1000)]),
+    "WEIGHT":    ("Weight", "KG", [("G", 1000, 1), ("MT", 1, 1000)]),
     "CEMENT":    ("Cement - Bag / KG (1 Bag = 50 KG)", "KG", [("BAG", 1, 50)]),
-    "AGGREGATE": ("Sand & aggregate - MT / KG", "MT", [("KG", 1000, 1)]),
-    "LENGTH":    ("Cable & pipe - Meter / Feet (1 Feet = 0.3048 M)", "MTR", [("FT", 1, 0.3048)]),
     "ELECTRODE": ("Welding electrode - KG / Box (1 Box = 5 KG)", "KG", [("BOX", 1, 5)]),
     "DISC":      ("Abrasive discs - Nos / Box (1 Box = 25 Nos)", "NOS", [("BOX", 1, 25)]),
-    "NOS":       ("Numbers", "NOS", []),
-    "SET":       ("Set", "SET", []),
-    "LITER":     ("Liter", "LTR", []),
 }
+UOM_GROUP_RENAMED = {"STEEL": "WEIGHT", "NOS": "EACH", "LITER": "VOLUME"}  # 2026-10-03: old code -> new code
 
 # ---------------------------------------------------------------------------------------------- warehouses
 WAREHOUSES = [  # (code, name, stock account)
@@ -44,52 +53,92 @@ WAREHOUSES = [  # (code, name, stock account)
 # "Consumables" already exists in AKE_DEMO (group 105) and is reused; the others copy the accounts of the
 # matching existing group (Raw material -> RM Plates, Safety Equipment -> PPE, Tools & Consumables -> Tools, FG -> FG).
 ITEM_GROUPS = {"Raw material": "RM Plates", "Finished Goods": "FG", "Safety Equipment": "PPE",
-               "Tools & Consumables": "Tools", "Consumables": "Consumables"}
+               "Tools & Consumables": "Tools", "Consumables": "Consumables", "Sub Assembly": "Sub Assembly",
+               "Packing Material": "Consumables", "Bought-out Components": "RM Plates"}
 
 HSN_TEXT = {"2505": "Natural sands", "2517": "Aggregate, crushed stone, M-sand", "2523": "Portland cement",
             "3824": "Construction chemicals", "3917": "PVC pipes and fittings", "6307": "Safety harness (textile)",
             "8413": "Pumps for liquids", "8537": "Distribution boards", "8544": "Insulated electric cables",
             "9405": "LED lamps and flood lights"}
+HSN_TEXT.update({"2710": "Petroleum oils - diesel, lubricants", "3402": "Cleaning and degreasing preparations",
+                 "3920": "Plastic film - stretch wrap", "3926": "Other plastic articles - cable ties, tarpaulin",
+                 "4415": "Wooden pallets and packing cases", "6116": "Knitted gloves", "6806": "Rock wool insulation",
+                 "7210": "Coated flat-rolled steel - roofing sheet", "7306": "Steel tubes and hollow sections",
+                 "7308": "Steel structures", "7318": "Bolts, nuts, washers", "8311": "Welding and brazing rods",
+                 "8482": "Ball bearings"})
 SAC_TEXT = {"996511": "Road transport services of goods (GTA)",
             "998873": "Job work - fabricated metal products (verify SAC)"}
 
 # ---------------------------------------------------------------------------------------------- items
 # code, description, group, inv, pur, sal, UoM group, inventory/purchase/sales UoM, default whse, valuation,
-# HSN/SAC, GST %, cost, purchase price, sales price (prices per inventory UoM), batch, serial
+# HSN/SAC, GST %, cost, purchase price, sales price (prices per pricing unit, see PRICING_UNIT), batch, serial.
+# Valuation: bought items Moving Average, items made in production (sub-assemblies, finished goods) Standard.
 MA, FIFO, STD = "bis_MovingAverage", "bis_FIFO", "bis_Standard"
 RM, FG, SF, TL, CN = "Raw material", "Finished Goods", "Safety Equipment", "Tools & Consumables", "Consumables"
+SA, PK, BO = "Sub Assembly", "Packing Material", "Bought-out Components"
 ITEMS = [
-    ("RM001", "TMT Steel Bar Fe500D 12mm", RM, 1, 1, 1, "STEEL", "KG", "MT", "KG", "U1WH02", MA, "7214", 18, 58, 60, 68, 0, 0),
-    ("RM002", "TMT Steel Bar Fe500D 16mm", RM, 1, 1, 1, "STEEL", "KG", "MT", "KG", "U1WH02", MA, "7214", 18, 57, 59, 67, 0, 0),
-    ("RM003", "Structural Steel ISMB / ISMC E250", RM, 1, 1, 1, "STEEL", "KG", "MT", "KG", "U1WH02", MA, "7216", 18, 60, 62, 72, 0, 0),
+    ("RM001", "TMT Steel Bar Fe500D 12mm", RM, 1, 1, 1, "WEIGHT", "KG", "MT", "KG", "U1WH02", MA, "7214", 18, 58, 60, 68, 0, 0),
+    ("RM002", "TMT Steel Bar Fe500D 16mm", RM, 1, 1, 1, "WEIGHT", "KG", "MT", "KG", "U1WH02", MA, "7214", 18, 57, 59, 67, 0, 0),
+    ("RM003", "Structural Steel ISMB / ISMC E250", RM, 1, 1, 1, "WEIGHT", "KG", "MT", "KG", "U1WH02", MA, "7216", 18, 60, 62, 72, 0, 0),
     ("RM004", "Cement OPC 53 Grade 50 KG Bag", RM, 1, 1, 0, "CEMENT", "BAG", "BAG", "BAG", "U1WH02", MA, "2523", 18, 360, 370, None, 0, 0),
-    ("RM005", "River Sand", RM, 1, 1, 0, "AGGREGATE", "MT", "MT", "MT", "U1WH02", MA, "2505", 5, 1800, 1850, None, 0, 0),
-    ("RM006", "M-Sand (Manufactured Sand)", RM, 1, 1, 0, "AGGREGATE", "MT", "MT", "MT", "U1WH02", MA, "2517", 5, 1100, 1150, None, 0, 0),
-    ("RM007", "Aggregate 20mm", RM, 1, 1, 0, "AGGREGATE", "MT", "MT", "MT", "U1WH02", MA, "2517", 5, 950, 1000, None, 0, 0),
+    ("RM005", "River Sand", RM, 1, 1, 0, "WEIGHT", "MT", "MT", "MT", "U1WH02", MA, "2505", 5, 1800, 1850, None, 0, 0),
+    ("RM006", "M-Sand (Manufactured Sand)", RM, 1, 1, 0, "WEIGHT", "MT", "MT", "MT", "U1WH02", MA, "2517", 5, 1100, 1150, None, 0, 0),
+    ("RM007", "Aggregate 20mm", RM, 1, 1, 0, "WEIGHT", "MT", "MT", "MT", "U1WH02", MA, "2517", 5, 950, 1000, None, 0, 0),
     ("EL001", "Electrical Cable 3.5C x 25 sqmm Armoured", RM, 1, 1, 1, "LENGTH", "MTR", "MTR", "MTR", "U1WH02", MA, "8544", 18, 210, 220, 260, 0, 0),
-    ("EL002", "Distribution Board 8-Way TPN", RM, 1, 1, 1, "NOS", "NOS", "NOS", "NOS", "U1WH02", MA, "8537", 18, 4200, 4400, 5200, 0, 0),
-    ("EL003", "LED Flood Light 100W", RM, 1, 1, 1, "NOS", "NOS", "NOS", "NOS", "U1WH02", MA, "9405", 18, 2300, 2400, 2900, 0, 0),
+    ("EL002", "Distribution Board 8-Way TPN", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "8537", 18, 4200, 4400, 5200, 0, 0),
+    ("EL003", "LED Flood Light 100W", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "9405", 18, 2300, 2400, 2900, 0, 0),
     ("PL001", "PVC Pipe 110mm 6 kgf", RM, 1, 1, 1, "LENGTH", "MTR", "FT", "MTR", "U1WH02", MA, "3917", 18, 290, 300, 350, 0, 0),
     ("PL002", "GI Pipe 50mm Medium", RM, 1, 1, 1, "LENGTH", "MTR", "MTR", "MTR", "U1WH02", MA, "7306", 18, 520, 540, 620, 0, 0),
-    ("SF001", "Safety Helmet", SF, 1, 1, 1, "NOS", "NOS", "NOS", "NOS", "U1WH01", FIFO, "6506", 18, 180, 190, 250, 0, 0),
-    ("SF002", "Safety Shoes", SF, 1, 1, 0, "NOS", "NOS", "NOS", "NOS", "U1WH01", FIFO, "6403", 5, 950, 990, None, 0, 0),
-    ("SF003", "Safety Harness Full Body with Lanyard", SF, 1, 1, 0, "SET", "SET", "SET", "SET", "U1WH01", FIFO, "6307", 5, 2600, 2700, None, 0, 0),
-    ("CN001", "Welding Rod E6013 3.15mm", CN, 1, 1, 0, "ELECTRODE", "KG", "BOX", "KG", "U1WH01", FIFO, "8311", 18, 210, 220, None, 0, 0),
-    ("CN002", "Cutting Disc 4 inch", CN, 1, 1, 0, "DISC", "NOS", "BOX", "NOS", "U1WH01", FIFO, "6804", 18, 28, 30, None, 0, 0),
-    ("CN003", "Grinding Disc 4 inch", CN, 1, 1, 0, "DISC", "NOS", "BOX", "NOS", "U1WH01", FIFO, "6804", 18, 35, 38, None, 0, 0),
-    ("TR001", "Water Pump 1 HP Monoblock", TL, 1, 1, 0, "NOS", "NOS", "NOS", "NOS", "U1WH01", MA, "8413", 18, 7800, 8200, None, 0, 0),
-    ("TR002", "Power Tool Kit (Angle Grinder + Drill)", TL, 1, 1, 0, "SET", "SET", "SET", "SET", "U1WH01", MA, "8467", 18, 9500, 9900, None, 0, 0),
-    ("BAT001", "Construction Chemical / Adhesive - Epoxy Grout", CN, 1, 1, 0, "LITER", "LTR", "LTR", "LTR", "U1WH02", FIFO, "3824", 18, 420, 440, None, 1, 0),
-    ("SER001", "Power Drill / Equipment - Rotary Hammer 26mm", TL, 1, 1, 0, "NOS", "NOS", "NOS", "NOS", "U1WH01", MA, "8467", 18, 14500, 15200, None, 0, 1),
-    ("SRV001", "Transportation Service (per trip)", None, 0, 1, 1, "NOS", "NOS", "NOS", "NOS", None, None, "996511", 5, None, 6000, 6500, 0, 0),
-    ("SRV002", "Subcontracting Service - Fabrication Job Work (per KG)", None, 0, 1, 0, "STEEL", "KG", "KG", "KG", None, None, "998873", 18, None, 18, None, 0, 0),
-    ("FG001", "Fabricated Steel Roof Truss", FG, 1, 0, 1, "STEEL", "KG", "KG", "MT", "U1WH07", STD, "7308", 18, 85, None, 110, 0, 0),
-    ("FG002", "Fabricated Built-up Steel Column", FG, 1, 0, 1, "STEEL", "KG", "KG", "MT", "U1WH07", STD, "7308", 18, 82, None, 105, 0, 0),
-    ("FG003", "MS Base Plate Assembly 300x300x20", FG, 1, 0, 1, "NOS", "NOS", "NOS", "NOS", "U1WH07", STD, "7308", 18, 2400, None, 3100, 0, 0),
+    ("SF001", "Safety Helmet", SF, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6506", 18, 180, 190, 250, 0, 0),
+    ("SF002", "Safety Shoes", SF, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6403", 5, 950, 990, None, 0, 0),
+    ("SF003", "Safety Harness Full Body with Lanyard", SF, 1, 1, 0, "EACH", "SET", "SET", "SET", "U1WH01", MA, "6307", 5, 2600, 2700, None, 0, 0),
+    ("CN001", "Welding Rod E6013 3.15mm", CN, 1, 1, 0, "ELECTRODE", "KG", "BOX", "KG", "U1WH01", MA, "8311", 18, 210, 220, None, 0, 0),
+    ("CN002", "Cutting Disc 4 inch", CN, 1, 1, 0, "DISC", "NOS", "BOX", "NOS", "U1WH01", MA, "6804", 18, 28, 30, None, 0, 0),
+    ("CN003", "Grinding Disc 4 inch", CN, 1, 1, 0, "DISC", "NOS", "BOX", "NOS", "U1WH01", MA, "6804", 18, 35, 38, None, 0, 0),
+    ("TR001", "Water Pump 1 HP Monoblock", TL, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8413", 18, 7800, 8200, None, 0, 0),
+    ("TR002", "Power Tool Kit (Angle Grinder + Drill)", TL, 1, 1, 0, "EACH", "SET", "SET", "SET", "U1WH01", MA, "8467", 18, 9500, 9900, None, 0, 0),
+    ("BAT001", "Construction Chemical / Adhesive - Epoxy Grout", CN, 1, 1, 0, "VOLUME", "LTR", "LTR", "LTR", "U1WH02", MA, "3824", 18, 420, 440, None, 1, 0),
+    ("SER001", "Power Drill / Equipment - Rotary Hammer 26mm", TL, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8467", 18, 14500, 15200, None, 0, 1),
+    ("SRV001", "Transportation Service (per trip)", None, 0, 1, 1, "EACH", "NOS", "NOS", "NOS", None, None, "996511", 5, None, 6000, 6500, 0, 0),
+    ("SRV002", "Subcontracting Service - Fabrication Job Work (per KG)", None, 0, 1, 0, "WEIGHT", "KG", "KG", "KG", None, None, "998873", 18, None, 18, None, 0, 0),
+    ("FG001", "Fabricated Steel Roof Truss", FG, 1, 0, 1, "WEIGHT", "KG", "KG", "MT", "U1WH07", STD, "7308", 18, 85, None, 110, 0, 0),
+    ("FG002", "Fabricated Built-up Steel Column", FG, 1, 0, 1, "WEIGHT", "KG", "KG", "MT", "U1WH07", STD, "7308", 18, 82, None, 105, 0, 0),
+    ("FG003", "MS Base Plate Assembly 300x300x20", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1WH07", STD, "7308", 18, 2400, None, 3100, 0, 0),
+    # 2026-10-03 sample items for the Purchase -> Inventory -> Production -> Sales demo, one or more per UoM group
+    ("RM008", "Colour Coated Roofing Sheet 0.47mm AZ150", RM, 1, 1, 1, "AREA", "SQM", "SQM", "SQFT", "U1WH02", MA, "7210", 18, None, 48, 58, 0, 0),
+    ("RM009", "Rockwool Insulation Blanket 50mm 64 kg/m3", RM, 1, 1, 0, "AREA", "SQM", "SQM", "SQM", "U1WH02", MA, "6806", 18, None, 310, None, 0, 0),
+    ("RM010", "MS Square Hollow Section 40x40x2mm", RM, 1, 1, 0, "LENGTH", "MTR", "MTR", "MTR", "U1WH02", MA, "7306", 18, None, 145, None, 0, 0),
+    ("RM011", "Ready Mix Concrete M25", RM, 1, 1, 0, "VOLUME", "M3", "M3", "M3", "U1WH02", MA, "3824", 18, None, 5600, None, 0, 0),
+    ("CN004", "HDPE Tarpaulin Sheet 200 GSM", CN, 1, 1, 0, "AREA", "SQM", "SQFT", "SQM", "U1WH01", MA, "3926", 18, None, 95, None, 0, 0),
+    ("CN005", "Industrial Degreaser / Cleaning Chemical", CN, 1, 1, 0, "VOLUME", "LTR", "LTR", "LTR", "U1WH01", MA, "3402", 18, None, 180, None, 0, 0),
+    ("CN006", "Silver Brazing Alloy Rod 15%", CN, 1, 1, 0, "WEIGHT", "G", "G", "G", "U1WH01", MA, "8311", 18, None, 38, None, 0, 0),
+    ("CN007", "Cotton Knitted Hand Gloves", CN, 1, 1, 0, "EACH", "PAIR", "PAIR", "PAIR", "U1WH01", MA, "6116", 5, None, 28, None, 0, 0),
+    ("CN008", "Hydraulic Oil ISO VG 68", CN, 1, 1, 0, "VOLUME", "LTR", "LTR", "LTR", "U1WH01", MA, "2710", 18, None, 165, None, 0, 0),
+    ("BO001", "Deep Groove Ball Bearing 6205-2RS", BO, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "8482", 18, None, 185, 240, 0, 0),
+    ("BO002", "HDG Hex Bolt M16x60 with Nut & Washer", BO, 1, 1, 1, "EACH", "NOS", "PKT", "NOS", "U1WH02", MA, "7318", 18, None, 22, 30, 0, 0),
+    ("BO003", "Anchor Bolt Set M20 (4 bolts + template)", BO, 1, 1, 1, "EACH", "SET", "SET", "SET", "U1WH02", MA, "7318", 18, None, 1450, 1800, 0, 0),
+    ("PM001", "Nylon Cable Tie 300mm (packet of 100)", PK, 1, 1, 0, "EACH", "NOS", "PKT", "NOS", "U1WH01", MA, "3926", 18, None, 1.6, None, 0, 0),
+    ("PM002", "Wooden Pallet 1200x1000mm", PK, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "4415", 12, None, 650, None, 0, 0),
+    ("PM003", "Stretch Wrap Film 500mm", PK, 1, 1, 0, "WEIGHT", "KG", "KG", "KG", "U1WH01", MA, "3920", 18, None, 210, None, 0, 0),
+    ("SA001", "Welded Bearing Bracket (semi-finished)", SA, 1, 0, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", STD, "7308", 18, 750, None, None, 0, 0),
+    ("FG004", "Conveyor Idler Support Frame", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1WH07", STD, "7308", 18, 2600, None, 3400, 0, 0),
+    ("FG005", "Insulated Roof Panel Assembly", FG, 1, 0, 1, "AREA", "SQM", "SQM", "SQFT", "U1WH07", STD, "7308", 18, 1250, None, 1650, 0, 0),
 ]
 ITEM_COLS = ["Code", "Description", "Group", "Inv", "Pur", "Sal", "UoMGroup", "InvUoM", "PurUoM", "SalUoM", "Whse",
              "Valuation", "HSN", "GST", "Cost", "PurPrice", "SalPrice", "Batch", "Serial"]
 ITEMS = [dict(zip(ITEM_COLS, r)) for r in ITEMS]
+# pricing unit (price list prices are per this unit) when it is not the inventory UoM
+PRICING_UNIT = {"RM008": "SQFT"}
+for i in ITEMS:
+    i["PriceUoM"] = PRICING_UNIT.get(i["Code"], i["InvUoM"])
+# production BOMs of the made items: code -> (warehouse, [(component, qty per 1 inventory unit, warehouse)])
+BOMS = {
+    "SA001": ("U1WH01", [("RM003", 6.5, "U1WH02"), ("RM010", 1.2, "U1WH02"), ("CN001", 0.3, "U1WH01")]),
+    "FG004": ("U1WH07", [("SA001", 2, "U1WH01"), ("BO001", 2, "U1WH02"), ("BO002", 8, "U1WH02"),
+                         ("CN005", 0.2, "U1WH01"), ("PM001", 4, "U1WH01"), ("PM003", 0.25, "U1WH01")]),
+    "FG005": ("U1WH07", [("RM008", 1.05, "U1WH02"), ("RM009", 1.05, "U1WH02"), ("RM010", 0.8, "U1WH02"),
+                         ("BO002", 4, "U1WH02")]),  # per 1 SQM of panel
+}
 
 # ---------------------------------------------------------------------------------------------- business partners
 # code, name, state, city, PAN, payment days, TDS code, what they buy / supply
@@ -271,12 +320,15 @@ def write_excel():
                        [(g, n, UOMS[b], "; ".join(f"{a} {UOMS[u]} = {q} {UOMS[b]}" for u, a, q in alt) or "-")
                         for g, (n, b, alt) in UOM_GROUPS.items()]),
         "Item Groups": (["Item group", "Accounts copied from"], list(ITEM_GROUPS.items())),
+        "BOMs": (["Parent", "Warehouse", "Component", "Qty", "UoM", "Component warehouse"],
+                 [(p, w, c, q, next(UOMS[i["InvUoM"]] for i in ITEMS if i["Code"] == c), cw)
+                  for p, (w, ls) in BOMS.items() for c, q, cw in ls]),
         "Items": (["Item Code", "Description", "Item Group", "Inventory Item", "Purchase Item", "Sales Item", "UoM Group",
-                   "UOM", "Purchase UOM", "Sales UOM", "Default Warehouse", "Valuation Method", "HSN / SAC",
+                   "UOM", "Purchase UOM", "Sales UOM", "Pricing Unit", "Default Warehouse", "Valuation Method", "HSN / SAC",
                    "Tax Category", "GST % (indicative)", "Cost", "Purchase Price", "Sales Price", "Batch Managed",
                    "Serial Managed"],
                   [(i["Code"], i["Description"], i["Group"] or "Items (services)", yn(i["Inv"]), yn(i["Pur"]), yn(i["Sal"]),
-                    i["UoMGroup"], UOMS[i["InvUoM"]], UOMS[i["PurUoM"]], UOMS[i["SalUoM"]], i["Whse"] or "-",
+                    i["UoMGroup"], UOMS[i["InvUoM"]], UOMS[i["PurUoM"]], UOMS[i["SalUoM"]], UOMS[i["PriceUoM"]], i["Whse"] or "-",
                     val[i["Valuation"]], i["HSN"], "Regular (Service)" if not i["Inv"] else "Regular (Goods)", i["GST"],
                     i["Cost"], i["PurPrice"], i["SalPrice"], yn(i["Batch"]), yn(i["Serial"])) for i in ITEMS]),
         "Customers": (BP_HEAD, [bp_row(b) for b in bps() if b["CardType"] == "cCustomer"]),
@@ -302,12 +354,31 @@ def write_excel():
 # ---------------------------------------------------------------------------------------------- SAP
 def load_sap(sl):
     v = lambda p: (sl.get(p) or {}).get("value", [])
-    uom = {u["Code"]: u["AbsEntry"] for u in v("UnitOfMeasurements?$select=AbsEntry,Code")}
+    cur = {u["Code"]: u for u in v("UnitOfMeasurements?$select=AbsEntry,Code,Name")}
+    uom = {c: u["AbsEntry"] for c, u in cur.items()}
     for code, name in UOMS.items():
         if code not in uom:
             res = sl.post("UnitOfMeasurements", {"Code": code, "Name": name}, f"UoM {code}")
             if res:
                 uom[code] = res["AbsEntry"]
+        elif cur[code]["Name"] != name:
+            sl.patch("UnitOfMeasurements", uom[code], {"Name": name}, f"UoM {code} name {name}")
+    groups_now = {g["Code"]: g for g in v("UnitOfMeasurementGroups")}
+    for old, new in UOM_GROUP_RENAMED.items():  # rename in place: items keep their group, no duplicate group
+        if old in groups_now and new not in groups_now:
+            sl.patch("UnitOfMeasurementGroups", groups_now[old]["AbsEntry"], {"Code": new}, f"UoM group {old} -> {new}")
+            groups_now[new] = groups_now.pop(old)
+    for code, (name, base, alt) in UOM_GROUPS.items():  # existing groups: fix the name, add missing alternate UoMs
+        g = groups_now.get(code)
+        if not g:
+            continue
+        have = {d["AlternateUoM"] for d in g["UoMGroupDefinitionCollection"]}
+        new_uoms = [u for u, *_ in alt if uom[u] not in have]
+        add = [{"AlternateUoM": uom[u], "AlternateQuantity": a, "BaseQuantity": q} for u, a, q in alt if u in new_uoms]
+        if g["Name"] != name or add:
+            sl.patch("UnitOfMeasurementGroups", g["AbsEntry"],
+                     {"Name": name, **({"UoMGroupDefinitionCollection": add} if add else {})},
+                     f"UoM group {code}" + (f" + {', '.join(new_uoms)}" if add else ""))
     ugp = {g["Code"]: g["AbsEntry"] for g in v("UnitOfMeasurementGroups?$select=AbsEntry,Code")}
     for code, (name, base, alt) in UOM_GROUPS.items():
         if code not in ugp:
@@ -352,7 +423,7 @@ def load_sap(sl):
 
     pur, sal = L.price_list_no(sl, "PUR"), L.price_list_no(sl, "SAL")
     whs = [w[0] for w in WAREHOUSES]
-    mat = {RM: "mt_RawMaterial", FG: "mt_FinishedGoods"}
+    mat = {RM: "mt_RawMaterial", FG: "mt_FinishedGoods", SA: "mt_GoodsInProcess"}
     yes = lambda f: "tYES" if f else "tNO"
     new_std = []
     for i in ITEMS:
@@ -363,13 +434,14 @@ def load_sap(sl):
                 "InventoryItem": yes(i["Inv"]), "PurchaseItem": yes(i["Pur"]), "SalesItem": yes(i["Sal"]),
                 "UoMGroupEntry": ugp[i["UoMGroup"]], "InventoryUoMEntry": uom[i["InvUoM"]],
                 "DefaultPurchasingUoMEntry": uom[i["PurUoM"]], "DefaultSalesUoMEntry": uom[i["SalUoM"]],
+                "PricingUnit": uom[i["PriceUoM"]],
                 "GSTRelevnt": "tYES", "GSTTaxCategory": "gtc_Regular",
                 "ItemPrices": [{"PriceList": pl, "Price": p} for pl, p in ((pur, i["PurPrice"]), (sal, i["SalPrice"])) if p]}
         if i["Inv"]:
             body.update({"ItemClass": "itcMaterial", "ChapterID": hsn.get(i["HSN"]), "GLMethod": "glm_ItemClass",
                          "CostAccountingMethod": i["Valuation"], "DefaultWarehouse": i["Whse"],
                          "ManageStockByWarehouse": "tYES", "MaterialType": mat.get(i["Group"], "mt_RawMaterial"),
-                         "ProcurementMethod": "bom_Make" if i["Group"] == FG else "bom_Buy",
+                         "ProcurementMethod": "bom_Make" if i["Code"] in BOMS or i["Group"] == FG else "bom_Buy",
                          "ItemWarehouseInfoCollection": [{"WarehouseCode": w} for w in whs]})
             if i["Batch"] or i["Serial"]:
                 body.update({"ManageBatchNumbers": yes(i["Batch"]), "ManageSerialNumbers": yes(i["Serial"]),
@@ -382,10 +454,17 @@ def load_sap(sl):
             new_std.append(i)
     # B1 refuses AvgStdPrice on the item master; standard cost is set per warehouse by an inventory revaluation
     if new_std:
-        sl.post("MaterialRevaluation", {"DocDate": DOC_DATE, "RevalType": "P", "Comments": "U1 FG standard cost",
+        sl.post("MaterialRevaluation", {"DocDate": DOC_DATE, "RevalType": "P", "Comments": "U1 standard cost",
                                         "MaterialRevaluationLines": [{"ItemCode": i["Code"], "Price": i["Cost"], "WarehouseCode": w}
                                                                      for i in new_std for w in whs]},
                 "Standard cost " + ", ".join(i["Code"] for i in new_std))
+
+    for code, (whs_bom, lines) in BOMS.items():
+        if not sl.exists("ProductTrees", code):
+            sl.post("ProductTrees", {"TreeCode": code, "TreeType": "iProductionTree", "Quantity": 1, "Warehouse": whs_bom,
+                                     "ProductTreeLines": [{"ItemCode": c, "Quantity": q, "Warehouse": w, "ItemType": "pit_Item",
+                                                           "IssueMethod": "im_Manual"} for c, q, w in lines]},
+                    f"BOM {code} ({len(lines)} lines)")
 
     for gtype, names in (("bbpgt_CustomerGroup", CUSTOMER_GROUPS), ("bbpgt_VendorGroup", VENDOR_GROUPS)):
         for name in names.values():
@@ -410,6 +489,10 @@ def load_sap(sl):
             details["Notes"] = b["Note"]
         contact = {"Name": b["Contact"], "FirstName": b["First"], "LastName": b["Last"], "Position": b["Position"],
                    "MobilePhone": b["Mobile"], "E_Mail": b["ContactEmail"]}
+        old = RENAMED_FROM.get(b["CardCode"])
+        if old and sl.exists("BusinessPartners", old):
+            sl.log(f"WARN {old} still exists - rename it to {b['CardCode']} in the SAP client first")
+            continue
         if sl.exists("BusinessPartners", b["CardCode"]):
             # complete BPs created before the details existed; the contact is added only once
             cur = sl.get(f"BusinessPartners('{b['CardCode']}')?$select=ContactEmployees,BPAddresses")
