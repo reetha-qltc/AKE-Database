@@ -18,11 +18,13 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 6 | Existing items on the new groups + valuation rule | 32 items updated (`tools/update_item_uoms.py`): 22 Manual-UoM items moved to Each / Weight (steel bought in Tonnes); FIFO → Moving Average (BAT001, CN001–3, SF002–3); FG-CTRAY-300 / FG-PLAT-HR / FG-PRACK-6M / FG-TANK-5KL → Standard (indicative cost 78 % of sales price). Prices cleared by the group change were restored |
 | 7 | 15 items with transactions set **Inactive** (user request) | B1 refused the UoM group / valuation change on them: CN-ELEC-E6013, CN-ENAMEL, CN-GRIND-4, CN-MIG-ER70, CN-PRIMER, PPE-HELMET, PPE-SHOE, RM-PL-0012, RM-PL-0020, RM-ST-A50, RM-ST-MB300, FG-COL-MB300-6M, SA-BASEPL-400, SA-GUSSET-12, SF001 (remark "Old UoM setup"); history kept |
 | 8 | Planning method by procurement method (user request) | 13 Make items (FG001–FG005, FG-* , SA001, SA-*) → **MRP**; 69 Buy items already **None**; loader sets this on new items |
+| 9 | All 17 **Consumables** items → UoM group Each, inventory / purchase / sales UoM and pricing unit NOS (user request) | Changed from Volume (BAT001, CN005, CN008), Weight (CN006), Area (CN004), Each-Pairs (CN007), Box packs (CN001–CN003) and Manual (5 inactive items); price figures kept, now per NOS |
 
 ### ⛔ Waiting on user / AKE
 - Rename in the SAP client (they have transactions, Service Layer cannot change a BP code): **U1C006 → C0012** ABC Developers and **U1V001 → V0010** Tungabhadra Steel. The demo script and guide already use C0012 / V0010.
 - New BPs: choose the group by address – Karnataka → Intrastate, other Indian state → Interstate, outside India → Export / Import Vendor
 - Inactive items still hold stock (e.g. RM-PL-0012 486.4 KG, RM-PL-0020 299.8 KG, RM-ST-A50 300 KG, RM-ST-MB300 219.6 KG, FG-COL-MB300-6M 2 Nos, SF001 7 Nos) and sit in the old BOMs FG-COL-MB300-6M, FG-PLAT-HR, FG-CTRAY-300, SA-BASEPL-400, SA-GUSSET-12 – decide: issue / write off the stock, and replace those BOM lines with active items
+- Consumables now counted in NOS: check the price figures (e.g. CN005 degreaser ₹180, CN006 brazing rod ₹38 were per LTR / Gram) and the BOM quantities SA001 → CN001 0.3 and FG004 → CN005 0.2 (now NOS)
 - Confirm standard costs (indicative) and the Packet = 100 NOS / Set = 1 NOS conversions
 
 ### 📌 Next

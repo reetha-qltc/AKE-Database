@@ -72,6 +72,7 @@ SAC_TEXT = {"996511": "Road transport services of goods (GTA)",
 # ---------------------------------------------------------------------------------------------- items
 # code, description, group, inv, pur, sal, UoM group, inventory/purchase/sales UoM, default whse, valuation,
 # HSN/SAC, GST %, cost, purchase price, sales price (prices per pricing unit, see PRICING_UNIT), batch, serial.
+# Consumables are all on Each / NOS (user decision 2026-10-03).
 # Valuation: bought items Moving Average, items made in production (sub-assemblies, finished goods) Standard.
 MA, FIFO, STD = "bis_MovingAverage", "bis_FIFO", "bis_Standard"
 RM, FG, SF, TL, CN = "Raw material", "Finished Goods", "Safety Equipment", "Tools & Consumables", "Consumables"
@@ -92,12 +93,12 @@ ITEMS = [
     ("SF001", "Safety Helmet", SF, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6506", 18, 180, 190, 250, 0, 0),
     ("SF002", "Safety Shoes", SF, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6403", 5, 950, 990, None, 0, 0),
     ("SF003", "Safety Harness Full Body with Lanyard", SF, 1, 1, 0, "EACH", "SET", "SET", "SET", "U1WH01", MA, "6307", 5, 2600, 2700, None, 0, 0),
-    ("CN001", "Welding Rod E6013 3.15mm", CN, 1, 1, 0, "ELECTRODE", "KG", "BOX", "KG", "U1WH01", MA, "8311", 18, 210, 220, None, 0, 0),
-    ("CN002", "Cutting Disc 4 inch", CN, 1, 1, 0, "DISC", "NOS", "BOX", "NOS", "U1WH01", MA, "6804", 18, 28, 30, None, 0, 0),
-    ("CN003", "Grinding Disc 4 inch", CN, 1, 1, 0, "DISC", "NOS", "BOX", "NOS", "U1WH01", MA, "6804", 18, 35, 38, None, 0, 0),
+    ("CN001", "Welding Rod E6013 3.15mm", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8311", 18, 210, 220, None, 0, 0),
+    ("CN002", "Cutting Disc 4 inch", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6804", 18, 28, 30, None, 0, 0),
+    ("CN003", "Grinding Disc 4 inch", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6804", 18, 35, 38, None, 0, 0),
     ("TR001", "Water Pump 1 HP Monoblock", TL, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8413", 18, 7800, 8200, None, 0, 0),
     ("TR002", "Power Tool Kit (Angle Grinder + Drill)", TL, 1, 1, 0, "EACH", "SET", "SET", "SET", "U1WH01", MA, "8467", 18, 9500, 9900, None, 0, 0),
-    ("BAT001", "Construction Chemical / Adhesive - Epoxy Grout", CN, 1, 1, 0, "VOLUME", "LTR", "LTR", "LTR", "U1WH02", MA, "3824", 18, 420, 440, None, 1, 0),
+    ("BAT001", "Construction Chemical / Adhesive - Epoxy Grout", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "3824", 18, 420, 440, None, 1, 0),
     ("SER001", "Power Drill / Equipment - Rotary Hammer 26mm", TL, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8467", 18, 14500, 15200, None, 0, 1),
     ("SRV001", "Transportation Service (per trip)", None, 0, 1, 1, "EACH", "NOS", "NOS", "NOS", None, None, "996511", 5, None, 6000, 6500, 0, 0),
     ("SRV002", "Subcontracting Service - Fabrication Job Work (per KG)", None, 0, 1, 0, "WEIGHT", "KG", "KG", "KG", None, None, "998873", 18, None, 18, None, 0, 0),
@@ -109,11 +110,11 @@ ITEMS = [
     ("RM009", "Rockwool Insulation Blanket 50mm 64 kg/m3", RM, 1, 1, 0, "AREA", "SQM", "SQM", "SQM", "U1WH02", MA, "6806", 18, None, 310, None, 0, 0),
     ("RM010", "MS Square Hollow Section 40x40x2mm", RM, 1, 1, 0, "LENGTH", "MTR", "MTR", "MTR", "U1WH02", MA, "7306", 18, None, 145, None, 0, 0),
     ("RM011", "Ready Mix Concrete M25", RM, 1, 1, 0, "VOLUME", "M3", "M3", "M3", "U1WH02", MA, "3824", 18, None, 5600, None, 0, 0),
-    ("CN004", "HDPE Tarpaulin Sheet 200 GSM", CN, 1, 1, 0, "AREA", "SQM", "SQFT", "SQM", "U1WH01", MA, "3926", 18, None, 95, None, 0, 0),
-    ("CN005", "Industrial Degreaser / Cleaning Chemical", CN, 1, 1, 0, "VOLUME", "LTR", "LTR", "LTR", "U1WH01", MA, "3402", 18, None, 180, None, 0, 0),
-    ("CN006", "Silver Brazing Alloy Rod 15%", CN, 1, 1, 0, "WEIGHT", "G", "G", "G", "U1WH01", MA, "8311", 18, None, 38, None, 0, 0),
-    ("CN007", "Cotton Knitted Hand Gloves", CN, 1, 1, 0, "EACH", "PAIR", "PAIR", "PAIR", "U1WH01", MA, "6116", 5, None, 28, None, 0, 0),
-    ("CN008", "Hydraulic Oil ISO VG 68", CN, 1, 1, 0, "VOLUME", "LTR", "LTR", "LTR", "U1WH01", MA, "2710", 18, None, 165, None, 0, 0),
+    ("CN004", "HDPE Tarpaulin Sheet 200 GSM", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "3926", 18, None, 95, None, 0, 0),
+    ("CN005", "Industrial Degreaser / Cleaning Chemical", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "3402", 18, None, 180, None, 0, 0),
+    ("CN006", "Silver Brazing Alloy Rod 15%", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8311", 18, None, 38, None, 0, 0),
+    ("CN007", "Cotton Knitted Hand Gloves", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6116", 5, None, 28, None, 0, 0),
+    ("CN008", "Hydraulic Oil ISO VG 68", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "2710", 18, None, 165, None, 0, 0),
     ("BO001", "Deep Groove Ball Bearing 6205-2RS", BO, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "8482", 18, None, 185, 240, 0, 0),
     ("BO002", "HDG Hex Bolt M16x60 with Nut & Washer", BO, 1, 1, 1, "EACH", "NOS", "PKT", "NOS", "U1WH02", MA, "7318", 18, None, 22, 30, 0, 0),
     ("BO003", "Anchor Bolt Set M20 (4 bolts + template)", BO, 1, 1, 1, "EACH", "SET", "SET", "SET", "U1WH02", MA, "7318", 18, None, 1450, 1800, 0, 0),
