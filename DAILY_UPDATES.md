@@ -19,11 +19,13 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 7 | 15 items with transactions set **Inactive** (user request) | B1 refused the UoM group / valuation change on them: CN-ELEC-E6013, CN-ENAMEL, CN-GRIND-4, CN-MIG-ER70, CN-PRIMER, PPE-HELMET, PPE-SHOE, RM-PL-0012, RM-PL-0020, RM-ST-A50, RM-ST-MB300, FG-COL-MB300-6M, SA-BASEPL-400, SA-GUSSET-12, SF001 (remark "Old UoM setup"); history kept |
 | 8 | Planning method by procurement method (user request) | 13 Make items (FG001–FG005, FG-* , SA001, SA-*) → **MRP**; 69 Buy items already **None**; loader sets this on new items |
 | 9 | All 17 **Consumables** items → UoM group Each, inventory / purchase / sales UoM and pricing unit NOS (user request) | Changed from Volume (BAT001, CN005, CN008), Weight (CN006), Area (CN004), Each-Pairs (CN007), Box packs (CN001–CN003) and Manual (5 inactive items); price figures kept, now per NOS |
+| 10 | All other items without transactions → Each / NOS everywhere (user request) | 36 items: steel RM002–RM007, RM-PL/RM-SG/RM-ST/RM-TMT (were KGS, bought in Tonnes), RM008–RM011, EL001, PL001–PL002 (Meters/Feet), BO002–BO003, PM001, PM003, PPE-GLOVE-W, SF003, TR002, FG001, FG002, FG005, SRV002; price figures and standard costs kept. Left unchanged (transactions/stock): RM001, CN-LPG, the 15 inactive items |
 
 ### ⛔ Waiting on user / AKE
 - Rename in the SAP client (they have transactions, Service Layer cannot change a BP code): **U1C006 → C0012** ABC Developers and **U1V001 → V0010** Tungabhadra Steel. The demo script and guide already use C0012 / V0010.
 - New BPs: choose the group by address – Karnataka → Intrastate, other Indian state → Interstate, outside India → Export / Import Vendor
 - Inactive items still hold stock (e.g. RM-PL-0012 486.4 KG, RM-PL-0020 299.8 KG, RM-ST-A50 300 KG, RM-ST-MB300 219.6 KG, FG-COL-MB300-6M 2 Nos, SF001 7 Nos) and sit in the old BOMs FG-COL-MB300-6M, FG-PLAT-HR, FG-CTRAY-300, SA-BASEPL-400, SA-GUSSET-12 – decide: issue / write off the stock, and replace those BOM lines with active items
+- Items now counted in NOS: steel prices (₹55–72) and FG001/FG002 standard cost (85 / 82) were per KG, RM008 ₹48 per SQFT, RM011 ₹5,600 per m3 – set real per-piece prices / costs; BOM quantities (e.g. SA001 6.5 × RM003, FG005 1.05 × RM008) now mean NOS
 - Consumables now counted in NOS: check the price figures (e.g. CN005 degreaser ₹180, CN006 brazing rod ₹38 were per LTR / Gram) and the BOM quantities SA001 → CN001 0.3 and FG004 → CN005 0.2 (now NOS)
 - Confirm standard costs (indicative) and the Packet = 100 NOS / Set = 1 NOS conversions
 
