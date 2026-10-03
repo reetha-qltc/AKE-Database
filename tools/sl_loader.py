@@ -523,7 +523,7 @@ def step_resources(sl):
         if sl.find("Resources", "VisCode", r["Code"]):  # VisCode = resource number shown in B1
             continue
         body = {"VisCode": r["Code"], "Name": r["Name"], "Type": r["Type"].replace("rt_", "rt"), "IssueMethod": "rimManual",
-                "Cost1": r["CostPerHour"], "DefaultWarehouse": r["Warehouse"],
+                "Cost1": r["CostPerMin"], "UnitOfMeasure": "Mins", "DefaultWarehouse": r["Warehouse"],  # resources in minutes
                 "ResourceWarehouses": [{"Warehouse": r["Warehouse"]}]}
         sl.post("Resources", body, f"{r['Code']} {r['Name']}")
 
