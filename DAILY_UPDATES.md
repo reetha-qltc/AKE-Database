@@ -29,6 +29,7 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 - Items now counted in NOS: steel prices (₹55–72) and FG001/FG002 standard cost (85 / 82) were per KG, RM008 ₹48 per SQFT, RM011 ₹5,600 per m3 – set real per-piece prices / costs; BOM quantities (e.g. SA001 6.5 × RM003, FG005 1.05 × RM008) now mean NOS
 - Consumables now counted in NOS: check the price figures (e.g. CN005 degreaser ₹180, CN006 brazing rod ₹38 were per LTR / Gram) and the BOM quantities SA001 → CN001 0.3 and FG004 → CN005 0.2 (now NOS)
 - **T0.1** TDS @ 0.1 % Purchase (and Q01) not created: section **194Q** is missing in B1 and cannot be added via Service Layer – add it in the client (Administration > Setup > Financials > Tax > Section), then re-run `--step tds`
+- Swap vendor TDS codes in the client (BP Master Data > Accounting > Tax > WTax Codes; Service Layer cannot remove a BP's WT row): **V0008, V0017 C2 → TDS2**, **V0009 J10 → TJ10**. V0007 / V0018 are individuals (atOthers) and stay on C1 – TDS1 is defined for companies (COM)
 - Confirm standard costs (indicative) and the Packet = 100 NOS / Set = 1 NOS conversions
 
 ### 📌 Next
