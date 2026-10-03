@@ -267,6 +267,9 @@ GL_DETERMINATION = {
     "ARCashDiscountAccount": "4004-07-24", "CustomerDownPaymentsAccount": "3002-02-07-01",
     "PurchaseAccount": "4008-01", "PurchaseReturnAccount": "4008-01", "ExpenseAccountDefault": "4008-01",
     "GoodsClearingAcc": "3002-02-05", "AllocationAcc": "3002-02-05", "VendorDownPaymentsAccount": "5002-04-01-01",
+    # payments on down payment requests post to these clearing / interim accounts (found by demo_finance.py)
+    "DownPaymentPClearingAcct": "5002-04-07-01", "DownPaymentSClearingAcct": "3002-02-04",
+    "PurchaseDownPaymentInterimAccount": "5002-04-04-01",
     "ExchangeRateDifferencesAcct": "4006-07", "OpeningBalancesAccount": "1003", "AcountforOpeningWHBalance": "1003",
     "CostOfGoodsSold": "4001-16", "PriceDifferenceAccount": "4001-17", "VarianceAcc": "4001-23",
     "IncreaseGLAccount": "4001-20", "DecreaseGLAcc": "4001-21",

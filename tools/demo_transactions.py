@@ -41,7 +41,8 @@ class Run:
         if r.status_code not in (200, 201):
             raise SystemExit(f"FAIL {key} {entity} {label}: {r.json()['error']['message']}")
         j = r.json()
-        rec = {"DocEntry": j.get("DocEntry") or j.get("AbsoluteEntry") or j.get("DocNum"), "DocNum": j.get("DocNum") or j.get("DocumentNumber"),
+        rec = {"DocEntry": j.get("DocEntry") or j.get("AbsoluteEntry") or j.get("JdtNum") or j.get("DocNum"),
+               "DocNum": j.get("DocNum") or j.get("DocumentNumber") or j.get("Number"),
                "Entity": entity}
         self.state[key] = rec
         STATE.write_text(json.dumps(self.state, indent=1))
