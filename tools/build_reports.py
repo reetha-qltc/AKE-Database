@@ -12,7 +12,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import sl_loader as L
 
 # OTC = Order to Cash, PTP = Procure to Pay, PTS = Plan to Stock (production & inventory), FICO = Finance & Controlling
-CATEGORIES = {"OTC": "OTC", "PTP": "PTP", "PTS": "PTS", "FICO": "FICO"}
+CATEGORIES = {"OTC": "OTC", "PTP": "PTP", "PTS": "PTS", "FICO": "FICO", "MPA": "Monthly Performance Analysis"}
 TEST_PARAMS = {"[%0]": "'2026-04-01'", "[%1]": "'2027-03-31'", "[%2]": "'3002-02-01'"}
 
 NO = lambda t, n="N": f'IFNULL({n}."BeginStr", \'\') || TO_NVARCHAR({t}."DocNum")'      # series prefix + number
