@@ -506,6 +506,7 @@ def load_sap(sl):
     for code, name, rtype, cost, whs_res in RESOURCES:
         if not sl.find("Resources", "VisCode", code):
             sl.post("Resources", {"VisCode": code, "Name": name, "Type": rtype, "IssueMethod": "rimBackflush",
+                                  "UnitOfMeasure": "Mins",  # shown as the UoM of the resource rows in the BOM
                                   "Cost1": cost, "DefaultWarehouse": whs_res, "ResourceWarehouses": [{"Warehouse": whs_res}]},
                     f"Resource {code} {name}")
     for code, (whs_bom, lines) in BOMS.items():
