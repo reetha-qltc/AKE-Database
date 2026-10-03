@@ -40,13 +40,10 @@ UOM_GROUPS = {
 UOM_GROUP_RENAMED = {"STEEL": "WEIGHT", "NOS": "EACH", "LITER": "VOLUME"}  # 2026-10-03: old code -> new code
 
 # ---------------------------------------------------------------------------------------------- warehouses
+# U1WH02 / U1WH03 / U1WH06 / U1WH07 duplicated U1 WH1 / WH9 / WH7 / WH5 and were set inactive on 2026-10-03
 WAREHOUSES = [  # (code, name, stock account)
     ("U1WH01", "Main Warehouse", "5002-01-01-06"),
-    ("U1WH02", "Raw Material Store", "5002-01-01-06"),
-    ("U1WH03", "Quality Warehouse", "5002-01-01-06"),
     ("U1WH04", "Rejected Warehouse", "5002-01-01-06"),
-    ("U1WH06", "Rejected Warehouse 2 (Scrap)", "5002-01-01-06"),
-    ("U1WH07", "Finished Warehouse", "5002-01-01-03"),
     # 2026-10-03 Unit-1 warehouse list from AKE (codes exactly as given, with a space)
     ("U1 WH1", "Unit-1 Raw Material Warehouse", "5002-01-01-06"),
     ("U1 WH2", "Unit-1 Bin Storage Warehouse", "5002-01-01-06"),
@@ -88,18 +85,18 @@ MA, FIFO, STD = "bis_MovingAverage", "bis_FIFO", "bis_Standard"
 RM, FG, SF, TL, CN = "Raw material", "Finished Goods", "Safety Equipment", "Tools & Consumables", "Consumables"
 SA, PK, BO = "Sub Assembly", "Packing Material", "Bought-out Components"
 ITEMS = [
-    ("RM001", "TMT Steel Bar Fe500D 12mm", RM, 1, 1, 1, "WEIGHT", "KG", "MT", "KG", "U1WH02", MA, "7214", 18, 58, 60, 68, 0, 0),
-    ("RM002", "TMT Steel Bar Fe500D 16mm", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "7214", 18, 57, 59, 67, 0, 0),
-    ("RM003", "Structural Steel ISMB / ISMC E250", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "7216", 18, 60, 62, 72, 0, 0),
-    ("RM004", "Cement OPC 53 Grade 50 KG Bag", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "2523", 18, 360, 370, None, 0, 0),
-    ("RM005", "River Sand", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "2505", 5, 1800, 1850, None, 0, 0),
-    ("RM006", "M-Sand (Manufactured Sand)", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "2517", 5, 1100, 1150, None, 0, 0),
-    ("RM007", "Aggregate 20mm", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "2517", 5, 950, 1000, None, 0, 0),
-    ("EL001", "Electrical Cable 3.5C x 25 sqmm Armoured", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "8544", 18, 210, 220, 260, 0, 0),
-    ("EL002", "Distribution Board 8-Way TPN", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "8537", 18, 4200, 4400, 5200, 0, 0),
-    ("EL003", "LED Flood Light 100W", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "9405", 18, 2300, 2400, 2900, 0, 0),
-    ("PL001", "PVC Pipe 110mm 6 kgf", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "3917", 18, 290, 300, 350, 0, 0),
-    ("PL002", "GI Pipe 50mm Medium", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "7306", 18, 520, 540, 620, 0, 0),
+    ("RM001", "TMT Steel Bar Fe500D 12mm", RM, 1, 1, 1, "WEIGHT", "KG", "MT", "KG", "U1 WH1", MA, "7214", 18, 58, 60, 68, 0, 0),
+    ("RM002", "TMT Steel Bar Fe500D 16mm", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "7214", 18, 57, 59, 67, 0, 0),
+    ("RM003", "Structural Steel ISMB / ISMC E250", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "7216", 18, 60, 62, 72, 0, 0),
+    ("RM004", "Cement OPC 53 Grade 50 KG Bag", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "2523", 18, 360, 370, None, 0, 0),
+    ("RM005", "River Sand", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "2505", 5, 1800, 1850, None, 0, 0),
+    ("RM006", "M-Sand (Manufactured Sand)", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "2517", 5, 1100, 1150, None, 0, 0),
+    ("RM007", "Aggregate 20mm", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "2517", 5, 950, 1000, None, 0, 0),
+    ("EL001", "Electrical Cable 3.5C x 25 sqmm Armoured", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "8544", 18, 210, 220, 260, 0, 0),
+    ("EL002", "Distribution Board 8-Way TPN", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "8537", 18, 4200, 4400, 5200, 0, 0),
+    ("EL003", "LED Flood Light 100W", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "9405", 18, 2300, 2400, 2900, 0, 0),
+    ("PL001", "PVC Pipe 110mm 6 kgf", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "3917", 18, 290, 300, 350, 0, 0),
+    ("PL002", "GI Pipe 50mm Medium", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "7306", 18, 520, 540, 620, 0, 0),
     ("SF001", "Safety Helmet", SF, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6506", 18, 180, 190, 250, 0, 0),
     ("SF002", "Safety Shoes", SF, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6403", 5, 950, 990, None, 0, 0),
     ("SF003", "Safety Harness Full Body with Lanyard", SF, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6307", 5, 2600, 2700, None, 0, 0),
@@ -108,32 +105,32 @@ ITEMS = [
     ("CN003", "Grinding Disc 4 inch", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6804", 18, 35, 38, None, 0, 0),
     ("TR001", "Water Pump 1 HP Monoblock", TL, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8413", 18, 7800, 8200, None, 0, 0),
     ("TR002", "Power Tool Kit (Angle Grinder + Drill)", TL, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8467", 18, 9500, 9900, None, 0, 0),
-    ("BAT001", "Construction Chemical / Adhesive - Epoxy Grout", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "3824", 18, 420, 440, None, 1, 0),
+    ("BAT001", "Construction Chemical / Adhesive - Epoxy Grout", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "3824", 18, 420, 440, None, 1, 0),
     ("SER001", "Power Drill / Equipment - Rotary Hammer 26mm", TL, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8467", 18, 14500, 15200, None, 0, 1),
     ("SRV001", "Transportation Service (per trip)", None, 0, 1, 1, "EACH", "NOS", "NOS", "NOS", None, None, "996511", 5, None, 6000, 6500, 0, 0),
     ("SRV002", "Subcontracting Service - Fabrication Job Work (per KG)", None, 0, 1, 0, "EACH", "NOS", "NOS", "NOS", None, None, "998873", 18, None, 18, None, 0, 0),
-    ("FG001", "Fabricated Steel Roof Truss", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1WH07", STD, "7308", 18, 85, None, 110, 0, 0),
-    ("FG002", "Fabricated Built-up Steel Column", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1WH07", STD, "7308", 18, 82, None, 105, 0, 0),
-    ("FG003", "MS Base Plate Assembly 300x300x20", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1WH07", STD, "7308", 18, 2400, None, 3100, 0, 0),
+    ("FG001", "Fabricated Steel Roof Truss", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH5", STD, "7308", 18, 85, None, 110, 0, 0),
+    ("FG002", "Fabricated Built-up Steel Column", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH5", STD, "7308", 18, 82, None, 105, 0, 0),
+    ("FG003", "MS Base Plate Assembly 300x300x20", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH5", STD, "7308", 18, 2400, None, 3100, 0, 0),
     # 2026-10-03 sample items for the Purchase -> Inventory -> Production -> Sales demo, one or more per UoM group
-    ("RM008", "Colour Coated Roofing Sheet 0.47mm AZ150", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "7210", 18, None, 48, 58, 0, 0),
-    ("RM009", "Rockwool Insulation Blanket 50mm 64 kg/m3", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "6806", 18, None, 310, None, 0, 0),
-    ("RM010", "MS Square Hollow Section 40x40x2mm", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "7306", 18, None, 145, None, 0, 0),
-    ("RM011", "Ready Mix Concrete M25", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "3824", 18, None, 5600, None, 0, 0),
+    ("RM008", "Colour Coated Roofing Sheet 0.47mm AZ150", RM, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "7210", 18, None, 48, 58, 0, 0),
+    ("RM009", "Rockwool Insulation Blanket 50mm 64 kg/m3", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "6806", 18, None, 310, None, 0, 0),
+    ("RM010", "MS Square Hollow Section 40x40x2mm", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "7306", 18, None, 145, None, 0, 0),
+    ("RM011", "Ready Mix Concrete M25", RM, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "3824", 18, None, 5600, None, 0, 0),
     ("CN004", "HDPE Tarpaulin Sheet 200 GSM", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "3926", 18, None, 95, None, 0, 0),
     ("CN005", "Industrial Degreaser / Cleaning Chemical", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "3402", 18, None, 180, None, 0, 0),
     ("CN006", "Silver Brazing Alloy Rod 15%", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "8311", 18, None, 38, None, 0, 0),
     ("CN007", "Cotton Knitted Hand Gloves", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "6116", 5, None, 28, None, 0, 0),
     ("CN008", "Hydraulic Oil ISO VG 68", CN, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "2710", 18, None, 165, None, 0, 0),
-    ("BO001", "Deep Groove Ball Bearing 6205-2RS", BO, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "8482", 18, None, 185, 240, 0, 0),
-    ("BO002", "HDG Hex Bolt M16x60 with Nut & Washer", BO, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "7318", 18, None, 22, 30, 0, 0),
-    ("BO003", "Anchor Bolt Set M20 (4 bolts + template)", BO, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1WH02", MA, "7318", 18, None, 1450, 1800, 0, 0),
+    ("BO001", "Deep Groove Ball Bearing 6205-2RS", BO, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "8482", 18, None, 185, 240, 0, 0),
+    ("BO002", "HDG Hex Bolt M16x60 with Nut & Washer", BO, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "7318", 18, None, 22, 30, 0, 0),
+    ("BO003", "Anchor Bolt Set M20 (4 bolts + template)", BO, 1, 1, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH1", MA, "7318", 18, None, 1450, 1800, 0, 0),
     ("PM001", "Nylon Cable Tie 300mm (packet of 100)", PK, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "3926", 18, None, 1.6, None, 0, 0),
     ("PM002", "Wooden Pallet 1200x1000mm", PK, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "4415", 12, None, 650, None, 0, 0),
     ("PM003", "Stretch Wrap Film 500mm", PK, 1, 1, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", MA, "3920", 18, None, 210, None, 0, 0),
     ("SA001", "Welded Bearing Bracket (semi-finished)", SA, 1, 0, 0, "EACH", "NOS", "NOS", "NOS", "U1WH01", STD, "7308", 18, 750, None, None, 0, 0),
-    ("FG004", "Conveyor Idler Support Frame", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1WH07", STD, "7308", 18, 2600, None, 3400, 0, 0),
-    ("FG005", "Insulated Roof Panel Assembly", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1WH07", STD, "7308", 18, 1250, None, 1650, 0, 0),
+    ("FG004", "Conveyor Idler Support Frame", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH5", STD, "7308", 18, 2600, None, 3400, 0, 0),
+    ("FG005", "Insulated Roof Panel Assembly", FG, 1, 0, 1, "EACH", "NOS", "NOS", "NOS", "U1 WH5", STD, "7308", 18, 1250, None, 1650, 0, 0),
 ]
 ITEM_COLS = ["Code", "Description", "Group", "Inv", "Pur", "Sal", "UoMGroup", "InvUoM", "PurUoM", "SalUoM", "Whse",
              "Valuation", "HSN", "GST", "Cost", "PurPrice", "SalPrice", "Batch", "Serial"]
@@ -144,11 +141,11 @@ for i in ITEMS:
     i["PriceUoM"] = PRICING_UNIT.get(i["Code"], i["InvUoM"])
 # production BOMs of the made items: code -> (warehouse, [(component, qty per 1 inventory unit, warehouse)])
 BOMS = {
-    "SA001": ("U1WH01", [("RM003", 6.5, "U1WH02"), ("RM010", 1.2, "U1WH02"), ("CN001", 0.3, "U1WH01")]),
-    "FG004": ("U1WH07", [("SA001", 2, "U1WH01"), ("BO001", 2, "U1WH02"), ("BO002", 8, "U1WH02"),
+    "SA001": ("U1WH01", [("RM003", 6.5, "U1 WH1"), ("RM010", 1.2, "U1 WH1"), ("CN001", 0.3, "U1WH01")]),
+    "FG004": ("U1 WH5", [("SA001", 2, "U1WH01"), ("BO001", 2, "U1 WH1"), ("BO002", 8, "U1 WH1"),
                          ("CN005", 0.2, "U1WH01"), ("PM001", 4, "U1WH01"), ("PM003", 0.25, "U1WH01")]),
-    "FG005": ("U1WH07", [("RM008", 1.05, "U1WH02"), ("RM009", 1.05, "U1WH02"), ("RM010", 0.8, "U1WH02"),
-                         ("BO002", 4, "U1WH02")]),  # per 1 SQM of panel
+    "FG005": ("U1 WH5", [("RM008", 1.05, "U1 WH1"), ("RM009", 1.05, "U1 WH1"), ("RM010", 0.8, "U1 WH1"),
+                         ("BO002", 4, "U1 WH1")]),  # per 1 SQM of panel
 }
 
 # ---------------------------------------------------------------------------------------------- business partners
