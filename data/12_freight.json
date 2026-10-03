@@ -1,0 +1,6 @@
+[
+ {"Name": "Packing & Forwarding", "RevenuesAccount": "2001-01-05", "ExpenseAccount": "4002-06-06",
+  "WTLiable": false, "DistributionMethod": "aed_Quantity", "DrawingMethod": "dmTotal", "Stock": true, "LastPurchasePrice": true},
+ {"Name": "Transport & Freight", "RevenuesAccount": "2001-01-06", "ExpenseAccount": "4002-06-01",
+  "WTLiable": false, "DistributionMethod": "aed_Quantity", "DrawingMethod": "dmTotal", "Stock": false, "LastPurchasePrice": false}
+]

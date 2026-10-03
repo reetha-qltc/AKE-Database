@@ -32,7 +32,7 @@ DRAWER_KEYWORDS = {
     "Expenditure": ["expens", "expendit", "cost"],
 }
 STEPS = ["coa", "gldet", "gst", "tds", "finyear", "states", "location", "warehouses", "paymentterms", "series", "pricelists", "itemgroups", "items", "hsn", "bps",
-         "resources", "boms", "users", "ob_stock", "ob_bp", "ob_gl"]
+         "resources", "boms", "freight", "users", "ob_stock", "ob_bp", "ob_gl"]
 
 
 def load(name):
@@ -538,6 +538,19 @@ def step_boms(sl):
         sl.post("ProductTrees", {"TreeCode": b["TreeCode"], "TreeType": "iProductionTree",
                                  "Quantity": b["Qty"], "Warehouse": b["Warehouse"],
                                  "ProductTreeLines": lines}, f"{b['TreeCode']} ({len(lines)} lines)")
+
+
+def step_freight(sl):
+    """Freight setup (additional expenses) as in AKE's B1: P&F charges capitalised into stock, transport expensed."""
+    yn = lambda f: "tYES" if f else "tNO"
+    have = set() if sl.dry else {f["Name"] for f in sl.get("AdditionalExpenses?$select=Name")["value"]}
+    for f in load("12_freight"):
+        if f["Name"] in have:
+            continue
+        sl.post("AdditionalExpenses", {"Name": f["Name"], "RevenuesAccount": f["RevenuesAccount"],
+                                       "ExpenseAccount": f["ExpenseAccount"], "WTLiable": yn(f["WTLiable"]),
+                                       "DistributionMethod": f["DistributionMethod"], "DrawingMethod": f["DrawingMethod"],
+                                       "Stock": yn(f["Stock"]), "LastPurchasePrice": yn(f["LastPurchasePrice"])}, f["Name"])
 
 
 def step_users(sl):
