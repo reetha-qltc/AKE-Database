@@ -2,7 +2,7 @@
 
 Items: active inventory items of the item groups named 'Finished Goods*' (Finished Goods, Finished Goods - Rework).
 Cost: AKE's average cost from `item master with average Price and Stock.csv`; items without one get a random demo cost
-(seeded, so a re-run gives the same values; 500-50,000 rounded to 10).  Standard items are revalued to that cost in
+(seeded, so a re-run gives the same values; 10,000-1,50,000 rounded to 50, e.g. 90,150).  Standard items are revalued to that cost in
 U1 WH5 first; moving-average items take the receipt price.  Posted 2026-04-01 against 1003 Opening Balance Offset,
 batch items on batch OB-260401.  The warehouse is renamed to 'Finished Goods Warehouse'.
 Idempotent: items that already have stock in U1 WH5 are skipped.
@@ -37,7 +37,7 @@ def main():
     todo = []
     for it in items:
         c = it["ItemCode"]
-        p, made_up = (cost[c], False) if cost.get(c, 0) > 0 else (rnd.randrange(50, 5001) * 10, True)
+        p, made_up = (cost[c], False) if cost.get(c, 0) > 0 else (rnd.randrange(200, 3001) * 50, True)
         todo.append((it, p, made_up))
     # stock / standard cost already in U1 WH5 (small OR-batches: whole warehouse collections at once drop the connection)
     cur = {}
