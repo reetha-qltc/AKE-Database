@@ -7,6 +7,9 @@ ARDP  C0009 Godavari Power Plant (Telangana, IGST), EL002 5 Nos from the stock r
       A/R Down Payment Request 50 % -> advance received -> Delivery -> A/R Invoice drawing the advance -> balance received.
 TRQ   Inventory Transfer Request: EL002 3 Nos from U1 WH1 Raw Material to U1 WH2 Bin Storage (left open - copy it to an
       Inventory Transfer in the client to move the stock).
+PRD   Production order on AKE's real BOM 050.193.01 Top Plate (part of Shovel 050.193) x 10, released: HR plate,
+      two scrap by-products (negative lines) and plasma / operator / helper resources. No stock yet for AKE's items,
+      so issue and receipt are left to the trainees.
 
 Run:  python tools/demo_finance.py            (JE, APDP, ARDP - ARDP sells the stock bought in APDP)
       python tools/demo_finance.py JE         (one flow)
@@ -148,6 +151,19 @@ def TRQ(run):
     for l in d["StockTransferLines"]:
         print(f"     Request #{d['DocNum']} status {d['DocumentStatus']}: {l['ItemCode']} {l['Quantity']:g} "
               f"{l['FromWarehouseCode']} -> {l['WarehouseCode']}, open {l['RemainingOpenQuantity']:g}")
+
+
+def PRD(run):
+    item, qty = "050.193.01", 10
+    po = run.doc("FIN-PRD1", "ProductionOrders", {"ItemNo": item, "PlannedQuantity": qty, "PostingDate": TODAY,
+        "DueDate": TODAY, "ProductionOrderType": "bopotStandard", "Remarks": "AKE demo - real BOM Top Plate"},
+        f"Production order {item} x {qty}")
+    run.patch_once("FIN-PRD1-REL", "ProductionOrders", po["DocEntry"], {"ProductionOrderStatus": "boposReleased"},
+                   "released")
+    d = run.get("ProductionOrders", po["DocEntry"])
+    print(f"     Production order #{d['DocumentNumber']} {d['ItemNo']} x {d['PlannedQuantity']:g} {d['ProductionOrderStatus']}")
+    for l in d["ProductionOrderLines"]:
+        print(f"       {l['ItemType']:13s} {l['ItemNo']:14s} {l['PlannedQuantity']:9.2f}  {l['Warehouse']}")
 
 
 FLOWS = ["JE", "APDP", "ARDP", "TRQ"]
