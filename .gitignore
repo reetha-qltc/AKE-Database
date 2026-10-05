@@ -21,3 +21,5 @@ data/ake_items/
 # AKE's real BOM export and its parsed copy - kept local
 Bom master list.csv
 data/ake_boms/
+# AKE stock / average cost export - kept local
+item master with average Price and Stock.csv

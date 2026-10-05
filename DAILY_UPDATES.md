@@ -18,12 +18,14 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 | 6 | AKE's real **production BOMs** loaded (user upload `Bom master list.csv`) | **4,438 BOMs**, 27,605 lines (18,053 items incl. 4,460 negative by-product/scrap lines, 9,552 resources) – `tools/parse_bom_list.py`, `tools/load_ake_boms.py`. Unit-2 mapped to Unit-1 (U2 WHn → U1 WHn, RESxxx-U2 → RESxxx-U1; old 01 → U1WH01, SubcU221 → U1 WH3) – user choice. **53 new resources** (code as name, cost/min = price on AKE's BOM lines, UoM Mins, labour / machine / subcontract), assigned to every warehouse their BOM lines use |
 | 7 | 174 BOM parents AKE had on **Buy** → **Make + MRP** (planning by procurement method) | `tools/fix_bom_parents.py`; 271 BOM parents are inactive items in AKE (left as is – their BOMs can't be used in production orders) |
 | 8 | Demo production order on a real AKE BOM | **Production order #4** 050.193.01 Top Plate (part of Shovel 050.193) × 10, **Released**: Z24601500008 HR plate 120.3 KGS from U1 WH8, scrap SCR220001 −3.4 / SCR220003 −3.8 to U1 WH7, resources RESPCM2-U1 12.4, RESPCO-U1 12.4, RESHRO-U1 37.2 min – `python tools/demo_finance.py PRD`. Issue/receipt pending: AKE's items have no stock yet |
+| 9 | AKE's **stock + average cost** loaded (user upload `item master with average Price and Stock.csv`) | **3,047 items** received into **U1 WH1** on **2026-04-01** against 1003 Opening Balance Offset – 32 goods receipts (Ref. 2 `AKE-OB-STK`), **₹23,62,82,311**; batch items on batch `OB-260401`; 818 standard items revalued to AKE's cost in U1 WH1 first (moving-average items take the receipt price). Skipped (user choices): 68 inactive items (₹42.6 L), the 8,235 rows without stock (cost not set); 4 items whose quantity rounds to 0 at 2 decimals (5010006, 5010010, 5010012, PL01.). USD rate set for 2026-04-01 – `tools/load_ake_stock.py` (idempotent, `--dry`, `--only`) |
 
 ### ⛔ Waiting on user / AKE
 - AKE's TDS codes, payment terms, price lists, credit limits and bank details were **not** loaded (export columns unreliable / codes differ in AKE_DEMO) – set where needed
 - 82 BPs have no GSTIN in the export (unregistered or missing) – check before GST transactions with them
 - Raw `Customer list.csv` and `data/ake_customers/` are git-ignored (bank account, balances, contact data); same for the item / BOM exports and `data/ake_items/`, `data/ake_boms/`
 - 53 new resources are named by code only (e.g. RESBGO-U1, SCRESVTL-2000) – give real names / check cost per minute
+- Stock: all AKE stock sits in U1 WH1 (export has no warehouse) – transfer FG / scrap / WIP to their warehouses as needed; quantities rounded to 2 decimals (B1 quantity accuracy)
 - Items: no HSN/SAC, prices or default warehouses loaded (AKE's are Unit-2); 37 items have no description in AKE's export (e.g. `100`)
 - New item groups use template G/L accounts – review per group (services / subcontracting / assets)
 
