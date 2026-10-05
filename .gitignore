@@ -15,3 +15,9 @@ __pycache__/
 # AKE's real BP export (bank account, balances, contact data) and its parsed copy - kept local
 Customer list.csv
 data/ake_customers/
+# AKE's real item master export (22 MB, prices) and its parsed copy - kept local
+item master list final.csv
+data/ake_items/
+# AKE's real BOM export and its parsed copy - kept local
+Bom master list.csv
+data/ake_boms/

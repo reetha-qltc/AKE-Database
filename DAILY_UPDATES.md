@@ -10,15 +10,20 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 ### ✅ Completed
 | # | Task | Result / where |
 |---|---|---|
-| 1 | AKE's real customer + vendor list loaded into AKE_DEMO (user upload `Customer list.csv`, B1 export) | **711 BPs** created with AKE's own codes (user choice): 98 customers C001–C098 (Intrastate 68+, Interstate 27, Export 3) and 613 vendors V001–V656 (Intrastate Vendor ~510, Interstate Vendor ~100, Import Vendor 2); 29 inactive vendors skipped (user choice). Each BP: name, all bill-to/ship-to addresses (Ajax C001 has 21 ship-to sites), state, GSTIN + GST type Regular, PAN (from GSTIN), mobile, e-mail, control + DP clearing accounts as on the demo BPs. Demo BPs C0001…/V0001… untouched |
+| 1 | AKE's real customer + vendor list loaded into AKE_DEMO (user upload `Customer list.csv`, B1 export) | **711 BPs** created with AKE's own codes (user choice): 98 customers C001–C098 (Intrastate 71, Interstate 24, Export 3) and 613 vendors V001–V656 (Intrastate Vendor 511, Interstate Vendor 100, Import Vendor 2); 29 inactive vendors skipped (user choice). Each BP: name, all bill-to/ship-to addresses (Ajax C001 has 21 ship-to sites), state, GSTIN + GST type Regular, PAN (from GSTIN), mobile, e-mail, control + DP clearing accounts as on the demo BPs. Demo BPs C0001…/V0001… untouched |
 | 2 | Parser for the unquoted export | `tools/parse_bp_list.py` → `data/ake_customers/bps.json` (fields found by anchors because commas in names/addresses/amounts shift the columns); loader `tools/load_ake_bps.py` (idempotent, `--dry`, `--only`) |
 | 3 | States WB, GJ, RJ, BR, PB, JH added with GST codes | `sl_loader.py --step states` |
 | 4 | Foreign / unregistered customers | PAN `PANNOTAVBL` + Deductee Ref. No. (B1 requires it) – C007 WEG Euro (PT), C040 Trackline (GB), C048 Wipro Oy (FI) |
+| 5 | AKE's real **item master** loaded (user upload `item master list final.csv`) | **10,725 items** with AKE's codes, descriptions, item group and UoM group / inventory / purchasing / sales UoM by name (NOS, KGS, Tonnes, Meters, Set, LTR, m3, Square Meters, Grams, Pairs, Packet; OTH → Manual); valuation Moving Avg / Standard, Buy / Make, MRP, batch management and purchase / sales / inventory flags as in AKE. 543 inactive items created **inactive**, 629 fixed-asset items **skipped** (user choices). **51 new item groups** (Services, SubContracting, Assets, Spare parts …) with the G/L accounts of Consumables / Finished Goods / Packing Material – `tools/parse_item_list.py`, `tools/load_ake_items.py` |
+| 6 | AKE's real **production BOMs** loaded (user upload `Bom master list.csv`) | **4,438 BOMs**, 27,605 lines (18,053 items incl. 4,460 negative by-product/scrap lines, 9,552 resources) – `tools/parse_bom_list.py`, `tools/load_ake_boms.py`. Unit-2 mapped to Unit-1 (U2 WHn → U1 WHn, RESxxx-U2 → RESxxx-U1; old 01 → U1WH01, SubcU221 → U1 WH3) – user choice. **53 new resources** (code as name, cost/min = price on AKE's BOM lines, UoM Mins, labour / machine / subcontract), assigned to every warehouse their BOM lines use |
 
 ### ⛔ Waiting on user / AKE
 - AKE's TDS codes, payment terms, price lists, credit limits and bank details were **not** loaded (export columns unreliable / codes differ in AKE_DEMO) – set where needed
 - 82 BPs have no GSTIN in the export (unregistered or missing) – check before GST transactions with them
-- Raw `Customer list.csv` and `data/ake_customers/` are git-ignored (bank account, balances, contact data)
+- Raw `Customer list.csv` and `data/ake_customers/` are git-ignored (bank account, balances, contact data); same for the item / BOM exports and `data/ake_items/`, `data/ake_boms/`
+- 53 new resources are named by code only (e.g. RESBGO-U1, SCRESVTL-2000) – give real names / check cost per minute
+- Items: no HSN/SAC, prices or default warehouses loaded (AKE's are Unit-2); 37 items have no description in AKE's export (e.g. `100`)
+- New item groups use template G/L accounts – review per group (services / subcontracting / assets)
 
 ---
 
