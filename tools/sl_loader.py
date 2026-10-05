@@ -429,7 +429,10 @@ def step_items(sl):
 # AKE_DEMO shipped 7 states with no GST codes; GST place-of-supply needs them.
 STATES = {"AP": ("Andhra Pradesh", "37"), "DL": ("Delhi", "07"), "HR": ("Haryana", "06"), "KT": ("Karnataka", "29"),
           "MH": ("Maharashtra", "27"), "MP": ("Madhya Pradesh", "23"), "UP": ("Uttar Pradesh", "09"),
-          "TN": ("Tamil Nadu", "33"), "TS": ("Telangana", "36"), "KL": ("Kerala", "32")}
+          "TN": ("Tamil Nadu", "33"), "TS": ("Telangana", "36"), "KL": ("Kerala", "32"),
+          # added 2026-10-05 for AKE's real customer/vendor list
+          "WB": ("West Bengal", "19"), "GJ": ("Gujarat", "24"), "RJ": ("Rajasthan", "08"), "BR": ("Bihar", "10"),
+          "PB": ("Punjab", "03"), "JH": ("Jharkhand", "20")}
 
 
 def step_states(sl):

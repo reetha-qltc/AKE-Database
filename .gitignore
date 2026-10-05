@@ -11,3 +11,7 @@ prints/
 # Python cache, server certificate (copied manually to each machine)
 __pycache__/
 *.crt
+
+# AKE's real BP export (bank account, balances, contact data) and its parsed copy - kept local
+Customer list.csv
+data/ake_customers/

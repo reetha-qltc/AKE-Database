@@ -5,6 +5,23 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 
 ---
 
+## 2026-10-05 (Monday)
+
+### ✅ Completed
+| # | Task | Result / where |
+|---|---|---|
+| 1 | AKE's real customer + vendor list loaded into AKE_DEMO (user upload `Customer list.csv`, B1 export) | **711 BPs** created with AKE's own codes (user choice): 98 customers C001–C098 (Intrastate 68+, Interstate 27, Export 3) and 613 vendors V001–V656 (Intrastate Vendor ~510, Interstate Vendor ~100, Import Vendor 2); 29 inactive vendors skipped (user choice). Each BP: name, all bill-to/ship-to addresses (Ajax C001 has 21 ship-to sites), state, GSTIN + GST type Regular, PAN (from GSTIN), mobile, e-mail, control + DP clearing accounts as on the demo BPs. Demo BPs C0001…/V0001… untouched |
+| 2 | Parser for the unquoted export | `tools/parse_bp_list.py` → `data/ake_customers/bps.json` (fields found by anchors because commas in names/addresses/amounts shift the columns); loader `tools/load_ake_bps.py` (idempotent, `--dry`, `--only`) |
+| 3 | States WB, GJ, RJ, BR, PB, JH added with GST codes | `sl_loader.py --step states` |
+| 4 | Foreign / unregistered customers | PAN `PANNOTAVBL` + Deductee Ref. No. (B1 requires it) – C007 WEG Euro (PT), C040 Trackline (GB), C048 Wipro Oy (FI) |
+
+### ⛔ Waiting on user / AKE
+- AKE's TDS codes, payment terms, price lists, credit limits and bank details were **not** loaded (export columns unreliable / codes differ in AKE_DEMO) – set where needed
+- 82 BPs have no GSTIN in the export (unregistered or missing) – check before GST transactions with them
+- Raw `Customer list.csv` and `data/ake_customers/` are git-ignored (bank account, balances, contact data)
+
+---
+
 ## 2026-10-03 (Saturday)
 
 ### ✅ Completed
