@@ -5,7 +5,8 @@ Run:  python tools/build_reports.py --test     (run every report against AKE_DEM
       python tools/build_reports.py            (test, then create/update the categories and saved queries)
       python tools/build_reports.py --no-test --only "PAR - 005"   (save only the reports whose title starts with it)
 In SAP: Tools -> Queries -> Query Manager -> OTC / PTP / PTS / FICO. Date-range reports prompt for From / To date
-([%0] / [%1]); the GL ledger also asks for the account ([%2]).
+([%0] / [%1]); the GL ledger also asks for the account ([%2]); PAR - 010 / 011 (closing inventory) ask for one
+date ([%0], closing as on).
 """
 import argparse, pathlib, re, sys
 
@@ -452,17 +453,18 @@ WHERE T0."CANCELED" = 'N' AND (UPPER(WH."WhsName") LIKE '%REJECT%' OR UPPER(WH."
   AND T1."Quantity" > IFNULL((SELECT SUM(R."Quantity") FROM "RPD1" R WHERE R."BaseType" = 20
                AND R."BaseEntry" = T1."DocEntry" AND R."BaseLine" = T1."LineNum"), 0)
 ORDER BY T0."DocDate", T0."DocNum\""""),
+    # PAR - 008 / 010 - 013: columns as in AKE's exports (user upload `PAR - 0xx - ....csv`, 2026-10-06)
     ("MPA", "PAR - 008 - Purchase Register in a Period", f"""
-SELECT {NO("T0")} AS "Invoice No", T0."DocDate" AS "Date", T0."NumAtCard" AS "Vendor Inv No", T0."CardCode" AS "Vendor",
-       T0."CardName" AS "Vendor Name", C."GSTRegnNo" AS "Vendor GSTIN",
-       CASE WHEN T0."DocType" = 'S' THEN T1."Dscription" ELSE T1."ItemCode" END AS "Item / Service",
-       T1."Dscription" AS "Description", G."ItmsGrpNam" AS "Item Group", IFNULL(H."ChapterID", S."ServCode") AS "HSN/SAC",
-       T1."Quantity" AS "Qty", T1."Price" AS "Rate", T1."LineTotal" AS "Taxable", T1."TaxCode" AS "Tax Code",
-       {CGST("T1")} AS "CGST", {CGST("T1")} AS "SGST", {IGST("T1")} AS "IGST", T1."LineTotal" + T1."VatSum" AS "Line Total",
-       T0."WTSum" AS "TDS (invoice)", T0."DocTotal" AS "Invoice Total"
+SELECT CASE WHEN T0."DocType" = 'S' THEN 'Service' ELSE 'Material' END AS "Service or Material",
+       T0."DocEntry" AS "Internal Number", {NO("T0")} AS "A/P Inv. No.", T0."DocDate" AS "A/P Invoice Date",
+       T0."CardName" AS "Vendor Name", T0."NumAtCard" AS "Bill Ref", T0."TaxDate" AS "Bill Date",
+       T1."ItemCode" AS "Item Code", T1."Dscription" AS "Item/Service Description", G."ItmsGrpNam" AS "Item Group",
+       T1."Quantity" AS "Quantity", {NO("GR", "N2")} AS "GRN. No.", T1."LineTotal" AS "Base Value", T1."AcctCode" AS "Account Code",
+       {CGST("T1")} AS "CGST Value", {CGST("T1")} AS "SGST Value", {IGST("T1")} AS "IGST Value",
+       T1."LineTotal" + T1."VatSum" AS "Line Total", C."GSTRegnNo" AS "GST No."
 FROM "OPCH" T0 INNER JOIN "PCH1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
 LEFT JOIN "OITM" I ON I."ItemCode" = T1."ItemCode" LEFT JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
-LEFT JOIN "OCHP" H ON H."AbsEntry" = T1."HsnEntry" LEFT JOIN "OSAC" S ON S."AbsEntry" = T1."SacEntry"
+LEFT JOIN "OPDN" GR ON GR."DocEntry" = T1."BaseEntry" AND T1."BaseType" = 20 LEFT JOIN "NNM1" N2 ON N2."Series" = GR."Series"
 LEFT JOIN "CRD1" C ON C."CardCode" = T0."CardCode" AND C."AdresType" = 'B' AND C."Address" = T0."PayToCode"
 WHERE {DATES("T0")} AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum\""""),
     ("MPA", "PAR - 009 - List of Grade Items with Stock in Hand", """
@@ -481,48 +483,68 @@ WHERE T0."OnHand" > 0
   AND (G."ItmsGrpNam" LIKE 'RM%' OR G."ItmsGrpNam" LIKE 'Raw%' OR G."ItmsGrpNam" = 'TMT Rod'
        OR UPPER(I."ItemName") LIKE '%GR.%' OR UPPER(I."ItemName") LIKE '%IS:2062%' OR UPPER(I."ItemName") LIKE '%IS2062%')
 ORDER BY 1, T0."ItemCode", T0."WhsCode\""""),
+    # closing stock = all inventory postings up to the date ([%0], "as on"); Total Wt. = qty for KGS / Tonnes items,
+    # otherwise qty x inventory weight; ranked by value with share and cumulative share (ABC view)
     ("MPA", "PAR - 010 - Closing Inventory in a Period (Detailed)", """
-SELECT T0."ItemCode" AS "Item", I."ItemName" AS "Description", G."ItmsGrpNam" AS "Item Group", T0."Warehouse" AS "Whse",
-       I."InvntryUom" AS "UoM",
-       SUM(CASE WHEN T0."DocDate" < [%0] THEN T0."InQty" - T0."OutQty" ELSE 0 END) AS "Opening Qty",
-       SUM(CASE WHEN T0."DocDate" >= [%0] THEN T0."InQty" ELSE 0 END) AS "Receipts Qty",
-       SUM(CASE WHEN T0."DocDate" >= [%0] THEN T0."OutQty" ELSE 0 END) AS "Issues Qty",
-       SUM(T0."InQty" - T0."OutQty") AS "Closing Qty",
-       SUM(CASE WHEN T0."DocDate" < [%0] THEN T0."TransValue" ELSE 0 END) AS "Opening Value",
-       SUM(T0."TransValue") AS "Closing Value"
-FROM "OINM" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
-WHERE T0."DocDate" <= [%1]
-GROUP BY T0."ItemCode", I."ItemName", G."ItmsGrpNam", T0."Warehouse", I."InvntryUom"
-HAVING SUM(T0."InQty" - T0."OutQty") <> 0 OR SUM(CASE WHEN T0."DocDate" >= [%0] THEN T0."InQty" + T0."OutQty" ELSE 0 END) <> 0
-ORDER BY G."ItmsGrpNam", T0."ItemCode", T0."Warehouse\""""),
+WITH CLOSING AS
+(
+    SELECT T0."ItemCode", SUM(T0."InQty" - T0."OutQty") AS "Qty", SUM(T0."TransValue") AS "Value"
+    FROM "OINM" T0 WHERE T0."DocDate" <= [%0]
+    GROUP BY T0."ItemCode"
+    HAVING SUM(T0."InQty" - T0."OutQty") <> 0 OR SUM(T0."TransValue") <> 0
+)
+SELECT A."CompnyName" AS "CompanyName", G."ItmsGrpNam" AS "Item Group", C."ItemCode" AS "Item No.",
+       I."ItemName" AS "Item Description", C."Qty" AS "ClosingInvQty",
+       CASE WHEN UPPER(I."InvntryUom") LIKE 'KG%' THEN C."Qty" WHEN UPPER(I."InvntryUom") LIKE 'TON%' THEN C."Qty" * 1000
+            ELSE C."Qty" * I."IWeight1" END AS "Total Wt.",
+       CASE WHEN C."Qty" <> 0 THEN C."Value" / C."Qty" ELSE 0 END AS "ClosingRate", C."Value" AS "ClosingValue",
+       ROUND(C."Value" * 100 / SUM(C."Value") OVER (), 2) AS "ClosingValue %",
+       SUM(C."Value") OVER (ORDER BY C."Value" DESC, C."ItemCode" ROWS UNBOUNDED PRECEDING) AS "Cummulative Sum",
+       ROUND(SUM(C."Value") OVER (ORDER BY C."Value" DESC, C."ItemCode" ROWS UNBOUNDED PRECEDING) * 100
+             / SUM(C."Value") OVER (), 2) AS "Cummulative %"
+FROM CLOSING C INNER JOIN "OITM" I ON I."ItemCode" = C."ItemCode" INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+CROSS JOIN "OADM" A
+ORDER BY C."Value" DESC, C."ItemCode\""""),
     ("MPA", "PAR - 011 - Closing Inventory in a Period (ItemGroup Level)", """
-SELECT G."ItmsGrpNam" AS "Item Group", COUNT(DISTINCT T0."ItemCode") AS "Items",
-       SUM(CASE WHEN T0."DocDate" < [%0] THEN T0."TransValue" ELSE 0 END) AS "Opening Value",
-       SUM(CASE WHEN T0."DocDate" >= [%0] AND T0."TransValue" > 0 THEN T0."TransValue" ELSE 0 END) AS "Receipts Value",
-       -SUM(CASE WHEN T0."DocDate" >= [%0] AND T0."TransValue" < 0 THEN T0."TransValue" ELSE 0 END) AS "Issues Value",
-       SUM(T0."TransValue") AS "Closing Value"
+SELECT G."ItmsGrpNam" AS "Item Group", SUM(T0."TransValue") AS "TotalClosingValue"
 FROM "OINM" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
-WHERE T0."DocDate" <= [%1]
-GROUP BY G."ItmsGrpNam" ORDER BY G."ItmsGrpNam\""""),
+WHERE T0."DocDate" <= [%0]
+GROUP BY G."ItmsGrpNam" HAVING SUM(T0."TransValue") <> 0 ORDER BY G."ItmsGrpNam\""""),
+    # net issue = goods issues (incl. issue for production) - goods receipts against a production order of anything other
+    # than the order's product (returned components, scrap / by-products)
     ("MPA", "PAR - 012 - Consumption in a Period (Detailed)", f"""
-SELECT {NO("T0")} AS "Issue No", T0."DocDate" AS "Date",
-       CASE WHEN T1."BaseType" = 202 THEN 'Issue for Production' ELSE 'Goods Issue' END AS "Type",
-       CASE WHEN T1."BaseType" = 202 THEN T1."BaseRef" END AS "Production Order", P."ItemCode" AS "Product",
-       T1."ItemCode" AS "Item", T1."Dscription" AS "Description", G."ItmsGrpNam" AS "Item Group", T1."WhsCode" AS "Whse",
-       I."InvntryUom" AS "UoM", T1."Quantity" AS "Qty", T1."StockPrice" AS "Unit Cost", T1."Quantity" * T1."StockPrice" AS "Value",
-       T0."Comments" AS "Remarks"
-FROM "OIGE" T0 INNER JOIN "IGE1" T1 ON T1."DocEntry" = T0."DocEntry" INNER JOIN "OITM" I ON I."ItemCode" = T1."ItemCode"
-INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
-LEFT JOIN "OWOR" P ON P."DocEntry" = T1."BaseEntry" AND T1."BaseType" = 202
-WHERE {DATES("T0")} ORDER BY T0."DocDate", T0."DocNum", T1."LineNum\""""),
+WITH NET_ISSUE AS
+(
+    SELECT T1."ItemCode", T1."Quantity" AS "Qty", T1."Quantity" * T1."StockPrice" AS "Value"
+    FROM "OIGE" T0 INNER JOIN "IGE1" T1 ON T1."DocEntry" = T0."DocEntry" WHERE {DATES("T0")}
+    UNION ALL
+    SELECT T1."ItemCode", -T1."Quantity", -T1."Quantity" * T1."StockPrice"
+    FROM "OIGN" T0 INNER JOIN "IGN1" T1 ON T1."DocEntry" = T0."DocEntry"
+    INNER JOIN "OWOR" W ON W."DocEntry" = T1."BaseEntry" AND T1."BaseType" = 202 AND W."ItemCode" <> T1."ItemCode"
+    WHERE {DATES("T0")}
+)
+SELECT G."ItmsGrpNam" AS "Group Name", X."ItemCode" AS "Item No.", I."ItemName" AS "Item Description",
+       SUM(X."Qty") AS "Net Issue Qty.", SUM(X."Value") AS "Net Issue Value"
+FROM NET_ISSUE X INNER JOIN "OITM" I ON I."ItemCode" = X."ItemCode" INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+GROUP BY G."ItmsGrpNam", X."ItemCode", I."ItemName"
+ORDER BY G."ItmsGrpNam", X."ItemCode\""""),
     ("MPA", "PAR - 013 - Consumption in a Period (ItemGroup)", f"""
-SELECT G."ItmsGrpNam" AS "Item Group",
-       SUM(CASE WHEN T1."BaseType" = 202 THEN T1."Quantity" * T1."StockPrice" ELSE 0 END) AS "Production Consumption",
-       SUM(CASE WHEN T1."BaseType" <> 202 THEN T1."Quantity" * T1."StockPrice" ELSE 0 END) AS "Other Goods Issues",
-       SUM(T1."Quantity" * T1."StockPrice") AS "Total Consumption", COUNT(DISTINCT T1."ItemCode") AS "Items"
-FROM "OIGE" T0 INNER JOIN "IGE1" T1 ON T1."DocEntry" = T0."DocEntry" INNER JOIN "OITM" I ON I."ItemCode" = T1."ItemCode"
-INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
-WHERE {DATES("T0")} GROUP BY G."ItmsGrpNam" ORDER BY 4 DESC"""),
+WITH NET_ISSUE AS
+(
+    SELECT T1."ItemCode", T1."Quantity" AS "Qty", T1."Quantity" * T1."StockPrice" AS "Value"
+    FROM "OIGE" T0 INNER JOIN "IGE1" T1 ON T1."DocEntry" = T0."DocEntry" WHERE {DATES("T0")}
+    UNION ALL
+    SELECT T1."ItemCode", -T1."Quantity", -T1."Quantity" * T1."StockPrice"
+    FROM "OIGN" T0 INNER JOIN "IGN1" T1 ON T1."DocEntry" = T0."DocEntry"
+    INNER JOIN "OWOR" W ON W."DocEntry" = T1."BaseEntry" AND T1."BaseType" = 202 AND W."ItemCode" <> T1."ItemCode"
+    WHERE {DATES("T0")}
+)
+SELECT G."ItmsGrpNam" AS "Item Group", G."BalInvntAc" AS "Inventory GL Account", AC."AcctName" AS "Inventory GL Account Name",
+       SUM(X."Qty") AS "Net Issue Qty.", SUM(X."Value") AS "Net Issue Value"
+FROM NET_ISSUE X INNER JOIN "OITM" I ON I."ItemCode" = X."ItemCode" INNER JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+LEFT JOIN "OACT" AC ON AC."AcctCode" = G."BalInvntAc"
+GROUP BY G."ItmsGrpNam", G."BalInvntAc", AC."AcctName"
+ORDER BY G."ItmsGrpNam\""""),
 ]
 
 
