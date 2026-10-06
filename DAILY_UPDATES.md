@@ -5,6 +5,24 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 
 ---
 
+## 2026-10-06 (Tuesday)
+
+### ✅ Completed
+| # | Task | Result / where |
+|---|---|---|
+| 1 | Fixed Assets module not visible in the B1 client | Enabled by the user: Company Details → Basic Initialization → *Enable Fixed Assets*, then log in again |
+| 2 | **Depreciation areas** (user upload `Deprecation Area.csv`) | **Main Books** → **Indirect posting** (I), Posting to G/L, main booking area. **Tax Books** stays Direct posting, Additional Area (B1 can't change the Area Type of an existing area: *1470000059 Field cannot be updated*). Demo area IFRS left alone – `tools/load_depreciation_areas.py` |
+| 3 | **Asset classes** (user upload `Assest Classes.csv`) | **22 classes** as in AKE: Unit 1 `U1…` and Unit 2 `U2…` × 11 (Computers, Factory Building, Electrical Fittings, Furniture, Four / Two Wheelers, Office Equipment, P&M, P&M Fixtures, P&M Instruments, Server & Software). Type General, one **Main Books** line each with AKE's account determination (TA-…), depreciation type (…WDV@…%) and useful life (36–360 months). No branch set (AKE_DEMO has no branches; AKE's Branch ID 1 / 3). Demo classes Furnitures / Machine / Motor vehicles untouched – `tools/load_asset_classes.py` |
+
+### ⛔ Waiting on user / AKE
+- Tax Books: user asked for Area Type *Posting to G/L*; AKE's file has O (Additional Area). Needs delete + recreate (it is on the 3 demo asset classes) and would post depreciation to G/L twice (Main Books + Tax Books) – confirm before changing
+- U1 and U2 asset classes are identical without branches – pick U1… or U2… on the asset master data
+
+### 📌 Next
+- Fixed-asset item master (629 FA items skipped on 2026-10-05) on the new asset classes; capitalization / opening values
+
+---
+
 ## 2026-10-05 (Monday)
 
 ### ✅ Completed
