@@ -387,16 +387,56 @@ FROM "OWOR" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" LEFT JOIN "OI
 LEFT JOIN "NNM1" N ON N."Series" = T0."Series" LEFT JOIN RECEIPT_FROM_PRODUCTION R ON R."Production Order DocEntry" = T0."DocEntry"
 WHERE T0."Status" = 'R' AND (T0."CmpltQty" + T0."RjctQty" >= T0."PlannedQty" OR T0."DueDate" < CURRENT_DATE)
 ORDER BY T0."DueDate", T0."DocNum\""""),
+    # one row per order as in AKE's PAR - 006 (screenshot `Production order with pending issue and Receipt.png`) + warehouses.
+    # Issue Status compares each material line's issued qty with what the received qty needs (line planned / order planned
+    # x received): less on any line -> Issue is Pending, more -> Receipt is Pending, equal -> Issued Qty Matches Receipt
     ("MPA", "PAR - 006 - Production Order with Pending Issue or Receipt", f"""
-SELECT {NO("T0")} AS "Order No", T0."PostDate" AS "Order Date", T0."DueDate" AS "Due Date", T0."ItemCode" AS "Product",
-       T0."PlannedQty" AS "Planned", T0."CmpltQty" + T0."RjctQty" AS "Received", T0."PlannedQty" - T0."CmpltQty" - T0."RjctQty" AS "Pending Receipt",
-       T1."ItemCode" AS "Component", T1."PlannedQty" AS "Component Planned", T1."IssuedQty" AS "Issued",
-       T1."PlannedQty" - T1."IssuedQty" AS "Pending Issue", T1."wareHouse" AS "Issue Whse",
-       CASE T1."IssueType" WHEN 'B' THEN 'Backflush' ELSE 'Manual' END AS "Issue Method"
-FROM "OWOR" T0 INNER JOIN "WOR1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
-WHERE T0."Status" = 'R' AND T1."ItemType" = 4
-  AND ((T1."PlannedQty" > 0 AND T1."IssuedQty" < T1."PlannedQty") OR T0."CmpltQty" + T0."RjctQty" < T0."PlannedQty")
-ORDER BY T0."DueDate", T0."DocNum", T1."VisOrder\""""),
+WITH RECEIPT_FROM_PRODUCTION AS
+(
+    SELECT T1."BaseEntry" AS "Production Order DocEntry",
+           SUM(T1."Quantity") AS "Receipt Qty", SUM(T1."Quantity" * T1."StockPrice") AS "Receipt Value"
+    FROM "IGN1" T1 INNER JOIN "OWOR" W ON W."DocEntry" = T1."BaseEntry" AND W."ItemCode" = T1."ItemCode"
+    WHERE T1."BaseType" = 202
+    GROUP BY T1."BaseEntry"
+),
+ISSUE_FOR_PRODUCTION AS
+(
+    SELECT W."DocEntry",
+           SUM(CASE WHEN W."IssuedQty" < W."PlannedQty" * (O."CmpltQty" + O."RjctQty") / O."PlannedQty" - 0.001 THEN 1 ELSE 0 END) AS "Short Lines",
+           SUM(CASE WHEN W."IssuedQty" > W."PlannedQty" * (O."CmpltQty" + O."RjctQty") / O."PlannedQty" + 0.001 THEN 1 ELSE 0 END) AS "Ahead Lines",
+           SUM(CASE WHEN W."IssuedQty" < W."PlannedQty" THEN 1 ELSE 0 END) AS "Open Lines"
+    FROM "WOR1" W INNER JOIN "OWOR" O ON O."DocEntry" = W."DocEntry"
+    WHERE W."ItemType" = 4 AND W."PlannedQty" > 0 AND O."Status" = 'R'
+    GROUP BY W."DocEntry"
+),
+ISSUE_WAREHOUSES AS
+(
+    SELECT "DocEntry", STRING_AGG("wareHouse", ', ' ORDER BY "wareHouse") AS "Issue Warehouses"
+    FROM (SELECT DISTINCT W."DocEntry", W."wareHouse" FROM "WOR1" W WHERE W."ItemType" = 4 AND W."PlannedQty" > 0)
+    GROUP BY "DocEntry"
+)
+SELECT T0."DocEntry" AS "Internal Number", {NO("T0")} AS "Production Order No", T0."PostDate" AS "Production Order Date",
+       T0."DueDate" AS "Due Date", G."ItmsGrpNam" AS "Item Group", T0."ItemCode" AS "Parent Item Code",
+       I."ItemName" AS "Parent Item Name",
+       CASE T0."Type" WHEN 'S' THEN 'Standard' WHEN 'P' THEN 'Special' WHEN 'D' THEN 'Disassembly' END AS "Production Order Type",
+       CASE T0."Status" WHEN 'P' THEN 'Planned' WHEN 'R' THEN 'Released' WHEN 'L' THEN 'Closed' WHEN 'C' THEN 'Cancelled' END
+           AS "Production Order Status",
+       T0."PlannedQty" AS "Production Order Planned Qty",
+       IFNULL(R."Receipt Qty", 0) AS "Receipt from Production Qty", IFNULL(R."Receipt Value", 0) AS "Receipt from Production Value",
+       T0."PlannedQty" - IFNULL(R."Receipt Qty", 0) AS "Balance Qty",
+       CASE WHEN IFNULL(S."Short Lines", 0) > 0 THEN 'Issue is Pending'
+            WHEN IFNULL(S."Ahead Lines", 0) > 0 THEN 'Receipt is Pending'
+            ELSE 'Issued Qty Matches Receipt' END AS "Issue Status",
+       IFNULL(S."Open Lines", 0) AS "Lines not fully issued",
+       IFNULL(WI."Issue Warehouses", '') AS "Issue Warehouse(s)",
+       T0."Warehouse" AS "Receipt Warehouse", WH."WhsName" AS "Receipt Warehouse Name"
+FROM "OWOR" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" LEFT JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+LEFT JOIN "OWHS" WH ON WH."WhsCode" = T0."Warehouse" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+LEFT JOIN RECEIPT_FROM_PRODUCTION R ON R."Production Order DocEntry" = T0."DocEntry"
+LEFT JOIN ISSUE_FOR_PRODUCTION S ON S."DocEntry" = T0."DocEntry"
+LEFT JOIN ISSUE_WAREHOUSES WI ON WI."DocEntry" = T0."DocEntry"
+WHERE T0."Status" = 'R' AND (T0."PlannedQty" > IFNULL(R."Receipt Qty", 0) OR IFNULL(S."Open Lines", 0) > 0)
+ORDER BY IFNULL(R."Receipt Value", 0) DESC, T0."DocNum\""""),
     ("MPA", "PAR - 007 - Rejection RC Conversion to Return", f"""
 SELECT {NO("T0")} AS "GRPO No", T0."DocDate" AS "GRPO Date", T0."CardCode" AS "Vendor", T0."CardName" AS "Vendor Name",
        T1."ItemCode" AS "Item", T1."Dscription" AS "Description", T1."WhsCode" AS "Rejection Whse", WH."WhsName" AS "Whse Name",
