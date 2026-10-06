@@ -3,6 +3,7 @@
 Run:  python tools/build_reports.py --test     (run every report against AKE_DEMO via Service Layer, save nothing)
       python tools/build_reports.py --no-test  (save without testing; test each report in the SAP client)
       python tools/build_reports.py            (test, then create/update the categories and saved queries)
+      python tools/build_reports.py --no-test --only "PAR - 005"   (save only the reports whose title starts with it)
 In SAP: Tools -> Queries -> Query Manager -> OTC / PTP / PTS / FICO. Date-range reports prompt for From / To date
 ([%0] / [%1]); the GL ledger also asks for the account ([%2]).
 """
@@ -356,15 +357,34 @@ SELECT {NO("T0")} AS "Delivery No", T0."DocDate" AS "Delivery Date", T0."CardCod
        T1."OpenQty" * T1."Price" AS "Pending Value", DAYS_BETWEEN(T0."DocDate", CURRENT_DATE) AS "Days Pending"
 FROM "ODLN" T0 INNER JOIN "DLN1" T1 ON T1."DocEntry" = T0."DocEntry" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
 WHERE T1."LineStatus" = 'O' AND T0."CANCELED" = 'N' ORDER BY T0."DocDate", T0."DocNum", T1."LineNum\""""),
+    # columns as in AKE's PAR - 005 (screenshot `Production Order to be closed.png`), then the close checks
     ("MPA", "PAR - 005 - List of Production orders to be closed", f"""
-SELECT {NO("T0")} AS "Order No", T0."PostDate" AS "Order Date", T0."DueDate" AS "Due Date", T0."ItemCode" AS "Product",
-       I."ItemName" AS "Description", T0."PlannedQty" AS "Planned", T0."CmpltQty" AS "Completed", T0."RjctQty" AS "Rejected",
+WITH RECEIPT_FROM_PRODUCTION AS
+(
+    SELECT T1."BaseEntry" AS "Production Order DocEntry",
+           SUM(T1."Quantity") AS "Receipt Qty", SUM(T1."Quantity" * T1."StockPrice") AS "Receipt Value"
+    FROM "IGN1" T1 INNER JOIN "OWOR" W ON W."DocEntry" = T1."BaseEntry" AND W."ItemCode" = T1."ItemCode"
+    WHERE T1."BaseType" = 202
+    GROUP BY T1."BaseEntry"
+)
+SELECT T0."DocEntry" AS "Internal Number", {NO("T0")} AS "Production Order No", T0."PostDate" AS "Production Order Date",
+       T0."DueDate" AS "Due Date", G."ItmsGrpNam" AS "Item Group", T0."ItemCode" AS "Parent Item Code",
+       I."ItemName" AS "Parent Item Name",
+       CASE T0."Type" WHEN 'S' THEN 'Standard' WHEN 'P' THEN 'Special' WHEN 'D' THEN 'Disassembly' END AS "Production Order Type",
+       CASE T0."Status" WHEN 'P' THEN 'Planned' WHEN 'R' THEN 'Released' WHEN 'L' THEN 'Closed' WHEN 'C' THEN 'Cancelled' END
+           AS "Production Order Status",
+       T0."PlannedQty" AS "Production Order Planned Qty", T0."CmpltQty" AS "Production Order Completed Qty",
+       IFNULL((SELECT SUM(W."IssuedQty") FROM "WOR1" W WHERE W."DocEntry" = T0."DocEntry" AND W."ItemType" = 4
+               AND W."PlannedQty" > 0), 0) AS "Production Order Issued Qty",
+       IFNULL(R."Receipt Qty", 0) AS "Receipt from Production Qty", IFNULL(R."Receipt Value", 0) AS "Receipt from Production Value",
+       T0."RjctQty" AS "Rejected Qty",
        (SELECT COUNT(*) FROM "WOR1" W WHERE W."DocEntry" = T0."DocEntry" AND W."ItemType" = 4 AND W."PlannedQty" > 0
            AND W."IssuedQty" < W."PlannedQty") AS "Lines not fully issued",
        DAYS_BETWEEN(T0."DueDate", CURRENT_DATE) AS "Days past Due",
        CASE WHEN T0."CmpltQty" + T0."RjctQty" >= T0."PlannedQty" THEN 'Fully received - close'
             ELSE 'Past due date - review and close' END AS "Reason"
-FROM "OWOR" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" LEFT JOIN "NNM1" N ON N."Series" = T0."Series"
+FROM "OWOR" T0 INNER JOIN "OITM" I ON I."ItemCode" = T0."ItemCode" LEFT JOIN "OITB" G ON G."ItmsGrpCod" = I."ItmsGrpCod"
+LEFT JOIN "NNM1" N ON N."Series" = T0."Series" LEFT JOIN RECEIPT_FROM_PRODUCTION R ON R."Production Order DocEntry" = T0."DocEntry"
 WHERE T0."Status" = 'R' AND (T0."CmpltQty" + T0."RjctQty" >= T0."PlannedQty" OR T0."DueDate" < CURRENT_DATE)
 ORDER BY T0."DueDate", T0."DocNum\""""),
     ("MPA", "PAR - 006 - Production Order with Pending Issue or Receipt", f"""
@@ -498,7 +518,9 @@ def main():
     ap.add_argument("--no-test", action="store_true",
                     help="save without the Service Layer test (SQLQueries rejects ||, CASE, arithmetic and some tables)")
     ap.add_argument("--categories", action="store_true", help="only create the Query Manager categories")
+    ap.add_argument("--only", help="only the reports whose title starts with this text")
     a = ap.parse_args()
+    reports = [r for r in REPORTS if not a.only or r[1].startswith(a.only)]
     sl = L.SL(L.read_env(), False, print)
     sl.login()
     if a.categories:
@@ -506,7 +528,7 @@ def main():
         print("Categories:", {n: cats.get(n) for n in CATEGORIES.values()}, f"Failures: {sl.failures}")
         return
     bad = 0
-    for cat, title, sql in ([] if a.no_test else REPORTS):
+    for cat, title, sql in ([] if a.no_test else reports):
         rows, err = run_sql(sl, "zz_" + title.split()[0].lower(), sql.strip())
         if err:
             bad += 1
@@ -514,12 +536,12 @@ def main():
         else:
             print(f"OK   {title:48s} {len(rows):4d} rows" + (f"  e.g. {list(rows[0].items())[:3]}" if rows else ""))
     if a.test or bad:
-        print(f"Tested {len(REPORTS)} reports, {bad} failed." + ("" if a.test else " Nothing saved."))
+        print(f"Tested {len(reports)} reports, {bad} failed." + ("" if a.test else " Nothing saved."))
         return
     cats = create_categories(sl)
     have = {(q["QueryCategory"], q["QueryDescription"]): q["InternalKey"]
             for q in sl.get(f"UserQueries?$select=InternalKey,QueryCategory,QueryDescription&$filter=QueryCategory gt 0")["value"]}
-    for cat, title, sql in REPORTS:
+    for cat, title, sql in reports:
         code = cats[CATEGORIES[cat]]
         body = {"QueryCategory": code, "QueryDescription": title, "Query": sql.strip()}
         if (code, title) in have:
