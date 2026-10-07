@@ -5,6 +5,18 @@ Newest day on top. Status: ✅ Completed · 🔄 In progress · ⛔ Blocked / wa
 
 ---
 
+## 2026-10-07 (Wednesday)
+
+### ✅ Completed
+| # | Task | Result / where |
+|---|---|---|
+| 1 | Item cost **00010 Paint sample plates = production cost ₹175.77** (user request; was ₹150) | BOM 00010 = 3 KGS Z24601500005 HR Plate 1500 x 5 mm × ₹58.59 (moving average, U1 WH1); no resources on the BOM. Standard cost 175.77 in all warehouses; the 50 in U1 WH5 revalued against 1003 (07-10) – `python tools/set_item_cost.py 00010=175.77` |
+
+### 📌 Next
+- Re-run `set_item_cost.py` if the HR plate average cost changes (standard cost does not follow the BOM automatically)
+
+---
+
 ## 2026-10-06 (Tuesday)
 
 ### ✅ Completed
