@@ -545,6 +545,30 @@ FROM NET_ISSUE X INNER JOIN "OITM" I ON I."ItemCode" = X."ItemCode" INNER JOIN "
 LEFT JOIN "OACT" AC ON AC."AcctCode" = G."BalInvntAc"
 GROUP BY G."ItmsGrpNam", G."BalInvntAc", AC."AcctName"
 ORDER BY G."ItmsGrpNam\""""),
+    # Item cost is managed per warehouse in AKE_DEMO (OADM.PriceSys = Y): OITM.AvgPrice stays 0, the cost is on OITW.
+    # Item cost = stock-weighted warehouse cost (no stock: highest warehouse cost); Production Std Cost = Production
+    # Data tab (OITM.PrdStdCst).  Title as saved by the user (query 340).
+    ("MPA", "PAR - 014-  Item with Item Cost and Production Cost Variance", """
+SELECT X."Item No.", X."Item Description", X."Item Group", X."Valuation Method", X."Item Cost / Standard Cost",
+       X."Last Purchase Price", X."On Hand Qty", X."Inventory Value", X."Production Standard Cost",
+       X."Item Cost / Standard Cost" - X."Production Standard Cost" AS "Standard Cost Variance",
+       CASE WHEN X."Production Standard Cost" = 0 THEN 0
+            ELSE (X."Item Cost / Standard Cost" - X."Production Standard Cost") / X."Production Standard Cost" * 100
+       END AS "Variance %"
+FROM (
+    SELECT T0."ItemCode" AS "Item No.", T0."ItemName" AS "Item Description", G."ItmsGrpNam" AS "Item Group",
+           CASE T0."EvalSystem" WHEN 'S' THEN 'Standard' WHEN 'A' THEN 'Moving Average' WHEN 'F' THEN 'FIFO'
+                ELSE T0."EvalSystem" END AS "Valuation Method",
+           CASE WHEN W."Qty" > 0 THEN W."Value" / W."Qty" ELSE IFNULL(W."MaxCost", 0) END AS "Item Cost / Standard Cost",
+           IFNULL(T0."LastPurPrc", 0) AS "Last Purchase Price", IFNULL(W."Qty", 0) AS "On Hand Qty",
+           IFNULL(W."Value", 0) AS "Inventory Value", IFNULL(T0."PrdStdCst", 0) AS "Production Standard Cost"
+    FROM "OITM" T0
+    INNER JOIN "OITB" G ON G."ItmsGrpCod" = T0."ItmsGrpCod"
+    LEFT JOIN (SELECT "ItemCode", SUM("OnHand") AS "Qty", SUM("OnHand" * "AvgPrice") AS "Value", MAX("AvgPrice") AS "MaxCost"
+               FROM "OITW" GROUP BY "ItemCode") W ON W."ItemCode" = T0."ItemCode"
+    WHERE T0."InvntItem" = 'Y'
+) X
+ORDER BY X."Item No.\""""),
 ]
 
 
